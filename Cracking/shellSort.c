@@ -19,8 +19,8 @@ void shellSort(int a[], int n)
 {
 	int i, j, gap;
 
-	for (gap = n / 2; gap > 0; gap /= 2) //²½³¤  
-	for (i = 0; i < gap; i++)        //Ö±½Ó²åÈëÅÅÐò  
+	for (gap = n / 2; gap > 0; gap /= 2) /
+	for (i = 0; i < gap; i++)        
 	{
 		for (j = i + gap; j < n; j += gap)
 			if (a[j] < a[j - gap])
