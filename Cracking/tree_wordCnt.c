@@ -1,3 +1,6 @@
+//This is a simple method to count different words in a txt file.
+//Use a Binary Search Tree
+
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -47,7 +50,7 @@ int getword(FILE *in, char *word)
 	word[len] = '\0';
 	return len;
 }
-
+//Add a new Node
 struct tnode *addtree(struct tnode *p, char word[])
 {
 	int cond;
