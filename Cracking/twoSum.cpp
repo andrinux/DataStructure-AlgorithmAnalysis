@@ -2,6 +2,9 @@
 //https://leetcode.com/problems/two-sum/
 
 
+//Comment: No need to loop for twice.
+//Map can add automatically
+
 #include <iostream>
 #include <vector>
 #include <map>
@@ -22,8 +25,8 @@ public:
 			int tmp = target - numbers[i];
 			itr = data.find(tmp);
 			if (itr != data.end() && (itr->second!=i)){
-				res[0] = 1+ i;
-				res[1] = 1+ itr->second;
+				res[0] = 1 + i;
+				res[1] = 1 + itr->second;
 				cout << "index1=" << res[0]+1 << ", index2=" << res[1]+1 << endl;
 				return res;
 			}
