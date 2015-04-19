@@ -1,5 +1,5 @@
 //interger to string
-/*
+/* X.Z.
 * Update histroy: fix bug of display -2^(31)=-2147483648;
 * line 35 and 37
 *
