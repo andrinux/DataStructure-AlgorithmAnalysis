@@ -1,5 +1,6 @@
 //This is a simple method to count different words in a txt file.
 //Use a Binary Search Tree
+//Not the optimal solution
 
 #include <stdio.h>
 #include <ctype.h>
