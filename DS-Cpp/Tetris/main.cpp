@@ -69,15 +69,17 @@ void test_example() {
   
   tetris.add_piece('I',90,2);
   tetris.print();
-  /*
   tetris.add_piece('I',0,4);
+  tetris.print();
+ 
   tetris.add_piece('O',0,3);
   std::cout << "after adding three more pieces:" << std::endl;
   tetris.print();
-
+  
   tetris.add_piece('O',0,0);
   std::cout << "after adding another piece, we need to score to remove the third row:" << std::endl;
   tetris.print();
+  /*
   assert (tetris.get_max_height() == 9);
   assert (tetris.count_squares() == 20);
 

@@ -49,28 +49,38 @@ bool Tetris::add_piece(char type, int angle, int pos) {
 	int W = 0, H = 0;
 	//Construct the new 
 	Piece P(type, angle);
+	//Find local max Height
+	int locMaxHgt = 0;
+	for (int i = 0; i != P.getW(); i++){
+		if (locMaxHgt < heights[pos + i])
+			locMaxHgt = heights[pos + i];
+	}
+
 	//Update data[][] by copy and delete old ones
 	for (int i = 0; i != P.getW(); i++){ 
-		//i is the col index within the Piece
-		int curHeight = this->heights[pos + i];
+		int col = pos + i;
+		int curHeight = heights[col];
 		int addHeight = P.getHeight(i);
-		//Update New Heights
-		this->setHeight(pos + i, curHeight + addHeight);
-		//copy
-		char *newAddr = new char(curHeight + addHeight);
+		int totalHeight = locMaxHgt + addHeight; //Not the final height
+		char * newAddr = new char[totalHeight];
+		//Three steps: copy existing-> complement blanks -> copy new added
 		int j = 0, k = 0;
-		for (j = 0; j != curHeight; j++)
+		for (j = 0; j < curHeight; j++)
 			newAddr[j] = this->data[pos + i][j];
-		for (k = 0; k != addHeight; j++, k++){
-			int index = P.getH()*i + k;
+		for (; j < locMaxHgt; j++) //blanks higher than curHeight but lower than locMax
+			newAddr[j] = ' ';
+		for (; j < totalHeight; j++){
+			int index = P.getH()*i + j - locMaxHgt;
 			newAddr[j] = P.content[index];
 		}
-		//Delete old and Copy new
-		//delete[] this->data[pos + i];
-		this->data[pos + i] = new char(curHeight + addHeight);
-		for (k = 0; k < curHeight + addHeight; k++)
-			this->data[pos + i][k] = newAddr[k];
-		//delete[] newAddr;  //<===Error Here.???
+		//Copy to data[][]
+		delete[] data[pos + i];
+		data[pos + i] = new char[totalHeight];
+		for (k = 0; k < totalHeight; k++)
+			data[pos + i][k] = *(newAddr + k);
+		delete[] newAddr;
+		//update current height
+		heights[col] = locMaxHgt + P.getHeight(i);
 	}
 	
 
