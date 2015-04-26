@@ -23,6 +23,7 @@ public:
 	bool add_piece(char type, int angle, int pos);
 	void print() const;
 	bool remove_full_rows();
+	void setHeight(int w, int newHeight) { this->heights[w] = newHeight; }
 
 
 private:
@@ -45,10 +46,13 @@ public:
 	int getH() const{ return H; }
 	char getType() const { return type; }
 	void fillContent(char *, char, int);
+	int getHeight(int w) const;
 private:
 	int W;
-	int H;
+	int H; //This is the max H
+	int *Hs;//This is the array contains the final added heights
 	char type;
 
 };
+
 #endif

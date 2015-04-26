@@ -66,8 +66,10 @@ void test_example() {
 
   */
 
-  /*
+  
   tetris.add_piece('I',90,2);
+  tetris.print();
+  /*
   tetris.add_piece('I',0,4);
   tetris.add_piece('O',0,3);
   std::cout << "after adding three more pieces:" << std::endl;
