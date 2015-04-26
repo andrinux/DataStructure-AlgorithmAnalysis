@@ -18,6 +18,7 @@ public:
 
 	//member variables
 	static int totalScore;
+	static int removedCnt;
 
 	//Member Functions
 	int get_width() const;
@@ -26,7 +27,11 @@ public:
 	bool add_piece(char type, int angle, int pos);
 	void print() const;
 	int remove_full_rows();
-	
+	void add_left_column();
+	void add_right_column(); 
+	void remove_left_column();
+	void remove_right_column();
+	void add_width(int delta){ this->width += delta; }
 	void setHeight(int w, int newHeight) { this->heights[w] = newHeight; }
 	void destroy();
 	int find_full_row();

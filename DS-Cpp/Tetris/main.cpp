@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) {
 
   test_example();
   test_score_multirow();
-  //test_add_remove_columns();
-  //test_all_pieces_all_rotations();
+  test_add_remove_columns();
+  test_all_pieces_all_rotations();
   
   //additional_student_tests();
 
@@ -173,7 +173,7 @@ void test_score_multirow() {
 // ======================================================================
 // ======================================================================
 
-/*
+
 void test_add_remove_columns() {
 
   std::cout << "=====================================================================" << std::endl;
@@ -229,12 +229,11 @@ void test_add_remove_columns() {
   tetris.destroy();
   std::cout << "done with test_add_remove_columns()" << std::endl;
 }
-*/
 
 // =====================================================================
 // =====================================================================
 
-/*
+
 void test_all_pieces_all_rotations() {
 
   std::cout << "=====================================================================" << std::endl;
@@ -248,6 +247,7 @@ void test_all_pieces_all_rotations() {
     tetris.add_piece(pieces[i],90,5);
     tetris.add_piece(pieces[i],180,10);
     tetris.add_piece(pieces[i],270,15);
+	tetris.print();
     assert (tetris.count_squares() == (i+1)*4*4);
     if      (i == 0) assert (tetris.get_max_height() == 4);
     else if (i == 1) assert (tetris.get_max_height() == 6);
@@ -263,7 +263,6 @@ void test_all_pieces_all_rotations() {
   tetris.destroy();
   std::cout << "done with test_all_pieces_all_rotations()" << std::endl;
 }
-*/
 
 // =====================================================================
 // =====================================================================

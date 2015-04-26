@@ -6,6 +6,7 @@
 //This is initialization of pieceCount, which is a static variable
 int Piece::pieceCnt = 0;
 int Tetris::totalScore = 0;
+int Tetris::removedCnt = 0;
 
 Tetris::~Tetris(){
 
@@ -44,7 +45,14 @@ int Tetris::get_max_height() const{
 
 //Count the total squares in the board
 int Tetris::count_squares() const {
-	return (Piece::pieceCnt * 4-totalScore*this->get_width());
+	int count=0;
+	for (int i = 0; i < this->get_width(); i++){
+		for (int j = 0; j < heights[i]; j++){
+			if (data[i][j] != ' ')
+				count++;
+		}
+	}
+	return count;
 }
 
 //Add a new piece to the board
@@ -187,7 +195,134 @@ void Tetris::destroy(){
 	delete[] heights;
 	totalScore = 0;
 	Piece::pieceCnt = 0;
+	removedCnt = 0;
 }
+
+//Is there any cleaner ways to do so?
+void Tetris::add_left_column(){
+	int curW = this->get_width();
+	//Update Heights
+	int *new_heights = new int[curW + 1];
+	new_heights[0] = 0;
+	for (int i = 0; i < curW; i++)
+		new_heights[i + 1] = heights[i];
+	delete[] heights;
+	heights = new int[curW + 1];
+	for (int i = 0; i < curW + 1; i++)
+		heights[i] = new_heights[i];
+	delete[] new_heights;
+	//Updates data
+	char **new_data = new char*[curW + 1];
+	new_data[0] = NULL;
+	for (int i = 0; i < curW; i++)
+		new_data[i + 1] = data[i];
+	delete[] data;
+	data = new char*[curW + 1];
+	for (int i = 0; i < curW + 1; i++)
+		data[i] = new_data[i];
+	delete[] new_data;
+
+	//Update Width
+	this->add_width(1);
+	return;
+}
+
+void Tetris::add_right_column(){
+	int curW = this->get_width();
+	//Update Heights
+	int *new_heights = new int[curW + 1];
+	new_heights[curW] = 0;
+	for (int i = 0; i < curW; i++)
+		new_heights[i] = heights[i];
+	delete[] heights;
+	heights = new int[curW + 1];
+	for (int i = 0; i < curW + 1; i++)
+		heights[i] = new_heights[i];
+	delete[] new_heights;
+	//Update Data
+	char **new_data = new char*[curW + 1];
+	new_data[curW] = NULL;
+	for (int i = 0; i < curW; i++)
+		new_data[i] = data[i];
+	delete[] data;
+	data = new char*[curW + 1];
+	for (int i = 0; i < curW + 1; i++)
+		data[i] = new_data[i];
+	delete[] new_data;
+
+	//Update Width
+	this->add_width(1);
+	return;
+}
+
+void Tetris::remove_left_column(){
+	int curW = this->get_width();
+	//Count the non-empty squares in the left column
+	for (int i = 0; i < heights[0]; i++){
+		if (data[0][i] != ' ' && data[0][i] != 'X')
+			removedCnt++;
+	}
+	//Update heights
+	int * new_heights = new int[curW - 1];
+	for (int i = 0; i < curW - 1; i++)
+		new_heights[i] = heights[i + 1];
+	delete[] heights;
+	heights = new int[curW - 1];
+	for (int i = 0; i < curW - 1; i++)
+		heights[i] = new_heights[i];
+	delete[] new_heights;
+	//Update Data
+	char **new_data = new char*[curW - 1];
+	for (int i = 0; i < curW - 1; i++)
+		new_data[i] = data[i + 1];
+	delete[] data;
+	data = new char*[curW - 1];
+	for (int i = 0; i < curW - 1; i++)
+		data[i] = new_data[i];
+	delete[] new_data;
+	//Update Width
+	this->add_width(-1);
+	return;
+}
+
+void Tetris::remove_right_column(){
+	int curW = this->get_width();
+	//Count the non-empty squares in the right column
+	//for (int i = 0; i < heights[0]; i++){
+	//	if (data[curW - 1][i] == 32)
+	//		continue;
+	//	else{
+	//		removedCnt++; //?????
+	//		std::cout << data[curW - 1][i] << '-';
+
+	//	}
+	//		
+	//}
+
+	//Update heights
+	int * new_heights = new int[curW - 1];
+	for (int i = 0; i < curW - 1; i++)
+		new_heights[i] = heights[i];
+	delete[] heights;
+	heights = new int[curW - 1];
+	for (int i = 0; i < curW - 1; i++)
+		heights[i] = new_heights[i];
+	delete[] new_heights;
+	//Update Data
+	char **new_data = new char*[curW - 1];
+	for (int i = 0; i < curW - 1; i++)
+		new_data[i] = data[i];
+	delete[] data;
+	data = new char*[curW - 1];
+	for (int i = 0; i < curW - 1; i++)
+		data[i] = new_data[i];
+	delete[] new_data;
+	//Update Width
+	this->add_width(-1);
+	return;
+}
+
+
 //============================================================
 //========================Piece===============================
 //============================================================
@@ -239,7 +374,7 @@ Piece::Piece(char type, int angle){
 			content = new char[W*H]; Hs = new int[W];
 			Hs[0] = 2; Hs[1] = 3;
 			for (int i = 0; i < W*H; i++) content[i] = 'T';
-			content[0] = ' '; content[4] = 'X';
+			content[0] = ' '; content[2] = 'X';
 		}
 		else if (angle == 180){
 			W = 3; H = 2;
@@ -323,7 +458,7 @@ Piece::Piece(char type, int angle){
 		if (angle == 0){
 			W = 2; H = 3;
 			content = new char[W * H]; Hs = new int[W];
-			Hs[0] = 1; Hs[1] = 2;
+			Hs[0] = 1; Hs[1] = 3;
 			for (int i = 0; i < W*H; i++) content[i] = 'J';
 			content[1] = content[2] = 'X';
 		}
