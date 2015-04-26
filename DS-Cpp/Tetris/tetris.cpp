@@ -44,7 +44,7 @@ int Tetris::get_max_height() const{
 
 //Count the total squares in the board
 int Tetris::count_squares() const {
-	return (Piece::pieceCnt * 4-totalScore*6);
+	return (Piece::pieceCnt * 4-totalScore*this->get_width());
 }
 
 //Add a new piece to the board
@@ -89,14 +89,23 @@ bool Tetris::add_piece(char type, int angle, int pos) {
 	return true;
 }
 
-int Tetris::remove_full_rows(){
+int Tetris::minHeight(){
+	int min=this->get_max_height();
+	for (int i = 0; i < this->get_width(); i++){
+		if (heights[i] < min)
+			min = heights[i];
+	}
+	return min;
+}
+
+int Tetris::find_full_row(){
 	int W = this->get_width();
 	int H = this->get_max_height();
-	int col = 0, row = 0, fullRow=0;
-	//i is the index of Height
-	for (row = 0; row < H; row++){
+	int col = 0, row = 0, fullRow = -1;
+	//look for the full rows
+	for (row = 0; row < this->minHeight(); row++){
 		for (col = 0; col < W; col++){
-			if (heights[col] < row)
+			if (heights[col] < row || heights[col] == 0)
 				break;
 			else if (data[col][row] == ' ' || data[col][row] == 'X')
 				break;
@@ -107,13 +116,22 @@ int Tetris::remove_full_rows(){
 			//std::cout << row << "Full Row Detected" << std::endl;
 			fullRow = row;
 			break;
-		}	
+		}
 	}
+	//Didn't find: return -1
+	return fullRow;
+}
+
+void Tetris::remove_one_row(int fullRow){
+	int W = this->get_width();
+	int H = this->get_max_height();
+	int col = 0, row = 0;
+
 	//Update the data[][]
 	int i;
 	for (col = 0; col < W; col++){
 		char * newAddr = new char[heights[col] - 1];
-		for (i=0, row = 0; row < heights[col]; row++){
+		for (i = 0, row = 0; row < heights[col]; row++){
 			if (row != fullRow){
 				newAddr[i] = data[col][row];
 				i++;
@@ -132,7 +150,7 @@ int Tetris::remove_full_rows(){
 	for (col = 0; col < W; col++){
 		for (row = 0; row < heights[col]; row++){
 			if (data[col][row] != ' ')
-			   break;
+				break;
 		}
 		if (row == heights[col]){
 			//std::cout << col << "An empty column is detected" << std::endl;
@@ -140,11 +158,39 @@ int Tetris::remove_full_rows(){
 			delete data[col];
 		}
 	}
-	//Calculate the scores
-	totalScore++;
-	return totalScore;
+	return;
 }
 
+
+int Tetris::remove_full_rows(){
+	int W = this->get_width();
+	int H = this->get_max_height();
+	int col = 0, row = 0, fullRow=-1;
+	int curScore = 0;
+
+	while ((fullRow = find_full_row()) != -1){
+		//Update Data and heights
+		remove_one_row(fullRow);
+		//Update Scores
+		curScore++;
+		totalScore++;
+	}
+		return curScore;
+}
+
+void Tetris::destroy(){
+	int col = 0;
+	for (col = 0; col < this->get_width() && heights[col] != 0; col++){
+		delete[] data[col];
+	}
+	delete[] data;
+	delete[] heights;
+	totalScore = 0;
+	Piece::pieceCnt = 0;
+}
+//============================================================
+//========================Piece===============================
+//============================================================
 Piece::Piece()
 {
 	//empty constructor

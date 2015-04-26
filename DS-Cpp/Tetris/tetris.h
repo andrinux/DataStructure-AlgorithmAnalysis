@@ -11,12 +11,14 @@
 
 class Tetris{
 public:
-	//Constructor
+	//Constructor& Destructor
 	Tetris();
 	Tetris(int num) : width(num) { this->init(width); } 
 	~Tetris();
+
 	//member variables
 	static int totalScore;
+
 	//Member Functions
 	int get_width() const;
 	int get_max_height() const;
@@ -24,8 +26,10 @@ public:
 	bool add_piece(char type, int angle, int pos);
 	void print() const;
 	int remove_full_rows();
+	
 	void setHeight(int w, int newHeight) { this->heights[w] = newHeight; }
-
+	void destroy();
+	int find_full_row();
 
 private:
 	int     width;
@@ -33,6 +37,8 @@ private:
 	char ** data;
 	//Init the Tetris class by allocating memory
 	void init(int width);
+	int minHeight();
+	void remove_one_row(int fullRow);
 
 };
 

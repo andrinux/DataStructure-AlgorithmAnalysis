@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
   // =======================================================================
 
   test_example();
-  //test_score_multirow();
+  test_score_multirow();
   //test_add_remove_columns();
   //test_all_pieces_all_rotations();
   
@@ -91,20 +91,20 @@ void test_example() {
   
   assert (tetris.get_max_height() == 8);
   assert (tetris.count_squares() == 14);
-  /*
+  
   // cleanup
   // The destroy Tetris member function cleans up all dynamically
   // allocated memory for the Tetris board.  
   tetris.destroy();
   std::cout << "done with test_example()" << std::endl;
-  */
+  
 
 }
 
 // =====================================================================
 // =====================================================================
 
-/*
+
 void test_score_multirow() {
   std::cout << "=====================================================================" << std::endl;
   std::cout << "test_score_multirow()" << std::endl;
@@ -169,7 +169,6 @@ void test_score_multirow() {
   tetris.destroy();
   std::cout << "done with test_score_multirow()" << std::endl;
 }
-*/
 
 // ======================================================================
 // ======================================================================
