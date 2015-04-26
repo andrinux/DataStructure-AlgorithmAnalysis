@@ -7,31 +7,48 @@
 #include <string>
 #include <assert.h>
 
-#define INIT_HEIGHT 2
-
+//#define INIT_HEIGHT 2
 
 class Tetris{
 public:
 	//Constructor
 	Tetris();
-	Tetris(int num) : width(num), curHeight(INIT_HEIGHT) { this->init(width); } 
-	~Tetris() {};
+	Tetris(int num) : width(num) { this->init(width); } 
+	~Tetris();
 
 	//Member Functions
-	int get_width() const { return 1; }
+	int get_width() const;
 	int get_max_height() const;
-	int count_squares() const { return 1; }
-	bool add_piece(char type, int angle, int pos) { return true; }
+	int count_squares() const;
+	bool add_piece(char type, int angle, int pos);
 	void print() const;
+	bool remove_full_rows();
 
 
 private:
 	int     width;
-	int *   heights;
+	int *   heights; //The Height of each column
 	char ** data;
-	int curHeight;
 	//Init the Tetris class by allocating memory
 	void init(int width);
+
+};
+
+
+class Piece{
+public:
+	char *content;
+	Piece();
+	Piece(char type, int angle);
+
+	int getW() const{ return W; }
+	int getH() const{ return H; }
+	char getType() const { return type; }
+	void fillContent(char *, char, int);
+private:
+	int W;
+	int H;
+	char type;
 
 };
 #endif

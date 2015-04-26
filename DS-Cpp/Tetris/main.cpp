@@ -52,16 +52,19 @@ void test_example() {
   std::cout << "empty board with width = 6:" << std::endl;
   tetris.print();
   assert (tetris.get_width() == 6);
-
+  
   tetris.add_piece('O',0,1);
   std::cout << "after adding first piece:" << std::endl;
   tetris.print();
+  /*
   // The get_max_height Tetris member function returns the height of
   // the tallest column on the board.
   assert (tetris.get_max_height() == 2);
   // The count_squares Tetris member function returns the total number
   // of squares on the board (each piece has 4 squares).
   assert (tetris.count_squares() == 4);
+
+  */
 
   /*
   tetris.add_piece('I',90,2);
