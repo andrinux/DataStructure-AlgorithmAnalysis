@@ -3,6 +3,9 @@
 
 #include "tetris.h"
 //Implementation of member functions in Tetris class
+//This is initialization of pieceCount, which is a static variable
+int Piece::pieceCnt = 0;
+int Tetris::totalScore = 0;
 
 Tetris::~Tetris(){
 
@@ -41,7 +44,7 @@ int Tetris::get_max_height() const{
 
 //Count the total squares in the board
 int Tetris::count_squares() const {
-	return 0;
+	return (Piece::pieceCnt * 4-totalScore*6);
 }
 
 //Add a new piece to the board
@@ -83,24 +86,74 @@ bool Tetris::add_piece(char type, int angle, int pos) {
 		heights[col] = locMaxHgt + P.getHeight(i);
 	}
 	
-
-	//check if there is complete rows to remove
-
 	return true;
 }
 
-bool Tetris::remove_full_rows(){
-	return true;
+int Tetris::remove_full_rows(){
+	int W = this->get_width();
+	int H = this->get_max_height();
+	int col = 0, row = 0, fullRow=0;
+	//i is the index of Height
+	for (row = 0; row < H; row++){
+		for (col = 0; col < W; col++){
+			if (heights[col] < row)
+				break;
+			else if (data[col][row] == ' ' || data[col][row] == 'X')
+				break;
+			else
+				continue;
+		}
+		if (col == W){
+			//std::cout << row << "Full Row Detected" << std::endl;
+			fullRow = row;
+			break;
+		}	
+	}
+	//Update the data[][]
+	int i;
+	for (col = 0; col < W; col++){
+		char * newAddr = new char[heights[col] - 1];
+		for (i=0, row = 0; row < heights[col]; row++){
+			if (row != fullRow){
+				newAddr[i] = data[col][row];
+				i++;
+			}
+		}
+		delete[] data[col];
+		data[col] = new char[heights[col] - 1];
+		for (i = 0; i < heights[col] - 1; i++)
+			data[col][i] = newAddr[i];
+		delete[] newAddr;
+
+		//update heights
+		heights[col] = heights[col] - 1;
+	}
+	//Check if there full column of ' ', then set this col as blank
+	for (col = 0; col < W; col++){
+		for (row = 0; row < heights[col]; row++){
+			if (data[col][row] != ' ')
+			   break;
+		}
+		if (row == heights[col]){
+			//std::cout << col << "An empty column is detected" << std::endl;
+			heights[col] = 0;
+			delete data[col];
+		}
+	}
+	//Calculate the scores
+	totalScore++;
+	return totalScore;
 }
 
 Piece::Piece()
 {
 	//empty constructor
+	return;
 }
 
 Piece::Piece(char type, int angle){
 	this->type = type;
-
+	++pieceCnt;
 	switch (type){
 	case 'I':
 		if (angle == 0 || angle == 180){
