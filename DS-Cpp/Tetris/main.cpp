@@ -4,6 +4,7 @@
 // =====================================================================
 // =====================================================================
 
+
 #include <iostream>
 #include <cassert>
 #include <cstdlib>
@@ -52,11 +53,10 @@ void test_example() {
   std::cout << "empty board with width = 6:" << std::endl;
   tetris.print();
   assert (tetris.get_width() == 6);
-  
+
   tetris.add_piece('O',0,1);
   std::cout << "after adding first piece:" << std::endl;
   tetris.print();
-  
   // The get_max_height Tetris member function returns the height of
   // the tallest column on the board.
   assert (tetris.get_max_height() == 2);
@@ -64,34 +64,26 @@ void test_example() {
   // of squares on the board (each piece has 4 squares).
   assert (tetris.count_squares() == 4);
 
- 
-
   
   tetris.add_piece('I',90,2);
-  tetris.print();
   tetris.add_piece('I',0,4);
-  tetris.print();
- 
   tetris.add_piece('O',0,3);
   std::cout << "after adding three more pieces:" << std::endl;
   tetris.print();
-  
+
   tetris.add_piece('O',0,0);
   std::cout << "after adding another piece, we need to score to remove the third row:" << std::endl;
   tetris.print();
- 
   assert (tetris.get_max_height() == 9);
   assert (tetris.count_squares() == 20);
- 
+
   int score = tetris.remove_full_rows();
-  
   assert (score == 1);
   std::cout << "after removing 1 full row:" << std::endl;
   tetris.print();
-  
   assert (tetris.get_max_height() == 8);
   assert (tetris.count_squares() == 14);
-  
+
   // cleanup
   // The destroy Tetris member function cleans up all dynamically
   // allocated memory for the Tetris board.  
@@ -170,6 +162,7 @@ void test_score_multirow() {
   std::cout << "done with test_score_multirow()" << std::endl;
 }
 
+
 // ======================================================================
 // ======================================================================
 
@@ -230,6 +223,7 @@ void test_add_remove_columns() {
   std::cout << "done with test_add_remove_columns()" << std::endl;
 }
 
+
 // =====================================================================
 // =====================================================================
 
@@ -247,7 +241,6 @@ void test_all_pieces_all_rotations() {
     tetris.add_piece(pieces[i],90,5);
     tetris.add_piece(pieces[i],180,10);
     tetris.add_piece(pieces[i],270,15);
-	tetris.print();
     assert (tetris.count_squares() == (i+1)*4*4);
     if      (i == 0) assert (tetris.get_max_height() == 4);
     else if (i == 1) assert (tetris.get_max_height() == 6);
@@ -263,6 +256,7 @@ void test_all_pieces_all_rotations() {
   tetris.destroy();
   std::cout << "done with test_all_pieces_all_rotations()" << std::endl;
 }
+
 
 // =====================================================================
 // =====================================================================

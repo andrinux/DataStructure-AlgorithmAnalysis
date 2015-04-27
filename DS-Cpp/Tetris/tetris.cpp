@@ -57,7 +57,6 @@ int Tetris::count_squares() const {
 
 //Add a new piece to the board
 bool Tetris::add_piece(char type, int angle, int pos) {
-	int W = 0, H = 0;
 	//Construct the new 
 	Piece P(type, angle);
 	//Find local max Height
@@ -108,7 +107,7 @@ int Tetris::minHeight(){
 
 int Tetris::find_full_row(){
 	int W = this->get_width();
-	int H = this->get_max_height();
+	//int H = this->get_max_height();
 	int col = 0, row = 0, fullRow = -1;
 	//look for the full rows
 	for (row = 0; row < this->minHeight(); row++){
@@ -132,7 +131,7 @@ int Tetris::find_full_row(){
 
 void Tetris::remove_one_row(int fullRow){
 	int W = this->get_width();
-	int H = this->get_max_height();
+	//int H = this->get_max_height();
 	int col = 0, row = 0;
 
 	//Update the data[][]
@@ -163,7 +162,7 @@ void Tetris::remove_one_row(int fullRow){
 		if (row == heights[col]){
 			//std::cout << col << "An empty column is detected" << std::endl;
 			heights[col] = 0;
-			delete data[col];
+			delete[] data[col];
 		}
 	}
 	return;
@@ -171,9 +170,7 @@ void Tetris::remove_one_row(int fullRow){
 
 
 int Tetris::remove_full_rows(){
-	int W = this->get_width();
-	int H = this->get_max_height();
-	int col = 0, row = 0, fullRow=-1;
+	int fullRow=-1;
 	int curScore = 0;
 
 	while ((fullRow = find_full_row()) != -1){
