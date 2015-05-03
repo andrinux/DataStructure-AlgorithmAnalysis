@@ -4,6 +4,7 @@
 #include <algorithm>
 
 #include "recipe.h"
+#include "kitchen.h"
 
 Recipe::Recipe(){
 
@@ -35,7 +36,7 @@ void Recipe::printCurRecipe(std::ostream &ostr) const {
 			<< itr->getName() <<std::endl;
 		else
 			ostr << "  " << itr->getUnits() << " units of " 
-			<< itr->getName() << "s" << std::endl;
+			<< itr->getName() << std::endl;
 	}
 }
 
@@ -43,4 +44,6 @@ bool IngreComp(Ingredient &ingre1, Ingredient &ingre2) {
 	return ((ingre1.getName() < ingre2.getName()) ? true : false);
 }
 
-
+void Recipe::checkAvaInKitchen(std::ostream &ostr, std::list<Ingredient> &list) const{
+	return ;
+}

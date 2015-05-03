@@ -5,6 +5,7 @@
 #include <string>
 #include <list>
 
+
 class Ingredient{
 public:
 	//friend Recipe;
@@ -15,7 +16,7 @@ public:
 	void setUnits(int number) { units = number; }
 	void addUnits(int number){ units += number; }
 	const std::string& getName() const { return name; } //Here &? another const
-
+	
 private:
 	std::string name;
 	int units;
@@ -27,11 +28,14 @@ class Recipe{
 public:
 	Recipe();
 	Recipe(std::string& name);
+	
 	void addIngredient(std::string& name, int units);
 	const std::string& getName() const { return RecipeName; }
 	void SortInOrder();
 	void printCurRecipe(std::ostream &ostr) const;//Must contain const.
 	const std::list<Ingredient>& getIngredient() const { return ingredients; }
+	void checkAvaInKitchen(std::ostream &ostr, std::list<Ingredient> &list) const;
+
 private:
 	std::string RecipeName;
 	std::list<Ingredient> ingredients;
