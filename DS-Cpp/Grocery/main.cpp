@@ -154,7 +154,29 @@ void do_printRecipe(std::ostream &ostr, std::list<Recipe>::const_iterator itrRec
 void makeRecipe(std::istream &istr, std::ostream &ostr, const std::list<Recipe> &recipes, Kitchen &kitchen) {
   std::string name;
   istr >> name;
+  //Make "name"
+  //Check if "name" exists in recipes
+  std::list<Recipe>::const_iterator itrRecipe;
+  for (itrRecipe = recipes.begin(); itrRecipe != recipes.end(); itrRecipe++){
+	  if (itrRecipe->getName() == name){
+		  //Found this recipe
+		  break;
+	  }
+  }
+  if (itrRecipe == recipes.end()){
+	  ostr << "Don't know how to make " << name << std::endl;
+	  return;
+  }
+  //If come to here, then indicates the recipe found
+  //Check if Kitchen contains enough materials one by one
+  bool Enough=kitchen.checkRecipe(itrRecipe, ostr);
+  if (Enough){
+	  ostr << "Made " << name << std::endl;
+	  kitchen.updateIngredient(itrRecipe);
+  }
+  
 
+  //
 
 
 

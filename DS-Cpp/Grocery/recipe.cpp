@@ -42,3 +42,5 @@ void Recipe::printCurRecipe(std::ostream &ostr) const {
 bool IngreComp(Ingredient &ingre1, Ingredient &ingre2) {
 	return ((ingre1.getName() < ingre2.getName()) ? true : false);
 }
+
+

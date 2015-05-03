@@ -31,7 +31,7 @@ public:
 	const std::string& getName() const { return RecipeName; }
 	void SortInOrder();
 	void printCurRecipe(std::ostream &ostr) const;//Must contain const.
-
+	const std::list<Ingredient>& getIngredient() const { return ingredients; }
 private:
 	std::string RecipeName;
 	std::list<Ingredient> ingredients;
