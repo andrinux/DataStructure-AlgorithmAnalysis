@@ -12,6 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <list>
+#include <string>
 
 #include "recipe.h"
 #include "kitchen.h"
