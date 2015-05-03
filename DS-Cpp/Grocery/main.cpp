@@ -6,13 +6,13 @@
 // code as you wish to complete the assignment.
 //
 
-
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <list>
 #include <string>
+#include <algorithm>
 
 #include "recipe.h"
 #include "kitchen.h"
@@ -24,6 +24,7 @@ void addIngredients(std::istream &istr, std::ostream &ostr, Kitchen &kitchen);
 void printRecipe(std::istream &istr, std::ostream &ostr, const std::list<Recipe> &recipes);
 void makeRecipe(std::istream &istr, std::ostream &ostr, const std::list<Recipe> &recipes, Kitchen &kitchen);
 void recipeSuggestions(std::ostream &ostr, const std::list<Recipe> &recipes, const Kitchen &kitchen);
+void do_printRecipe(std::ostream &ostr, std::list<Recipe>::const_iterator itrRecipe);
 
 // The main loop parses opens the files for I/O & parses the input
 int main(int argc, char* argv[]) {
@@ -125,20 +126,30 @@ void addIngredients(std::istream &istr, std::ostream &ostr, Kitchen &kitchen) {
   ostr << count << " ingredients added to kitchen" << std::endl;
 }
 
-
+//Print the list for a recipe
 void printRecipe(std::istream &istr, std::ostream &ostr, const std::list<Recipe> &recipes) {
   std::string name;
   istr >> name;
-
-
-
-
-
-
-
-
+  std::list<Recipe>::const_iterator itrRecipe; //Must be const_iterator??? WHY?
+  for (itrRecipe = recipes.begin(); itrRecipe != recipes.end(); itrRecipe++){
+	  if (itrRecipe->getName() == name){
+		  //Found and Print
+		  ostr << "To make " << name << ", mix together:" << std::endl;
+		  do_printRecipe(ostr, itrRecipe);
+		  return;
+	  }
+	  if (itrRecipe == recipes.end()){
+		  ostr << "No recipe for " << name << std::endl;
+	  }
+  }
+  
 }
 
+//Do the print for a FOUND Recipe using iterator
+void do_printRecipe(std::ostream &ostr, std::list<Recipe>::const_iterator itrRecipe){
+	std::list<Ingredient>::const_iterator itrIngre;
+	(*itrRecipe).printCurRecipe(ostr);
+}
 
 void makeRecipe(std::istream &istr, std::ostream &ostr, const std::list<Recipe> &recipes, Kitchen &kitchen) {
   std::string name;

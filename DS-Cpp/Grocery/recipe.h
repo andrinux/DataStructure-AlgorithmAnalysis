@@ -14,6 +14,7 @@ public:
 	int getUnits() const { return units; }
 	void setUnits(int number) { units = number; }
 	void addUnits(int number){ units += number; }
+	const std::string& getName() const { return name; } //Here &? another const
 
 private:
 	std::string name;
@@ -27,10 +28,15 @@ public:
 	Recipe();
 	Recipe(std::string& name);
 	void addIngredient(std::string& name, int units);
+	const std::string& getName() const { return RecipeName; }
+	void SortInOrder();
+	void printCurRecipe(std::ostream &ostr) const;//Must contain const.
 
 private:
 	std::string RecipeName;
 	std::list<Ingredient> ingredients;
 };
+
+bool IngreComp(Ingredient &ingre1, Ingredient &ingre2);
 
 #endif

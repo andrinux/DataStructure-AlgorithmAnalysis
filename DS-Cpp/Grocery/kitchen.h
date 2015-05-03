@@ -16,4 +16,5 @@ public:
 private:
 	std::list<Ingredient> ingredients;
 };
+
 #endif
