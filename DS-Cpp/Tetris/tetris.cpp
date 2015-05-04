@@ -9,11 +9,27 @@ int Tetris::totalScore = 0;
 int Tetris::removedCnt = 0;
 
 Tetris::~Tetris(){
-
+	if (heights!=NULL){
+		delete[] heights;
+		heights = NULL;
+	}
+	for (int i = 0; i != width; i++){
+		if (data[i] != NULL){
+			delete[] data[i];
+			data[i] = NULL;
+		}
+			
+	}
+	if (data!=NULL){
+		delete[] data;
+		data = NULL;
+	}
+	
 }
 
 Tetris::Tetris(){
 	//empty
+
 }
 
 
@@ -84,17 +100,25 @@ bool Tetris::add_piece(char type, int angle, int pos) {
 			newAddr[j] = P.content[index];
 		}
 		//Copy to data[][]
-		delete[] data[pos + i];
+		if (data[pos + i]!=NULL){
+			delete[] data[pos + i];
+			data[pos + i] = NULL;
+		}
 		data[pos + i] = new char[totalHeight];
 		for (k = 0; k < totalHeight; k++)
 			data[pos + i][k] = *(newAddr + k);
-		delete[] newAddr;
+
+		if (newAddr != NULL){
+			delete[] newAddr;
+			newAddr = NULL;
+		}
 		//update current height
 		heights[col] = locMaxHgt + P.getHeight(i);
 	}
-	
+	P.destroy();
 	return true;
 }
+
 
 int Tetris::minHeight(){
 	int min=this->get_max_height();
@@ -144,12 +168,18 @@ void Tetris::remove_one_row(int fullRow){
 				i++;
 			}
 		}
-		delete[] data[col];
+		if (data[col] !=NULL){
+			delete[] data[col];
+			data[col] = NULL;
+		}
+		
 		data[col] = new char[heights[col] - 1];
 		for (i = 0; i < heights[col] - 1; i++)
 			data[col][i] = newAddr[i];
-		delete[] newAddr;
-
+		if (newAddr!=NULL){
+			delete[] newAddr;
+			newAddr = NULL;
+		}
 		//update heights
 		heights[col] = heights[col] - 1;
 	}
@@ -159,10 +189,13 @@ void Tetris::remove_one_row(int fullRow){
 			if (data[col][row] != ' ')
 				break;
 		}
-		if (row == heights[col]){
+		if (row == heights[col] ){
 			//std::cout << col << "An empty column is detected" << std::endl;
 			heights[col] = 0;
-			delete[] data[col];
+			//if (data[col] !=NULL){
+				delete[] data[col];
+				data[col] = NULL;
+			//}
 		}
 	}
 	return;
@@ -185,14 +218,19 @@ int Tetris::remove_full_rows(){
 
 void Tetris::destroy(){
 	int col = 0;
-	for (col = 0; col < this->get_width() && heights[col] != 0; col++){
+	//for (col = 0; col < this->get_width() && heights[col] != 0; col++){
+	for (col = 0; col < this->get_width(); col++){
 		delete[] data[col];
+		data[col] = NULL;
 	}
 	delete[] data;
+	data = NULL;
 	delete[] heights;
+	heights = NULL;
 	totalScore = 0;
 	Piece::pieceCnt = 0;
 	removedCnt = 0;
+	width = 0;
 }
 
 //Is there any cleaner ways to do so?
@@ -204,20 +242,24 @@ void Tetris::add_left_column(){
 	for (int i = 0; i < curW; i++)
 		new_heights[i + 1] = heights[i];
 	delete[] heights;
+	heights = NULL;
 	heights = new int[curW + 1];
 	for (int i = 0; i < curW + 1; i++)
 		heights[i] = new_heights[i];
 	delete[] new_heights;
+	new_heights = NULL;
 	//Updates data
 	char **new_data = new char*[curW + 1];
 	new_data[0] = NULL;
 	for (int i = 0; i < curW; i++)
 		new_data[i + 1] = data[i];
 	delete[] data;
+	data = NULL;
 	data = new char*[curW + 1];
 	for (int i = 0; i < curW + 1; i++)
 		data[i] = new_data[i];
 	delete[] new_data;
+	new_data = NULL;
 
 	//Update Width
 	this->add_width(1);
@@ -232,20 +274,24 @@ void Tetris::add_right_column(){
 	for (int i = 0; i < curW; i++)
 		new_heights[i] = heights[i];
 	delete[] heights;
+	heights = NULL;
 	heights = new int[curW + 1];
 	for (int i = 0; i < curW + 1; i++)
 		heights[i] = new_heights[i];
 	delete[] new_heights;
+	new_heights = NULL;
 	//Update Data
 	char **new_data = new char*[curW + 1];
 	new_data[curW] = NULL;
 	for (int i = 0; i < curW; i++)
 		new_data[i] = data[i];
 	delete[] data;
+	data = NULL;
 	data = new char*[curW + 1];
 	for (int i = 0; i < curW + 1; i++)
 		data[i] = new_data[i];
 	delete[] new_data;
+	new_data = NULL;
 
 	//Update Width
 	this->add_width(1);
@@ -264,19 +310,23 @@ void Tetris::remove_left_column(){
 	for (int i = 0; i < curW - 1; i++)
 		new_heights[i] = heights[i + 1];
 	delete[] heights;
+	heights = NULL;
 	heights = new int[curW - 1];
 	for (int i = 0; i < curW - 1; i++)
 		heights[i] = new_heights[i];
 	delete[] new_heights;
+	new_heights = NULL;
 	//Update Data
 	char **new_data = new char*[curW - 1];
 	for (int i = 0; i < curW - 1; i++)
 		new_data[i] = data[i + 1];
 	delete[] data;
+	data = NULL;
 	data = new char*[curW - 1];
 	for (int i = 0; i < curW - 1; i++)
 		data[i] = new_data[i];
 	delete[] new_data;
+	new_data = NULL;
 	//Update Width
 	this->add_width(-1);
 	return;
@@ -284,36 +334,27 @@ void Tetris::remove_left_column(){
 
 void Tetris::remove_right_column(){
 	int curW = this->get_width();
-	//Count the non-empty squares in the right column
-	//for (int i = 0; i < heights[0]; i++){
-	//	if (data[curW - 1][i] == 32)
-	//		continue;
-	//	else{
-	//		removedCnt++; //?????
-	//		std::cout << data[curW - 1][i] << '-';
-
-	//	}
-	//		
-	//}
-
-	//Update heights
 	int * new_heights = new int[curW - 1];
 	for (int i = 0; i < curW - 1; i++)
 		new_heights[i] = heights[i];
 	delete[] heights;
+	heights = NULL;
 	heights = new int[curW - 1];
 	for (int i = 0; i < curW - 1; i++)
 		heights[i] = new_heights[i];
 	delete[] new_heights;
+	new_heights = NULL;
 	//Update Data
 	char **new_data = new char*[curW - 1];
 	for (int i = 0; i < curW - 1; i++)
 		new_data[i] = data[i];
 	delete[] data;
+	data = NULL;
 	data = new char*[curW - 1];
 	for (int i = 0; i < curW - 1; i++)
 		data[i] = new_data[i];
 	delete[] new_data;
+	new_data = NULL;
 	//Update Width
 	this->add_width(-1);
 	return;
@@ -327,6 +368,18 @@ Piece::Piece()
 {
 	//empty constructor
 	return;
+}
+
+Piece::~Piece(){
+	if (content != NULL){
+		delete[] content;
+		content = NULL;
+	}
+	if (Hs != NULL){
+		delete[] Hs;
+		Hs = NULL;
+	}
+	W = 0; H = 0;
 }
 
 Piece::Piece(char type, int angle){
@@ -488,4 +541,16 @@ Piece::Piece(char type, int angle){
 
 int Piece::getHeight(int w) const{
 	return this->Hs[w];
+}
+
+void Piece::destroy(){
+	//Delete content
+	if (content!=NULL){
+		delete[] content;
+		content = NULL;
+	}
+	if (Hs!=NULL){
+		delete[] Hs;
+		Hs = NULL;
+	}
 }

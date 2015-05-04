@@ -51,20 +51,22 @@ private:
 class Piece{
 public:
 	char *content;
+	int *Hs;//This is the array contains the final added heights
 	Piece();
 	Piece(char type, int angle);
-	static int  pieceCnt;
+	~Piece();
+	static int pieceCnt;
 
 	int getW() const{ return W; }
 	int getH() const{ return H; }
 	char getType() const { return type; }
 	void fillContent(char *, char, int);
 	int getHeight(int w) const;
+	void destroy();
 	
 private:
 	int W;
 	int H; //This is the max H
-	int *Hs;//This is the array contains the final added heights
 	char type;
 	
 
