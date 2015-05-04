@@ -219,6 +219,7 @@ int Tetris::remove_full_rows(){
 void Tetris::destroy(){
 	int col = 0;
 	//for (col = 0; col < this->get_width() && heights[col] != 0; col++){
+	int w = this->get_width();
 	for (col = 0; col < this->get_width(); col++){
 		delete[] data[col];
 		data[col] = NULL;
