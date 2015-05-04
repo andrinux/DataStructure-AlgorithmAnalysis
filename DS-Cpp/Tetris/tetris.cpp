@@ -100,7 +100,7 @@ bool Tetris::add_piece(char type, int angle, int pos) {
 			newAddr[j] = P.content[index];
 		}
 		//Copy to data[][]
-		if (data[pos + i]!=NULL){
+		if (data[pos + i] != NULL){
 			delete[] data[pos + i];
 			data[pos + i] = NULL;
 		}

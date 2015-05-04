@@ -194,7 +194,7 @@ void test_add_remove_columns() {
   std::cout << "add a few more pieces to the board:" << std::endl;
   tetris.add_piece('I',90,0);
   //debug
-  //tetris.print();
+  tetris.print();
   tetris.add_piece('O',0,5);
   tetris.print();
   assert (tetris.count_squares() == 16);
