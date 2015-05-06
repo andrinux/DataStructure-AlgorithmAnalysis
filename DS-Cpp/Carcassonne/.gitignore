@@ -1,0 +1,6 @@
+keyfile*
+*.pdf
+*.zip
+*.txt
+
+provided_files/*
