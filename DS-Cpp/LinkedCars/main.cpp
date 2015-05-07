@@ -36,7 +36,7 @@ int main() {
   //ShipFreightTests();
   //SeparateTests();
 
-  StudentTests();
+  //StudentTests();
 
   return 0;
 }
