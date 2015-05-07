@@ -19,46 +19,47 @@ class TrainCar {
 public:
   // static helper functions for construction
   // (the constructor is private)
-  static TrainCar* MakeEngine()               { return new TrainCar('e',150);    }
-  static TrainCar* MakeFreightCar(int weight) { return new TrainCar('f',weight); }
-  static TrainCar* MakePassengerCar()         { return new TrainCar('p',50);     }
-  static TrainCar* MakeDiningCar()            { return new TrainCar('d',50);     }
-  static TrainCar* MakeSleepingCar()          { return new TrainCar('s',50);     }
+	static TrainCar* MakeEngine()               { return new TrainCar('e',150);    }
+	static TrainCar* MakeFreightCar(int weight) { return new TrainCar('f',weight); }
+	static TrainCar* MakePassengerCar()         { return new TrainCar('p',50);     }
+	static TrainCar* MakeDiningCar()            { return new TrainCar('d',50);     }
+	static TrainCar* MakeSleepingCar()          { return new TrainCar('s',50);     }
 
-  // ACCESSORS
-  int getID() const           { return id; }
-  int getWeight() const       { return weight; }
+	// ACCESSORS
+	int getID() const           { return id; }
+	int getWeight() const       { return weight; }
   
-  bool isEngine() const       { return (type == 'e'); }
-  bool isFreightCar() const   { return (type == 'f'); }
-  bool isPassengerCar() const { return (type == 'p'); }
-  bool isDiningCar() const    { return (type == 'd'); }
-  bool isSleepingCar() const  { return (type == 's'); }
+	bool isEngine() const       { return (type == 'e'); }
+	bool isFreightCar() const   { return (type == 'f'); }
+	bool isPassengerCar() const { return (type == 'p'); }
+	bool isDiningCar() const    { return (type == 'd'); }
+	bool isSleepingCar() const  { return (type == 's'); }
 
 private:
   // private constructor
-  TrainCar(char t, int w) : type(t), weight(w), prev(NULL), next(NULL) {
-    // each train car has a unique identifer, 
-    // numbered sequentially, starting at 100
-    static int next_id = 100;
-    id = next_id;
-    next_id++;
+	TrainCar(char t, int w) : type(t), weight(w), prev(NULL), next(NULL) {
+		// each train car has a unique identifer, 
+		// numbered sequentially, starting at 100
+		//Note this usage of static variable, defined and initialize inside class
+		static int next_id = 100; 
+		id = next_id;
+		next_id++;
   }
 
-  // REPRESENTATION
-  // these three member variables cannot be edited after object construction
-  int id;
-  char type;
-  int weight;
+	// REPRESENTATION
+	// these three member variables cannot be edited after object construction
+	int id;
+	char type;
+	int weight;
 public:
-  // these two member variables can be publicly read & edited
-  TrainCar* prev;
-  TrainCar* next;
+	// these two member variables can be publicly read & edited
+	TrainCar* prev;
+	TrainCar* next;
 };
 
 
 // =======================================================================
-//
+//function
 // IMPORTANT NOTE: Do not modify this file
 //
 // =======================================================================
