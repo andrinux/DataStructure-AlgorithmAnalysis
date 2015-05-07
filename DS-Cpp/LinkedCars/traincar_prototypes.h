@@ -16,3 +16,9 @@
 // Implement these functions in "traincar.cpp"
 //
 
+//Helper function to add one new car to the list
+#include"traincar.h"
+
+void PushBack(TrainCar* simple, static TrainCar* newCar);
+
+void DeleteAllCars(TrainCar* simple);
