@@ -7,6 +7,7 @@
 #include <vector>
 //Impelement the pushback function, "simple" is the linked list head.
 //Note: No need to add "static" here 
+//Pay attention to the passing of reference, See StackOverflow
 void PushBack(TrainCar*& head, TrainCar* newCar){
 	if (head == NULL){
 		//still a empty list
