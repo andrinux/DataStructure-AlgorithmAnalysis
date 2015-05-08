@@ -19,6 +19,6 @@
 //Helper function to add one new car to the list
 #include"traincar.h"
 
-void PushBack(TrainCar* simple, TrainCar* newCar);
+void PushBack(TrainCar*& simple, TrainCar* newCar);
 
 void DeleteAllCars(TrainCar* simple);

@@ -7,14 +7,14 @@
 
 //Impelement the pushback function, "simple" is the linked list head.
 //Note: No need to add "static" here 
-void PushBack(TrainCar* simple, TrainCar* newCar){
-	if (simple == NULL){
+void PushBack(TrainCar*& head, TrainCar* newCar){
+	if (head == NULL){
 		//still a empty list
-		simple = newCar;
+		head = newCar;
 	}
 	else{
 		//need to loop to the end of list because there is no "tail" in the class
-		TrainCar* itr = simple;
+		TrainCar* itr = head;
 		while (itr->next != NULL){
 			itr = itr->next;
 		}
@@ -24,7 +24,13 @@ void PushBack(TrainCar* simple, TrainCar* newCar){
 	return;
 }
 
+//Destroy thr list from beginning
 void DeleteAllCars(TrainCar* simple){
-	
+	TrainCar *tmp;
+	while (simple != NULL){
+		tmp = simple->next;
+		delete simple;
+		simple = tmp;
+	}
 	return;
 }

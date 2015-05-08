@@ -16,7 +16,7 @@
 
 // pseudo-random number generator
 #include "mtrand.h"
-
+#include "traincar_prototypes.h"
 #include "traincar.h"
 
 
@@ -58,6 +58,7 @@ void SanityCheck(TrainCar* train) {
     assert (tmp->next->prev == tmp);
     tmp = tmp->next;
   }
+  std::cout << "CHeck pass" << std::endl;
 }
 
 
@@ -189,7 +190,7 @@ void SimpleTrainTest() {
 
   // create a train with 6 dynamically-allocated cars in a doubly-linked list structure
   TrainCar* simple = NULL;
-  PushBack(simple, TrainCar::MakeEngine()); 
+  PushBack(simple, TrainCar::MakeEngine());
   PushBack(simple, TrainCar::MakePassengerCar());
   PushBack(simple, TrainCar::MakePassengerCar());
   PushBack(simple, TrainCar::MakeDiningCar());
