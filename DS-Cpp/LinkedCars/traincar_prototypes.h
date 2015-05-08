@@ -17,8 +17,17 @@
 //
 
 //Helper function to add one new car to the list
-#include"traincar.h"
+#include "traincar.h"
+#include <vector>
 
 void PushBack(TrainCar*& simple, TrainCar* newCar);
 
+//Destroy thr list from beginning to avoid memory leak
 void DeleteAllCars(TrainCar* simple);
+//Optimization problem
+std::vector<TrainCar*>  ShipFreight(TrainCar* all_engines, TrainCar* all_freight, int min_speed, int max_cars_per_train);
+
+void TotalWeightAndCountCars(TrainCar* train, int total_weight, int num_engines, int num_freight_cars, int num_passenger_cars, int num_dining_cars, int num_sleeping_cars);
+
+float CalculateSpeed(TrainCar* train);
+

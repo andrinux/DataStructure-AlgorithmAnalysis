@@ -228,7 +228,7 @@ void SimpleTrainTest() {
 // the freight car weights
 void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int min_speed, int max_cars_per_train) {
 
-  /*
+  
 
   // UNCOMMENT THIS FUNCTION WHEN YOU'RE READY TO TEST SHIP FREIGHT
 
@@ -286,7 +286,7 @@ void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int 
   for (unsigned int i = 0; i < trains.size(); i++) {
     DeleteAllCars(trains[i]);
   }
-  */
+  
 }
 
 

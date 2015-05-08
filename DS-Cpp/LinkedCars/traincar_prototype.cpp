@@ -4,7 +4,7 @@
 //This file is used to implement some functions declared in traincar_prototytpe.h
 
 #include "traincar_prototypes.h"
-
+#include <vector>
 //Impelement the pushback function, "simple" is the linked list head.
 //Note: No need to add "static" here 
 void PushBack(TrainCar*& head, TrainCar* newCar){
@@ -33,4 +33,20 @@ void DeleteAllCars(TrainCar* simple){
 		simple = tmp;
 	}
 	return;
+}
+
+
+//Optimization problem
+std::vector<TrainCar*>  ShipFreight(TrainCar* all_engines, TrainCar* all_freight, int min_speed, int max_cars_per_train){
+	std::vector<TrainCar*> trains;
+	return trains;
+}
+
+void TotalWeightAndCountCars(TrainCar* train, int total_weight, int num_engines,
+	int num_freight_cars, int num_passenger_cars, int num_dining_cars, int num_sleeping_cars){
+	return;
+}
+
+float CalculateSpeed(TrainCar* train){
+	return 0.0;
 }
