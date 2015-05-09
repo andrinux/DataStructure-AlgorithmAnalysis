@@ -28,7 +28,10 @@ void DeleteAllCars(TrainCar* simple);
 std::vector<TrainCar*>  ShipFreight(TrainCar* all_engines, TrainCar* all_freight, int min_speed, int max_cars_per_train);
 //Sort the freight list from heavy to light
 void sortFreights(TrainCar*& all_freight);
+//Swap to adjacent Node, Note that std::sort doesn't work well here
 void swap(TrainCar*& a);
+int engineLeft(TrainCar * all_engines);
+int freightLeft(TrainCar * all_freight);
 void TotalWeightAndCountCars(TrainCar* train, int total_weight, int num_engines, int num_freight_cars, int num_passenger_cars, int num_dining_cars, int num_sleeping_cars);
 
 float CalculateSpeed(TrainCar* train);

@@ -226,6 +226,7 @@ void SimpleTrainTest() {
 
 // This function takes a random number generator to create variety in
 // the freight car weights
+//ShipFreightHelper(mtrand_fixed_seed,10,25,60,12);
 void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int min_speed, int max_cars_per_train) {
 
   

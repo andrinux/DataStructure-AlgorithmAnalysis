@@ -6,6 +6,7 @@
 #include "traincar_prototypes.h"
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 //Impelement the pushback function, "simple" is the linked list head.
 //Note: No need to add "static" here 
@@ -44,10 +45,33 @@ std::vector<TrainCar*> ShipFreight(TrainCar* all_engines, TrainCar* all_freight,
 	//all_engines in the engines-list avaiable  all_freights are all the freights cars  
 	std::vector<TrainCar*> trains; //store the final result
 	sortFreights(all_freight);
+	//Use Greedy Algorithm to solve
+	while (engineLeft(all_engines) != 0 && freightLeft(all_freight) != 0){
+		TrainCar* curTrain;
 
+	}
 	return trains;
 }
 
+int engineLeft(TrainCar * all_engines){
+	TrainCar * itr = all_engines;
+	int num = 0;
+	while (itr->next != NULL){
+		num++;
+		itr = itr->next;
+	}
+	return num;
+}
+
+int freightLeft(TrainCar * all_freight){
+	TrainCar * itr = all_freight;
+	int num = 0;
+	while (itr->next != NULL){
+		num++;
+		itr = itr->next;
+	}
+	return num;
+}
 //Sort freights
 void sortFreights_v(TrainCar*& all_freight){
 	//Just Use  sorting first
