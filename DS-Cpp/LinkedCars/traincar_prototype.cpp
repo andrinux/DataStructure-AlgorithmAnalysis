@@ -49,16 +49,8 @@ std::vector<TrainCar*> ShipFreight(TrainCar* all_engines, TrainCar* all_freight,
 }
 
 //Sort freights
-void sortFreights(TrainCar*& all_freight){
+void sortFreights_v(TrainCar*& all_freight){
 	//Just Use  sorting first
-	//debug info
-	TrainCar *itr = all_freight;
-	while (itr != NULL){
-		std::cout << itr->getWeight()<<", ";
-		itr = itr->next;
-	}
-	std::cout << std::endl;
-	//Start 
 	int count = 100;
 	TrainCar* tmp = all_freight;
 	//bool not_last_pair = 0;
@@ -69,13 +61,45 @@ void sortFreights(TrainCar*& all_freight){
 				swap(tmp);
 				count++;
 			}
-			else tmp = tmp->next;
+			else 
+				tmp = tmp->next;
 		}
 		while (tmp->prev != NULL) {
 			tmp = tmp->prev;
 		}
 	}
 	all_freight = tmp;
+	return;
+}
+
+
+//Try to use while to do sorting for Linked List
+void sortFreights(TrainCar*& all_freight){
+	//Just Use  sorting first
+	//debug info
+	TrainCar *itr = all_freight;
+	while (itr != NULL){
+		std::cout << itr->getWeight() << ", ";
+		itr = itr->next;
+	}
+	std::cout << std::endl;
+	//Start 
+	int swapped = 1;
+	while (swapped){
+		swapped = 0;
+		TrainCar *i = all_freight;
+		while (i->next != NULL){
+			if (i->getWeight() < i->next->getWeight()){
+				swap(i);
+				swapped = 1;
+			}
+			else
+				i = i->next;
+		}
+		while (i->prev != NULL)
+			i = i->prev;
+		all_freight = i;
+	}
 	//end
 	itr = all_freight;
 	while (itr != NULL){
@@ -86,7 +110,6 @@ void sortFreights(TrainCar*& all_freight){
 	//After sorting, need to find out the new head
 	return;
 }
-
 //Swap Node a and the node following a
 //Maybe too many steps, but very easy to understand
 void swap(TrainCar*& a){

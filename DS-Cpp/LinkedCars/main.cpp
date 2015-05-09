@@ -32,8 +32,8 @@ void StudentTests();
 
 int main() {
 
-  SimpleTrainTest();
-  //ShipFreightTests();
+  //SimpleTrainTest();
+  ShipFreightTests();
   //SeparateTests();
 
   //StudentTests();
