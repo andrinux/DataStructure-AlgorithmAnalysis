@@ -40,10 +40,11 @@ void DeleteAllCars(TrainCar* simple){
 
 
 //Optimization problem
-std::vector<TrainCar*>  ShipFreight(TrainCar* all_engines, TrainCar* all_freight, int min_speed, int max_cars_per_train){
+std::vector<TrainCar*> ShipFreight(TrainCar* all_engines, TrainCar* all_freight, int min_speed, int max_cars_per_train){
 	//all_engines in the engines-list avaiable  all_freights are all the freights cars  
 	std::vector<TrainCar*> trains; //store the final result
 	sortFreights(all_freight);
+
 	return trains;
 }
 
@@ -58,19 +59,24 @@ void sortFreights(TrainCar*& all_freight){
 	}
 	std::cout << std::endl;
 	//Start 
-	TrainCar *i, *j;
-	for (i = all_freight; i != NULL; i = i->next){
-		for (j = all_freight; j != NULL; j = j->next){
-			if (j->getWeight() < j->getWeight()){
-				swap(j);
+	int count = 100;
+	TrainCar* tmp = all_freight;
+	//bool not_last_pair = 0;
+	while (count != 0) {
+		count = 0;
+		while (tmp->next != NULL) {
+			if (tmp->getWeight() < tmp->next->getWeight()) {
+				swap(tmp);
+				count++;
 			}
+			else tmp = tmp->next;
 		}
-		while (j->prev != NULL)
-			j = j->prev;
-		all_freight = j;
+		while (tmp->prev != NULL) {
+			tmp = tmp->prev;
+		}
 	}
-
-	//swap(all_freight);
+	all_freight = tmp;
+	//end
 	itr = all_freight;
 	while (itr != NULL){
 		std::cout << itr->getWeight() << ", ";
@@ -97,6 +103,13 @@ void swap(TrainCar*& a){
 		a->prev = b;
 		b->prev = N1;
 	}
+	else if(N2==NULL){
+		N1->next = b;
+		b->next = a;
+		a->prev = b;
+		b->prev = N1;
+		a->next = NULL;
+	}
 	else{
 		//Normal case
 		N1->next = b;//onlu difference
@@ -105,7 +118,7 @@ void swap(TrainCar*& a){
 		N2->prev = a;
 		a->prev = b;
 		b->prev = N1;
-	}	
+	}
 	return;
 }
 
