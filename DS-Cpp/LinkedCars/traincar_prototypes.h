@@ -26,7 +26,9 @@ void PushBack(TrainCar*& simple, TrainCar* newCar);
 void DeleteAllCars(TrainCar* simple);
 //Optimization problem
 std::vector<TrainCar*>  ShipFreight(TrainCar* all_engines, TrainCar* all_freight, int min_speed, int max_cars_per_train);
-
+//Sort the freight list from heavy to light
+void sortFreights(TrainCar*& all_freight);
+void swap(TrainCar*& a);
 void TotalWeightAndCountCars(TrainCar* train, int total_weight, int num_engines, int num_freight_cars, int num_passenger_cars, int num_dining_cars, int num_sleeping_cars);
 
 float CalculateSpeed(TrainCar* train);
