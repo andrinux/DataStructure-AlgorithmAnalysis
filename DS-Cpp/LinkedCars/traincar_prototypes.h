@@ -32,6 +32,9 @@ void sortFreights(TrainCar*& all_freight);
 void swap(TrainCar*& a);
 int engineLeft(TrainCar * all_engines);
 int freightLeft(TrainCar * all_freight);
+TrainCar* pop_front(TrainCar*& all_engines);
+bool checkOK(TrainCar* curTrain, TrainCar* curFreight, int min_speed, int max_cars_per_train);
+int getCarNum(TrainCar* head);
 void TotalWeightAndCountCars(TrainCar* train, int total_weight, int num_engines, int num_freight_cars, int num_passenger_cars, int num_dining_cars, int num_sleeping_cars);
 
 float CalculateSpeed(TrainCar* train);

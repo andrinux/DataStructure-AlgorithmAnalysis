@@ -46,13 +46,81 @@ std::vector<TrainCar*> ShipFreight(TrainCar* all_engines, TrainCar* all_freight,
 	std::vector<TrainCar*> trains; //store the final result
 	sortFreights(all_freight);
 	//Use Greedy Algorithm to solve
+	//Add each freight one by one, check its feasibility
+	TrainCar* curTrain;
+	std::vector<TrainCar*>::iterator itr = trains.begin();
+	TrainCar * curFreight = pop_front(all_freight);
 	while (engineLeft(all_engines) != 0 && freightLeft(all_freight) != 0){
-		TrainCar* curTrain;
+		if (trains.empty()){
+			//At begining, trains is empty, so need to add One Train into the vector
+			curTrain = pop_front(all_engines);
+			trains.push_back(curTrain);
+			continue;
+		}
+		for (; itr != trains.end(); itr++){
+			curTrain = *itr;
+			if (checkOK(curTrain, curFreight, min_speed, max_cars_per_train)){
+				//Add current Freight into the current Train
+				PushBack(curTrain, curFreight);
+				curFreight = curFreight->next;
+				break;
+			}
+			else{
+				//All the existing train cannot hold the new Car, So add a new train
+				//Default is that all the cars can be held in a new Engine
+				
+			}
 
+		}
+
+		
 	}
 	return trains;
 }
 
+bool checkOK(TrainCar* curTrain, TrainCar* curFreight, int min_speed, int max_cars_per_train){
+	int curNum = getCarNum(curTrain);
+	if (curNum == max_cars_per_train)
+		return false;
+	float Speed=getSpeed(curTrain, curFreight,min_speed);
+	if (Speed < float(min_speed))
+		return false;
+	else
+		return true;
+}
+//get the speed with a new car
+float getSpeed(TrainCar* curTrain, TrainCar* curFreight, int min_speed){
+	int curWeight = getTotalWeight(curTrain);
+	int total = curWeight + curFreight->getWeight();
+	float speed = 3000 * 550 * 3600 / (2000 * 0.02 * 5280 * total);
+	return speed;
+}
+
+//Get the total Weight without a new Car
+int getTotalWeight(TrainCar* curTrain){
+	int num = 0;
+	TrainCar* itr;
+	while (itr!=NULL){
+		num += itr->getWeight();
+	}
+	return num;
+}
+TrainCar* pop_front(TrainCar*& all_engines){
+	TrainCar *tmp;
+	tmp = all_engines;
+	all_engines = all_engines->next;
+	return tmp;
+}
+
+int getCarNum(TrainCar* head){
+	TrainCar * itr = head;
+	int num = 0;
+	while (itr->next != NULL){
+		num++;
+		itr = itr->next;
+	}
+	return num;
+}
 int engineLeft(TrainCar * all_engines){
 	TrainCar * itr = all_engines;
 	int num = 0;
