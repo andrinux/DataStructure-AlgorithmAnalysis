@@ -79,6 +79,7 @@ std::vector<TrainCar*> ShipFreight(TrainCar*& all_engines, TrainCar*& all_freigh
 			//curFreight = pop_front(all_freight);
 		}
 	}
+
 	MergeTrains(trains, max_cars_per_train);
 	return trains;
 }
@@ -176,6 +177,8 @@ TrainCar* pop_front(TrainCar*& all_engines){
 	TrainCar *tmp;
 	tmp = all_engines;
 	all_engines = all_engines->next;
+	if (all_engines!=NULL)
+		all_engines->prev = NULL;
 	return tmp;
 }
 
@@ -306,9 +309,33 @@ void swap(TrainCar*& a){
 
 void TotalWeightAndCountCars(TrainCar* train, int total_weight, int num_engines,
 	int num_freight_cars, int num_passenger_cars, int num_dining_cars, int num_sleeping_cars){
+	TrainCar *itr = train;
+	while (itr != NULL){
+		total_weight += itr->getWeight();
+		if (itr->isDiningCar())
+			num_dining_cars++;
+		if (itr->isEngine())
+			num_engines++;
+		if (itr->isFreightCar())
+			num_freight_cars++;
+		if (itr->isPassengerCar())
+			num_passenger_cars++;
+		if (itr->isSleepingCar())
+			num_sleeping_cars++;
+		itr = itr->next;
+	}
 	return;
 }
 
 float CalculateSpeed(TrainCar* train){
-	return 0.0;
+	TrainCar *itr=train;
+	int num_engines = 0, total=0;
+	while (itr != NULL){
+		total += itr->getWeight();
+		if (itr->isEngine())
+			num_engines++;
+		itr = itr->next;
+	}
+	float speed = num_engines*30 * 550 * 36 / (20 * 0.02 * 52.80 * total);
+	return speed;
 }

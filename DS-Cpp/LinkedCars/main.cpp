@@ -32,7 +32,7 @@ void StudentTests();
 
 int main() {
 
-  //SimpleTrainTest();
+  SimpleTrainTest();
   ShipFreightTests();
   //SeparateTests();
 
@@ -245,8 +245,6 @@ void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int 
     int weight = 30 + (mtrand()%15)*5;
     PushBack(all_freight, TrainCar::MakeFreightCar(weight));
   }
-  //debug
-  std::cout << "Begin Optimize" << std::endl;
   // rearrange the two structures into a collection of trains
   // with the specified minimum speed & specified maximum length 12 cars
   std::vector<TrainCar*> trains = ShipFreight(all_engines, all_freight, min_speed, max_cars_per_train);
@@ -262,7 +260,7 @@ void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int 
   // when finished, we have either used up all of the engines, or
   // shipped all the freight (or both!)
   assert (all_engines == NULL || all_freight == NULL);
-  /*
+  
   // print the remaining engines or freight cars
   if (all_engines != NULL) {
     std::cout << "Remaining Unused Engines:" << std::endl;
@@ -274,22 +272,23 @@ void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int 
     SanityCheck(all_freight);
     PrintTrain(all_freight);
   }
-
+  
   // print the trains
   std::cout << "Prepared Trains for Shipment:" << std::endl;  
   for (unsigned int i = 0; i < trains.size(); i++) {
     SanityCheck(trains[i]);
     PrintTrain(trains[i]);
-
+	
     // check that the speed and length rules are followed
     int total_weight,num_engines,num_freight_cars,num_passenger_cars,num_dining_cars,num_sleeping_cars;
+	total_weight = 0; num_engines = 0; num_freight_cars = 0; num_passenger_cars = 0; num_dining_cars = 0; num_sleeping_cars = 0;
     TotalWeightAndCountCars(trains[i],total_weight,num_engines,num_freight_cars,num_passenger_cars,num_dining_cars,num_sleeping_cars);
     int total_cars = num_engines+num_freight_cars+num_passenger_cars+num_dining_cars+num_sleeping_cars;
     float speed = CalculateSpeed(trains[i]);
     assert (total_cars <= max_cars_per_train);
     assert (speed >= min_speed);
   }
-
+  
   // fully delete all TrainCar nodes to prevent memory leaks
   DeleteAllCars(all_engines);
   DeleteAllCars(all_freight);
@@ -297,7 +296,7 @@ void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int 
     DeleteAllCars(trains[i]);
   }
   
-  */
+  
 }
 
 
