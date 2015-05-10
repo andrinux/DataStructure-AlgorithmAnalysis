@@ -41,7 +41,7 @@ void DeleteAllCars(TrainCar* simple){
 
 
 //Optimization problem
-std::vector<TrainCar*> ShipFreight(TrainCar* all_engines, TrainCar* all_freight, int min_speed, int max_cars_per_train){
+std::vector<TrainCar*> ShipFreight(TrainCar*& all_engines, TrainCar*& all_freight, int min_speed, int max_cars_per_train){
 	//all_engines in the engines-list avaiable  all_freights are all the freights cars  
 	std::vector<TrainCar*> trains; //store the final result
 	sortFreights(all_freight);
@@ -49,13 +49,14 @@ std::vector<TrainCar*> ShipFreight(TrainCar* all_engines, TrainCar* all_freight,
 	//Add each freight one by one, check its feasibility
 	TrainCar* curTrain=NULL;
 	std::vector<TrainCar*>::iterator itr = trains.begin();
-	std::cout << "count:" << getCount(all_freight) << std::endl;
-	TrainCar * curFreight = pop_front(all_freight);
-	std::cout << "count:" << getCount(all_freight) << std::endl;
-	while (engineLeft(all_engines) != 0 && freightLeft(all_freight) != 0){
+	TrainCar * curFreight;
+	while (all_engines != NULL && all_freight != NULL){
+		curFreight = pop_front(all_freight);
+		//int test = curFreight->getWeight();
 		if (trains.empty()){
 			//At begining, trains is empty, so need to add One Train into the vector
 			addToTrain(curTrain, pop_front(all_engines));
+			addToTrain(curTrain, curFreight);
 			trains.push_back(curTrain);
 			continue;
 		}
@@ -65,7 +66,7 @@ std::vector<TrainCar*> ShipFreight(TrainCar* all_engines, TrainCar* all_freight,
 			if (checkOK(curTrain, curFreight, min_speed, max_cars_per_train)){
 				//Add current Freight into the current Train
 				addToTrain(curTrain, curFreight);
-				curFreight = pop_front(all_freight);
+				//curFreight = pop_front(all_freight);
 				break;
 			}
 		}
@@ -75,12 +76,42 @@ std::vector<TrainCar*> ShipFreight(TrainCar* all_engines, TrainCar* all_freight,
 			addToTrain(newTrain, pop_front(all_engines));
 			addToTrain(newTrain, curFreight);
 			trains.push_back(newTrain);
-			curFreight = pop_front(all_freight);
+			//curFreight = pop_front(all_freight);
 		}
 	}
+	MergeTrains(trains, max_cars_per_train);
 	return trains;
 }
+//There are some short tains, merger them to get a smaller train count
+void MergeTrains(std::vector<TrainCar*>& trains, int max_cars_per_train){
+	std::sort(trains.begin(), trains.end(), compTrain);
+	std::vector<TrainCar*>::iterator itr1, itr2;
+	itr1 = trains.begin();
+	while (itr1 != trains.end()){
+		itr2 = itr1 + 1;
+		if (itr2!=trains.end() && (getCarNum(*itr1) + getCarNum(*itr2)) < max_cars_per_train){
+			linkCars(*itr1, *itr2);
+			trains.erase(itr2);
+		}
+		else
+			itr1++;
+	}
+	return;
+}
 
+void linkCars(TrainCar*& t1, TrainCar*& t2){
+	TrainCar* ptr=t1;
+	while (ptr->next != NULL)
+		ptr = ptr->next;
+	//ptr point to the last position
+	ptr->next = t2;
+	t2->prev = ptr;
+}
+bool compTrain(TrainCar* t1, TrainCar* t2){
+	int len1 = getCarNum(t1);
+	int len2 = getCarNum(t2);
+	return (len1 > len2) ? true : false;
+}
 //Add a new car(Freight/Engine) to the train,
 //because the newCar's next is set already, so we cannot use PushBack directly
 void addToTrain(TrainCar*& head, TrainCar* newCar){
@@ -122,6 +153,7 @@ bool checkOK(TrainCar* curTrain, TrainCar* curFreight, int min_speed, int max_ca
 	else
 		return true;
 }
+
 //get the speed with a new car
 float getSpeed(TrainCar* curTrain, TrainCar* curFreight, int min_speed){
 	int curWeight = getTotalWeight(curTrain);
@@ -150,7 +182,7 @@ TrainCar* pop_front(TrainCar*& all_engines){
 int getCarNum(TrainCar* head){
 	TrainCar * itr = head;
 	int num = 0;
-	while (itr->next != NULL){
+	while (itr != NULL){
 		num++;
 		itr = itr->next;
 	}
@@ -159,7 +191,7 @@ int getCarNum(TrainCar* head){
 int engineLeft(TrainCar * all_engines){
 	TrainCar * itr = all_engines;
 	int num = 0;
-	while (itr->next != NULL){
+	while (itr != NULL){
 		num++;
 		itr = itr->next;
 	}
@@ -169,7 +201,7 @@ int engineLeft(TrainCar * all_engines){
 int freightLeft(TrainCar * all_freight){
 	TrainCar * itr = all_freight;
 	int num = 0;
-	while (itr->next != NULL){
+	while (itr != NULL){
 		num++;
 		itr = itr->next;
 	}
