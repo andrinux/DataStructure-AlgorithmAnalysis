@@ -47,37 +47,71 @@ std::vector<TrainCar*> ShipFreight(TrainCar* all_engines, TrainCar* all_freight,
 	sortFreights(all_freight);
 	//Use Greedy Algorithm to solve
 	//Add each freight one by one, check its feasibility
-	TrainCar* curTrain;
+	TrainCar* curTrain=NULL;
 	std::vector<TrainCar*>::iterator itr = trains.begin();
+	std::cout << "count:" << getCount(all_freight) << std::endl;
 	TrainCar * curFreight = pop_front(all_freight);
+	std::cout << "count:" << getCount(all_freight) << std::endl;
 	while (engineLeft(all_engines) != 0 && freightLeft(all_freight) != 0){
 		if (trains.empty()){
 			//At begining, trains is empty, so need to add One Train into the vector
-			curTrain = pop_front(all_engines);
+			addToTrain(curTrain, pop_front(all_engines));
 			trains.push_back(curTrain);
 			continue;
 		}
-		for (; itr != trains.end(); itr++){
+		//Loop the whole train list to find a place to
+		for (itr=trains.begin(); itr != trains.end(); itr++){
 			curTrain = *itr;
 			if (checkOK(curTrain, curFreight, min_speed, max_cars_per_train)){
 				//Add current Freight into the current Train
-				PushBack(curTrain, curFreight);
-				curFreight = curFreight->next;
+				addToTrain(curTrain, curFreight);
+				curFreight = pop_front(all_freight);
 				break;
 			}
-			else{
-				//All the existing train cannot hold the new Car, So add a new train
-				//Default is that all the cars can be held in a new Engine
-				
-			}
-
 		}
-
-		
+		if (itr == trains.end()){
+			//No existing Train can hold curFreight, so assign a new Train
+			TrainCar* newTrain = NULL;
+			addToTrain(newTrain, pop_front(all_engines));
+			addToTrain(newTrain, curFreight);
+			trains.push_back(newTrain);
+			curFreight = pop_front(all_freight);
+		}
 	}
 	return trains;
 }
 
+//Add a new car(Freight/Engine) to the train,
+//because the newCar's next is set already, so we cannot use PushBack directly
+void addToTrain(TrainCar*& head, TrainCar* newCar){
+	newCar->next = NULL;//here is different
+	if (head == NULL){
+		//still a empty list
+		head = newCar;
+	}
+	else{
+		//need to loop to the end of list because there is no "tail" in the class
+		TrainCar* itr = head;
+		while (itr->next != NULL){
+			itr = itr->next;
+		}
+		//Travel to the train end, itr is the end now
+		newCar->prev = itr;
+		itr->next = newCar;
+	}
+	
+	return;
+}
+
+int getCount(TrainCar* head){
+	int num = 0;
+	TrainCar* itr = head;
+	while (itr != NULL){
+		num += 1;
+		itr = itr->next;
+	}
+	return num;
+}
 bool checkOK(TrainCar* curTrain, TrainCar* curFreight, int min_speed, int max_cars_per_train){
 	int curNum = getCarNum(curTrain);
 	if (curNum == max_cars_per_train)
@@ -92,16 +126,17 @@ bool checkOK(TrainCar* curTrain, TrainCar* curFreight, int min_speed, int max_ca
 float getSpeed(TrainCar* curTrain, TrainCar* curFreight, int min_speed){
 	int curWeight = getTotalWeight(curTrain);
 	int total = curWeight + curFreight->getWeight();
-	float speed = 3000 * 550 * 3600 / (2000 * 0.02 * 5280 * total);
+	float speed = 30 * 550 * 36 / (20 * 0.02 * 52.80 * total);
 	return speed;
 }
 
 //Get the total Weight without a new Car
 int getTotalWeight(TrainCar* curTrain){
 	int num = 0;
-	TrainCar* itr;
-	while (itr!=NULL){
+	TrainCar* itr=curTrain;
+	while (itr != NULL){
 		num += itr->getWeight();
+		itr = itr->next;
 	}
 	return num;
 }
