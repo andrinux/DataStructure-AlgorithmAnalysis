@@ -25,7 +25,7 @@ void PushBack(TrainCar*& simple, TrainCar* newCar);
 //Destroy thr list from beginning to avoid memory leak
 void DeleteAllCars(TrainCar* simple);
 //Optimization problem
-std::vector<TrainCar*>  ShipFreight(TrainCar* all_engines, TrainCar* all_freight, int min_speed, int max_cars_per_train);
+std::vector<TrainCar*>  ShipFreight(TrainCar*& all_engines, TrainCar*& all_freight, int min_speed, int max_cars_per_train);
 //Sort the freight list from heavy to light
 void sortFreights(TrainCar*& all_freight);
 //Swap to adjacent Node, Note that std::sort doesn't work well here
@@ -39,6 +39,9 @@ float getSpeed(TrainCar* curTrain, TrainCar* curFreight, int min_speed);
 int getTotalWeight(TrainCar* curTrain);
 int getCount(TrainCar* head);
 void addToTrain(TrainCar*& head, TrainCar* newCar);
+void MergeTrains(std::vector<TrainCar*>& trains, int max_cars_per_train);
+bool compTrain(TrainCar* t1, TrainCar* t2);
+void linkCars(TrainCar*& t1, TrainCar*& t2);
 void TotalWeightAndCountCars(TrainCar* train, int total_weight, int num_engines, int num_freight_cars, int num_passenger_cars, int num_dining_cars, int num_sleeping_cars);
 
 float CalculateSpeed(TrainCar* train);

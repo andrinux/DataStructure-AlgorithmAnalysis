@@ -216,7 +216,7 @@ void SimpleTrainTest() {
   // helper routine sanity check & print the results
   SanityCheck(simple);
   PrintTrain(simple);
-
+  //std::cout << getTotalWeight(simple);
   // fully delete all TrainCar nodes to prevent a memory leak
   DeleteAllCars(simple);
 }
@@ -245,15 +245,24 @@ void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int 
     int weight = 30 + (mtrand()%15)*5;
     PushBack(all_freight, TrainCar::MakeFreightCar(weight));
   }
-
+  //debug
+  std::cout << "Begin Optimize" << std::endl;
   // rearrange the two structures into a collection of trains
   // with the specified minimum speed & specified maximum length 12 cars
   std::vector<TrainCar*> trains = ShipFreight(all_engines, all_freight, min_speed, max_cars_per_train);
-
+  
+  //Debug code to be deleted
+  std::vector<TrainCar*>::iterator itr;
+  for (itr = trains.begin(); itr != trains.end(); itr++){
+	  //std::cout << getCarNum(*itr) << ":";
+	  PrintTrain(*itr);
+  }
+  
+  
   // when finished, we have either used up all of the engines, or
   // shipped all the freight (or both!)
   assert (all_engines == NULL || all_freight == NULL);
-
+  /*
   // print the remaining engines or freight cars
   if (all_engines != NULL) {
     std::cout << "Remaining Unused Engines:" << std::endl;
@@ -288,6 +297,7 @@ void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int 
     DeleteAllCars(trains[i]);
   }
   
+  */
 }
 
 
