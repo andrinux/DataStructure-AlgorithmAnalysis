@@ -32,13 +32,13 @@ void StudentTests();
 
 int main() {
 
-  SimpleTrainTest();
-  ShipFreightTests();
-  //SeparateTests();
+	//SimpleTrainTest();
+	//ShipFreightTests();
+	SeparateTests();
 
-  //StudentTests();
+	//StudentTests();
 
-  return 0;
+	return 0;
 }
 
 
@@ -249,12 +249,12 @@ void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int 
   // with the specified minimum speed & specified maximum length 12 cars
   std::vector<TrainCar*> trains = ShipFreight(all_engines, all_freight, min_speed, max_cars_per_train);
   
-  //Debug code to be deleted
-  std::vector<TrainCar*>::iterator itr;
-  for (itr = trains.begin(); itr != trains.end(); itr++){
-	  //std::cout << getCarNum(*itr) << ":";
-	  PrintTrain(*itr);
-  }
+  ////Debug code to be deleted
+  //std::vector<TrainCar*>::iterator itr;
+  //for (itr = trains.begin(); itr != trains.end(); itr++){
+	 // //std::cout << getCarNum(*itr) << ":";
+	 // PrintTrain(*itr);
+  //}
   
   
   // when finished, we have either used up all of the engines, or
@@ -311,7 +311,7 @@ void ShipFreightTests() {
   std::cout << "SHIP FREIGHT TEST, FIXED SEED" << std::endl;
   ShipFreightHelper(mtrand_fixed_seed,10,25,60,12);
 
-  /*
+  
 
   // UNCOMMENT THIS FUNCTION WHEN THE FIXED SEED SHIP FREIGHT TEST LOOKS GOOD
 
@@ -324,7 +324,7 @@ void ShipFreightTests() {
     std::cout << "SHIP FREIGHT TEST, RANDOM SEED #" << i << std::endl;
     ShipFreightHelper(mtrand_autoseed,6,25,65,10);
   }
-  */
+ 
 }
 
 
@@ -418,7 +418,7 @@ void SeparateStatistics(const std::vector<int> &original,
 
 // Each different input train configuration to Separate is handled similarly
 void SeparateTestHelper(TrainCar* &train1, const std::string &which_test) {
-  /*
+  
 
   // UNCOMMENT THIS FUNCTION WHEN YOU'RE READY TO TEST SEPARATE
 
@@ -434,6 +434,7 @@ void SeparateTestHelper(TrainCar* &train1, const std::string &which_test) {
   TrainCar* train2;
   TrainCar* train3;
   Separate(train1, train2, train3);
+  /*
   assert (train1 == NULL);
   SanityCheck(train2);
   SanityCheck(train3);
@@ -483,7 +484,7 @@ void SeparateTests() {
 
   TrainCar* t;
 
-  /*
+  
 
   // UNCOMMENT THESE TESTS ONE AT A TIME AS YOU WORK ON SEPARATE
 
@@ -500,7 +501,7 @@ void SeparateTests() {
   PushBack(t, TrainCar::MakeDiningCar());
   PushBack(t, TrainCar::MakePassengerCar());
   SeparateTestHelper(t, "#1");
-  
+  /*
   t = NULL;  
   PushBack(t, TrainCar::MakePassengerCar());
   PushBack(t, TrainCar::MakeDiningCar());

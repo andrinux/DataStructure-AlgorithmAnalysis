@@ -239,12 +239,12 @@ void sortFreights_v(TrainCar*& all_freight){
 void sortFreights(TrainCar*& all_freight){
 	//Just Use  sorting first
 	//debug info
-	TrainCar *itr = all_freight;
+	/*TrainCar *itr = all_freight;
 	while (itr != NULL){
 		std::cout << itr->getWeight() << ", ";
 		itr = itr->next;
 	}
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 	//Start 
 	int swapped = 1;
 	while (swapped){
@@ -263,15 +263,16 @@ void sortFreights(TrainCar*& all_freight){
 		all_freight = i;
 	}
 	//end
-	itr = all_freight;
+	/*itr = all_freight;
 	while (itr != NULL){
 		std::cout << itr->getWeight() << ", ";
 		itr = itr->next;
 	}
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 	//After sorting, need to find out the new head
 	return;
 }
+
 //Swap Node a and the node following a
 //Maybe too many steps, but very easy to understand
 void swap(TrainCar*& a){
@@ -338,4 +339,56 @@ float CalculateSpeed(TrainCar* train){
 	}
 	float speed = num_engines*30 * 550 * 36 / (20 * 0.02 * 52.80 * total);
 	return speed;
+}
+
+//Core function to seperate
+void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3){
+	int total = getTotalWeight(train1)-2 * 150; //Total weights other than engine
+	int total_1 = 0, total_2 = 0;
+	int loc1=-1, loc2 = -1;
+	int loc = 0;
+	train2 = train1;
+	TrainCar *itr = train1;
+	while (total_1 < total / 2){
+		if (itr->isEngine()){
+			if (loc1 == -1)
+				loc1 = loc;
+			else
+				loc2 = loc;
+		}
+		else{
+			total_1 += itr->getWeight();
+			itr = itr->next;
+		}
+		loc++;
+	}
+	if (loc1 != -1 && loc2 == -1){
+		//only found one engine so far, good
+		itr->prev->next = NULL;
+		itr->prev = NULL;
+		train3 = itr;
+	}
+	else if (loc1 != -1 && loc2 != -1){
+		//Two engines are found
+		total_1 -= 150;
+		
+		moveEngine();
+
+	}
+	else {
+		//No found
+
+	}
+	
+	
+}
+
+int engineCnt(TrainCar* t){
+	int num = 0;
+	while (t != NULL){
+		if (t->isEngine())
+			num++;
+		t = t->next;
+	}
+	return num;
 }
