@@ -10,6 +10,7 @@
 #include <set>
 #include <vector>
 #include <string>
+#include <cctype>
 
 class TextQuery{
 public:
@@ -22,7 +23,7 @@ public:
 	*/
 	void read_file(std::ifstream &is) { store_file(is); build_map(); }
 	std::set<line_no> run_query(const std::string& str) const;
-	std::string text_line(line_no line) const;
+	const std::string& text_line(line_no line) const;
 private:
 	//utility functions to read file
 	void store_file(std::ifstream& is);
@@ -32,5 +33,6 @@ private:
 	std::vector<std::string> lines_of_text;
 	//map word to set of the line on which it occurs
 	std::map<std::string, std::set<line_no> > word_map;
+	std::string cleanUp(std::string& str);
 };
 #endif

@@ -10,6 +10,7 @@
 #include "TextQuery.h"
 
 std::ifstream& open_file(std::ifstream &in, const std::string &file);
+void printResult(std::set<TextQuery::line_no> locations, std::string &str, TextQuery &Text);
 
 int main(int argc, char* argv[])
 {
@@ -26,8 +27,27 @@ int main(int argc, char* argv[])
 	std::string str1, str2;
 	line >> str1 >> str2;
 	std::cout << str1 << ",,,," << str2 << std::endl;*/
-
+	while (true){
+		std::cout << "Enter a word to look up, 'q' to quit: " << std::endl;
+		std::string str;
+		std::cin >> str;
+		if (!std::cin || str == "q")
+			break;
+		std::set<TextQuery::line_no> locations = Text.run_query(str);
+		printResult(locations, str, Text);
+	}
 	return EXIT_SUCCESS;
+}
+
+void printResult(std::set<TextQuery::line_no> locations, std::string &str, TextQuery &Text){
+	if (locations.size() == 0)
+		std::cout << "No resuls found." << std::endl;
+	else{
+		std::set<TextQuery::line_no>::const_iterator itr;
+		for (itr = locations.begin(); itr != locations.end(); itr++)
+			std::cout << "\t (line " << (*itr + 1) << " ): " 
+						<< Text.text_line(*itr) << std::endl;
+	}
 }
 
 std::ifstream& open_file(std::ifstream &in, const std::string &file){
