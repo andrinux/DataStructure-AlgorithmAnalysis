@@ -3,6 +3,8 @@
 #define _TEXT_QUERY_H_
 
 #include <iostream>
+#include <fstream>
+#include <sstream> //for stringstream
 #include <iomanip>
 #include <map>
 #include <set>
@@ -11,6 +13,7 @@
 
 class TextQuery{
 public:
+	//We use size_type here to be generalized
 	typedef std::vector<std::string>::size_type line_no;
 	/*iterfaces:
 	* read files: read the files and build the data structure of each line
@@ -29,6 +32,5 @@ private:
 	std::vector<std::string> lines_of_text;
 	//map word to set of the line on which it occurs
 	std::map<std::string, std::set<line_no> > word_map;
-
 };
 #endif
