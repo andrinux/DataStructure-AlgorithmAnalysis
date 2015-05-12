@@ -16,6 +16,7 @@ class TextQuery{
 public:
 	//We use size_type here to be generalized
 	typedef std::vector<std::string>::size_type line_no;
+
 	/*iterfaces:
 	* read files: read the files and build the data structure of each line
 	* run_query find the given word and returns sets of lines which is appears

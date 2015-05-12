@@ -9,7 +9,6 @@ void TextQuery::store_file(std::ifstream& is){
 	while (std::getline(is, curLine)){
 		lines_of_text.push_back(curLine);
 	}
-
 	return;
 }
 
