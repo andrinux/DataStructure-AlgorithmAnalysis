@@ -404,8 +404,16 @@ void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3){
 		}
 		moveNode(itr1, itr2);
 	}
+	//Note the order maybe different from las case
 	if (cutPos < loc1 && loc1 < loc2){
 		//Need to move loc1 to right before cutPos
+		TrainCar* itr1, *itr2;
+		itr = train1; itr1 = train1; itr2 = train1;
+		int tmp = 0;
+		while (itr != NULL){
+			if (tmp==cutPos)
+				itr1
+		}
 
 	}
 	return;
