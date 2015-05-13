@@ -349,36 +349,7 @@ void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3){
 	int loc = 0;
 	train2 = train1;
 	TrainCar *itr = train1;
-	while (total_1 < total / 2){
-		if (itr->isEngine()){
-			if (loc1 == -1)
-				loc1 = loc;
-			else
-				loc2 = loc;
-		}
-		else{
-			total_1 += itr->getWeight();
-			itr = itr->next;
-		}
-		loc++;
-	}
-	if (loc1 != -1 && loc2 == -1){
-		//only found one engine so far, good
-		itr->prev->next = NULL;
-		itr->prev = NULL;
-		train3 = itr;
-	}
-	else if (loc1 != -1 && loc2 != -1){
-		//Two engines are found
-		total_1 -= 150;
-		
-		moveEngine();
-
-	}
-	else {
-		//No found
-
-	}
+	
 	
 	
 }
