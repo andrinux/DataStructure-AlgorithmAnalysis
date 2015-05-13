@@ -346,11 +346,36 @@ void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3){
 	int total = getTotalWeight(train1)-2 * 150; //Total weights other than engine
 	int total_1 = 0, total_2 = 0;
 	int loc1=-1, loc2 = -1;
-	int loc = 0;
+	int loc = 0, cutPos=0;
 	train2 = train1;
 	TrainCar *itr = train1;
+	//Search for twice, one for turning point location
+	//Another for enginer location
+	while (total_1 < total / 2){
+		if (!itr->isEngine()){
+			total_1 += itr->getWeight();
+		}
+		loc++;
+		itr = itr->next;
+	}
+	//cutPos is the location of 50% weights(without engine)
+	cutPos = loc-1;
+	//Search another time, reset itr and loc
+	itr = train1; loc = 0;
+	while (itr != NULL){
+		if (itr->isEngine()){
+			if (loc1 == -1)
+				loc1 = loc;
+			else
+				loc2 = loc;
+		}
+		itr = itr->next;
+		loc++;
+	}
+	//Move the location of engine according to the relation between 
+	//curPos, loc1, loc2
 	
-	
+	return;
 	
 }
 
