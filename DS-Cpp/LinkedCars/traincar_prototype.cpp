@@ -359,7 +359,7 @@ void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3){
 		itr = itr->next;
 	}
 	//cutPos is the location of 50% weights(without engine)
-	cutPos = loc-1;
+	cutPos = loc-1; //[Need]: further discussion here.
 	//Search another time, reset itr and loc
 	itr = train1; loc = 0;
 	while (itr != NULL){
@@ -374,11 +374,51 @@ void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3){
 	}
 	//Move the location of engine according to the relation between 
 	//curPos, loc1, loc2
-	
+	if (loc1 < cutPos && cutPos < loc2){
+		//seems good, nothing need to be moved, just cut into two trains at cutPos
+		//Move the itr to the location just before cutPos
+		itr = train1;
+		int tmp = 0;
+		while (tmp != cutPos){
+			itr = itr->next;
+			tmp++;
+		}
+		itr->prev->next = NULL;
+		itr->prev = NULL;
+		train3 = itr;
+	}
+	if (loc1 < loc2 && loc2 < cutPos){
+		//need to move loc2 to right after cutPos
+		TrainCar* itr1, *itr2;
+		itr = train1; itr1 = train1; itr2 = train1;
+		int tmp = 0;
+		while (itr != NULL){
+			if (tmp == loc2){
+				itr1 = itr;
+			}
+			if (tmp = cutPos){
+				itr2 = itr;
+			}
+			tmp++;
+			itr = itr->next;
+		}
+		moveNode(itr1, itr2);
+	}
+	if (cutPos < loc1 && loc1 < loc2){
+		//Need to move loc1 to right before cutPos
+
+	}
 	return;
 	
 }
 
+//Move the node@itr1 to the location after @itr2
+//Move is divided into two steps, erase and insert
+void moveNode(TrainCar*& itr1, TrainCar*& itr2){
+
+}
+
+//get the count of engine
 int engineCnt(TrainCar* t){
 	int num = 0;
 	while (t != NULL){
