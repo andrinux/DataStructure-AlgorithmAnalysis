@@ -34,7 +34,7 @@ int main() {
 
 	SimpleTrainTest();
 	ShipFreightTests();
-	//SeparateTests();
+	SeparateTests();
 
 	//StudentTests();
 
