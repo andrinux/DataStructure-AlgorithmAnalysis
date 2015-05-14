@@ -34,7 +34,7 @@ int main() {
 
 	SimpleTrainTest();
 	ShipFreightTests();
-	SeparateTests();
+	//SeparateTests();
 
 	//StudentTests();
 
@@ -58,7 +58,7 @@ void SanityCheck(TrainCar* train) {
     assert (tmp->next->prev == tmp);
     tmp = tmp->next;
   }
-  std::cout << "CHeck pass" << std::endl;
+  //std::cout << "CHeck pass" << std::endl;
 }
 
 

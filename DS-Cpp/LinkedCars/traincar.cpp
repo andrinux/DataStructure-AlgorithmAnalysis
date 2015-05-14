@@ -55,6 +55,7 @@ void DeleteAllCars(TrainCar* simple){
 
 
 //Optimization problem
+//May.13: Still have some bugs here, freights cannot be shipped completely
 std::vector<TrainCar*> ShipFreight(TrainCar*& all_engines, TrainCar*& all_freight, int min_speed, int max_cars_per_train){
 	//all_engines in the engines-list avaiable  all_freights are all the freights cars  
 	std::vector<TrainCar*> trains; //store the final result
@@ -64,7 +65,8 @@ std::vector<TrainCar*> ShipFreight(TrainCar*& all_engines, TrainCar*& all_freigh
 	TrainCar* curTrain = NULL;
 	std::vector<TrainCar*>::iterator itr = trains.begin();
 	TrainCar * curFreight;
-	while (all_engines != NULL && all_freight != NULL){
+	TrainCar * unFitFreights=NULL;
+	while (all_freight != NULL){
 		curFreight = pop_front(all_freight);
 		//int test = curFreight->getWeight();
 		if (trains.empty()){
@@ -80,20 +82,32 @@ std::vector<TrainCar*> ShipFreight(TrainCar*& all_engines, TrainCar*& all_freigh
 			if (checkOK(curTrain, curFreight, min_speed, max_cars_per_train)){
 				//Add current Freight into the current Train
 				addToTrain(curTrain, curFreight);
-				//curFreight = pop_front(all_freight);
 				break;
 			}
 		}
 		if (itr == trains.end()){
 			//No existing Train can hold curFreight, so assign a new Train
-			TrainCar* newTrain = NULL;
-			addToTrain(newTrain, pop_front(all_engines));
-			addToTrain(newTrain, curFreight);
-			trains.push_back(newTrain);
-			//curFreight = pop_front(all_freight);
+			if (all_engines != NULL){
+				TrainCar* newTrain = NULL;
+				addToTrain(newTrain, pop_front(all_engines));
+				addToTrain(newTrain, curFreight);
+				trains.push_back(newTrain);
+			}
+			else{
+				//add the freight to the unfit Freight chains, 
+				//actually, this is the largest one, All the following will not be fitted, so OK to quit.
+				addToTrain(unFitFreights, curFreight);
+				/*
+				//Need to store back curFreight to all Freight
+				all_freight->prev = curFreight;
+				curFreight->next = all_freight;
+				all_freight = curFreight;
+				break;*/
+
+			}
 		}
 	}
-
+	all_freight = unFitFreights;
 	MergeTrains(trains, max_cars_per_train);
 	return trains;
 }
@@ -104,7 +118,7 @@ void MergeTrains(std::vector<TrainCar*>& trains, int max_cars_per_train){
 	itr1 = trains.begin();
 	while (itr1 != trains.end()){
 		itr2 = itr1 + 1;
-		if (itr2 != trains.end() && (getCarNum(*itr1) + getCarNum(*itr2)) < max_cars_per_train){
+		if (itr2 != trains.end() && (getCarNum(*itr1) + getCarNum(*itr2)) <= max_cars_per_train){
 			linkCars(*itr1, *itr2);
 			trains.erase(itr2);
 		}
@@ -163,7 +177,7 @@ bool checkOK(TrainCar* curTrain, TrainCar* curFreight, int min_speed, int max_ca
 	if (curNum == max_cars_per_train)
 		return false;
 	float Speed = getSpeed(curTrain, curFreight, min_speed);
-	if (Speed < float(min_speed))
+	if (Speed <= float(min_speed))
 		return false;
 	else
 		return true;
@@ -253,12 +267,14 @@ void sortFreights_v(TrainCar*& all_freight){
 void sortFreights(TrainCar*& all_freight){
 	//Just Use  sorting first
 	//debug info
-	/*TrainCar *itr = all_freight;
+#if _DEBUG
+	TrainCar *itr = all_freight;
 	while (itr != NULL){
 	std::cout << itr->getWeight() << ", ";
 	itr = itr->next;
 	}
-	std::cout << std::endl;*/
+	std::cout << std::endl;
+#endif
 	//Start 
 	int swapped = 1;
 	while (swapped){
@@ -277,12 +293,14 @@ void sortFreights(TrainCar*& all_freight){
 		all_freight = i;
 	}
 	//end
-	/*itr = all_freight;
+#if _DEBUG
+	itr = all_freight;
 	while (itr != NULL){
 	std::cout << itr->getWeight() << ", ";
 	itr = itr->next;
 	}
-	std::cout << std::endl;*/
+	std::cout << std::endl;
+#endif
 	//After sorting, need to find out the new head
 	return;
 }
