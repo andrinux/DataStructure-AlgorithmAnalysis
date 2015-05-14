@@ -396,13 +396,18 @@ void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3){
 			if (tmp == loc2){
 				itr1 = itr;
 			}
-			if (tmp = cutPos){
+			if (tmp == cutPos){
 				itr2 = itr;
 			}
 			tmp++;
 			itr = itr->next;
 		}
-		moveNode(itr1, itr2);
+		moveBackEngine(itr1, itr2);
+		//Divide into two trains at cutPos
+		itr = itr2;
+		itr->prev->next = NULL;
+		itr->prev = NULL;
+		train3 = itr;
 	}
 	//Note the order maybe different from las case
 	if (cutPos < loc1 && loc1 < loc2){
@@ -411,19 +416,54 @@ void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3){
 		itr = train1; itr1 = train1; itr2 = train1;
 		int tmp = 0;
 		while (itr != NULL){
-			if (tmp==cutPos)
-				itr1
+			if (tmp == cutPos)
+				itr1 = itr;
+			if (tmp == loc1)
+				itr2 = itr;
+			itr = itr->next;
+			tmp++;
 		}
-
+		moveFrontEngine(itr1, itr2);
+		itr = itr1;
+		itr->prev->next = NULL;
+		itr->prev = NULL;
+		train3 = itr;
 	}
+	train1 = NULL;
 	return;
-	
 }
 
 //Move the node@itr1 to the location after @itr2
 //Move is divided into two steps, erase and insert
-void moveNode(TrainCar*& itr1, TrainCar*& itr2){
-
+void moveBackEngine(TrainCar*& itr1, TrainCar*& itr2){
+	//Erase and then Insert
+	TrainCar * N1 = itr1->prev;
+	TrainCar * N2 = itr1->next;
+	N1->next = N2;
+	N2->prev = N1;
+	//insert
+	TrainCar* N3 = itr2->next;
+	itr2->next = itr1;
+	N3->prev = itr1;
+	itr1->prev = itr2;
+	itr1->next = N3;
+	return;
+}
+//Case3. Move itr2 front before itr1
+void moveFrontEngine(TrainCar*& itr1, TrainCar*& itr2){
+	TrainCar * N1 = itr1->prev;
+	TrainCar * N2 = itr1->next;
+	TrainCar * N3 = itr2->prev;
+	TrainCar * N4 = itr2->next;
+	//erase
+	N3->next = N4;
+	N4->prev = N3;
+	//Insert
+	N1->next = itr2;
+	itr2->next = itr1;
+	itr1->prev = itr2;
+	itr2->prev = N1;
+	return;
 }
 
 //get the count of engine

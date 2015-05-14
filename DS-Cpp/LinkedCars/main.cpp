@@ -434,14 +434,14 @@ void SeparateTestHelper(TrainCar* &train1, const std::string &which_test) {
   TrainCar* train2;
   TrainCar* train3;
   Separate(train1, train2, train3);
-  /*
+  
   assert (train1 == NULL);
   SanityCheck(train2);
   SanityCheck(train3);
   // record the IDs after separation
   std::vector<int> left = RecordIDs(train2);
   std::vector<int> right = RecordIDs(train3);
-
+ 
   // calculate the number of links, unlinks, and train shifts
   // (all of these counts should be kept small to minimize train yard costs
   int num_unlinks, num_links, num_shifts;
@@ -450,7 +450,7 @@ void SeparateTestHelper(TrainCar* &train1, const std::string &which_test) {
   std::cout << ", num links = " << num_links;
   std::cout << ", num shifts = " << num_shifts;
   std::cout << "   Total Cost: " << num_unlinks+num_links+num_shifts << std::endl;
-
+  
   float speed_left = CalculateSpeed(train2);
   float speed_right = CalculateSpeed(train3);
   float left_percent = 100.0 * (speed_original-speed_left) / speed_original;
@@ -469,13 +469,13 @@ void SeparateTestHelper(TrainCar* &train1, const std::string &which_test) {
     std::cout << "  left and right train speeds are equal to the original." << std::endl;
   }
 
-
+  
   PrintTrain(train2);
   PrintTrain(train3);
   // cleanup memory usage
   DeleteAllCars(train2);
   DeleteAllCars(train3);
-  */
+  
 }
 
 
@@ -501,7 +501,7 @@ void SeparateTests() {
   PushBack(t, TrainCar::MakeDiningCar());
   PushBack(t, TrainCar::MakePassengerCar());
   SeparateTestHelper(t, "#1");
-  /*
+  
   t = NULL;  
   PushBack(t, TrainCar::MakePassengerCar());
   PushBack(t, TrainCar::MakeDiningCar());
@@ -514,7 +514,7 @@ void SeparateTests() {
   PushBack(t, TrainCar::MakeSleepingCar());
   PushBack(t, TrainCar::MakeEngine());  
   SeparateTestHelper(t, "#2");
-
+  
   t = NULL;
   PushBack(t, TrainCar::MakePassengerCar());
   PushBack(t, TrainCar::MakePassengerCar());
@@ -540,7 +540,7 @@ void SeparateTests() {
   PushBack(t, TrainCar::MakePassengerCar());
   PushBack(t, TrainCar::MakeSleepingCar());
   SeparateTestHelper(t, "#4");
-
+  
   t = NULL;
   PushBack(t, TrainCar::MakeEngine());  
   PushBack(t, TrainCar::MakeEngine());  
@@ -554,7 +554,7 @@ void SeparateTests() {
   PushBack(t, TrainCar::MakePassengerCar());
   PushBack(t, TrainCar::MakeSleepingCar());
   SeparateTestHelper(t, "#5");
-  */
+  
 
   // Note: SeparateTestHelper takes care of deleting all memory
   // associated with these tests

@@ -47,3 +47,5 @@ float CalculateSpeed(TrainCar* train);
 
 void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3);
 int engineCnt(TrainCar* t);
+void moveBackEngine(TrainCar*& itr1, TrainCar*& itr2);
+void moveFrontEngine(TrainCar*& itr1, TrainCar*& itr2);
