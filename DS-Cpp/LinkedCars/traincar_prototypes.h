@@ -42,10 +42,14 @@ void addToTrain(TrainCar*& head, TrainCar* newCar);
 void MergeTrains(std::vector<TrainCar*>& trains, int max_cars_per_train);
 bool compTrain(TrainCar* t1, TrainCar* t2);
 void linkCars(TrainCar*& t1, TrainCar*& t2);
-void TotalWeightAndCountCars(TrainCar* train, int total_weight, int num_engines, int num_freight_cars, int num_passenger_cars, int num_dining_cars, int num_sleeping_cars);
+void TotalWeightAndCountCars(TrainCar* train, int &total_weight, int &num_engines, 
+	int &num_freight_cars, int &num_passenger_cars, int &num_dining_cars, int &num_sleeping_cars);
 float CalculateSpeed(TrainCar* train);
 
 void Separate(TrainCar*& train1, TrainCar*& train2, TrainCar*& train3);
 int engineCnt(TrainCar* t);
 void moveBackEngine(TrainCar*& itr1, TrainCar*& itr2);
 void moveFrontEngine(TrainCar*& itr1, TrainCar*& itr2);
+
+float  AverageDistanceToDiningCar(TrainCar *train);
+int  ClosestEngineToSleeperCar(TrainCar* train);

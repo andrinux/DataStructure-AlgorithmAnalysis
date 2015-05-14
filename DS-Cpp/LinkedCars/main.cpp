@@ -32,8 +32,8 @@ void StudentTests();
 
 int main() {
 
-	//SimpleTrainTest();
-	//ShipFreightTests();
+	SimpleTrainTest();
+	ShipFreightTests();
 	SeparateTests();
 
 	//StudentTests();
@@ -146,10 +146,11 @@ void PrintTrain(TrainCar* train) {
   PrintHelper(train, 3);
   PrintHelper(train, 4);
 
-  /*  
+  
   // UNCOMMENT THESE ADDITIONAL STATISTICS AS YOU WORK
 
   int total_weight,num_engines,num_freight_cars,num_passenger_cars,num_dining_cars,num_sleeping_cars;
+  total_weight = num_engines = num_freight_cars = num_passenger_cars = num_dining_cars = num_sleeping_cars = 0;
   TotalWeightAndCountCars(train,total_weight,num_engines,num_freight_cars,num_passenger_cars,num_dining_cars,num_sleeping_cars);
   int total_cars = num_engines+num_freight_cars+num_passenger_cars+num_dining_cars+num_sleeping_cars;
   float speed = CalculateSpeed(train);
@@ -178,7 +179,7 @@ void PrintTrain(TrainCar* train) {
   }
 
   std::cout << std::endl;
-  */
+  
 }
 
 // =======================================================================
@@ -248,14 +249,7 @@ void ShipFreightHelper(MTRand_int32 &mtrand, int num_engines, int num_cars, int 
   // rearrange the two structures into a collection of trains
   // with the specified minimum speed & specified maximum length 12 cars
   std::vector<TrainCar*> trains = ShipFreight(all_engines, all_freight, min_speed, max_cars_per_train);
-  
-  ////Debug code to be deleted
-  //std::vector<TrainCar*>::iterator itr;
-  //for (itr = trains.begin(); itr != trains.end(); itr++){
-	 // //std::cout << getCarNum(*itr) << ":";
-	 // PrintTrain(*itr);
-  //}
-  
+    
   
   // when finished, we have either used up all of the engines, or
   // shipped all the freight (or both!)
