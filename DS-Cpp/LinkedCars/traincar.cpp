@@ -16,6 +16,7 @@
 #include <vector>
 #include <algorithm>
 
+#define _DEBUG 0
 // =======================================================================
 // =======================================================================
 //
@@ -79,7 +80,7 @@ std::vector<TrainCar*> ShipFreight(TrainCar*& all_engines, TrainCar*& all_freigh
 		//Loop the whole train list to find a place to
 		for (itr = trains.begin(); itr != trains.end(); itr++){
 			curTrain = *itr;
-			if (checkOK(curTrain, curFreight, min_speed, max_cars_per_train)){
+			if (true==checkOK(curTrain, curFreight, min_speed, max_cars_per_train)){
 				//Add current Freight into the current Train
 				addToTrain(curTrain, curFreight);
 				break;
@@ -96,6 +97,16 @@ std::vector<TrainCar*> ShipFreight(TrainCar*& all_engines, TrainCar*& all_freigh
 			else{
 				//add the freight to the unfit Freight chains, 
 				//actually, this is the largest one, All the following will not be fitted, so OK to quit.
+			#if _DEBUG
+				for (itr = trains.begin(); itr != trains.end(); itr++){
+					curTrain = *itr;
+					if (false==checkOK(curTrain, curFreight, min_speed, max_cars_per_train)){
+						//Add current Freight into the current Train
+						std::cout << "Check Fail:" << curFreight->getWeight() << ", " << getTotalWeight(curTrain) << ", "<<
+							getSpeed(curTrain, curFreight, min_speed) << " < " << min_speed<< std::endl;
+					}
+				}
+			#endif
 				addToTrain(unFitFreights, curFreight);
 				/*
 				//Need to store back curFreight to all Freight
@@ -177,7 +188,7 @@ bool checkOK(TrainCar* curTrain, TrainCar* curFreight, int min_speed, int max_ca
 	if (curNum == max_cars_per_train)
 		return false;
 	float Speed = getSpeed(curTrain, curFreight, min_speed);
-	if (Speed <= float(min_speed))
+	if (Speed < float(min_speed))
 		return false;
 	else
 		return true;
@@ -187,7 +198,7 @@ bool checkOK(TrainCar* curTrain, TrainCar* curFreight, int min_speed, int max_ca
 float getSpeed(TrainCar* curTrain, TrainCar* curFreight, int min_speed){
 	int curWeight = getTotalWeight(curTrain);
 	int total = curWeight + curFreight->getWeight();
-	float speed = 30 * 550 * 36 / (20 * 0.02 * 52.80 * total);
+	float speed = 30 * 550 * 36 * 50 / (20  * 52.80 * total);
 	return speed;
 }
 
