@@ -41,35 +41,51 @@ bool insideBoard(int row, int col, std::vector<std::string> &board){
 //Linear Search, firstly to determine the constant Diff
 bool searchFromLoc(loc start, std::string &word, std::vector<std::string> &board, std::vector<loc> &path){
 	//std::cout << "Local Search" << std::endl;
+	std::vector<loc> Diffs;
+	std::vector<loc>::const_iterator itr;
 	loc locDiff = loc();
 	int row, col;
 	for (int r = -1; r != 2; r++){
 		for (int c = -1; c != 2; c++){
 			row = r + start.row;
 			col = c + start.col;
-			if (insideBoard(row, col, board) && board[row][col] == word[1])
-				locDiff = loc(r, c);
+			if (insideBoard(row, col, board) && board[row][col] == word[1]){
+				Diffs.push_back(loc(r, c));
+			}
 			else
 				continue;
 		}
 	}
-	path.push_back(start);
-	//Found the locDiff, search continue the same direction
-	int cur = 1;
-	row = start.row; col = start.col;
-	while (cur < word.size()){
-		row += locDiff.row;
-		col += locDiff.col;
-		if (insideBoard(row, col, board) && board[row][col] == word[cur]){
-			cur++;
-			path.push_back(loc(row, col));
+	//try each possible direction
+	bool found = false;
+	for (itr = Diffs.begin(); itr != Diffs.end(); itr++){
+		locDiff = *itr;
+		path.push_back(start);
+		//Found the locDiff, search continue the same direction
+		int cur = 1;
+		row = start.row; col = start.col;
+		while (cur < word.size()){
+			row += locDiff.row;
+			col += locDiff.col;
+			if (insideBoard(row, col, board) && board[row][col] == word[cur]){
+				cur++;
+				path.push_back(loc(row, col));
+			}
+			else{
+				path.clear();
+				break;
+			}
+		}
+		if (cur == word.size()){
+			found = true;
+			return found;
 		}
 		else{
-			path.clear();
-			return false;
+			found = false;
+			continue;
 		}
 	}
-	return true;
+	return found;
 }
 
 void printPath(std::vector<loc> &path){
