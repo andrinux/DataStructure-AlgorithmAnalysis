@@ -1,8 +1,9 @@
-//WordSearch Problem using Recursion
+//Wordsearch in linear
 //Input is a string and a letter grid
 //Target is in8 directions(col, row, diagonal)
 
 //Usage: wrdSearch file.txt [string]
+//This is the iterative version. Recursion maybe a better choice
 
 #include <iostream>
 #include <string>
