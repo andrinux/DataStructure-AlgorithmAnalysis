@@ -1,2 +1,4 @@
 #Data Structure Practices in C++
-  - Use STL
+  - Use C++ STL
+  - Some medium level problems
+  - including memory leaking management

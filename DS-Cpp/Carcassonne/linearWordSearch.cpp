@@ -97,7 +97,7 @@ void printPath(std::vector<loc> &path){
 	std::cout << std::endl;
 }
 
-int main(int argc, char* argv[])
+int main_1(int argc, char* argv[])
 {
 	std::ifstream infile(argv[1]);
 	if (argc != 3 || !infile){
