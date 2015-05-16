@@ -28,47 +28,38 @@ bool onPath(loc Pos, std::vector<loc> &path){
 	return false;
 }
 
-//Recursive or Iterative
+//Recursive
 bool searchFromLoc(loc Pos, std::string word, std::vector<std::string>& board, std::vector<loc> &path){
 	//The start point should be no problem
-	assert(board[Pos.row][Pos.col] == word[0]);
+	assert(board[Pos.row][Pos.col] == word[path.size()]);
 	path.push_back(Pos);
-	if (word.size() == 0)
+	if (path.size() == word.size())
 		return true;
-	int r, c;
-	//Search the adjacent 8 positions to check if there is any matching with the second letter
+	int r = 0, c = 0;
 	for (r = -1; r <= 1; r++){
 		for (c = -1; c <= 1; c++){
 			int row = Pos.row + r;
 			int col = Pos.col + c;
-			if (row < 0 || row > board.size()) continue;
-			if (col < 0 || col > board[row].size()) continue;
+			if (row < 0 || row >= board.size()) continue;
+			if (col < 0 || col >= board[row].size()) continue;
 			if (onPath(loc(row, col), path)) continue;
-			if (board[row][col] != word[1]){
-				continue;
-			}
-			else{
-				//matching
-				word.erase(word.begin());
-				path.push_back(loc(row, col));
-				searchFromLoc(loc(row, col), word, board, path);
+			if (board[row][col] == word[path.size()]){
+				if (searchFromLoc(loc(row, col), word, board, path))
+					return true;
 			}
 		}
 	}
-	//reach here indicates loops all the 8 points
-	if (r == 1 && c == 1){
-		path.clear();
-		return false;
-	}
-		
+	path.pop_back();
+	return false;
+
 }
 
 //wordSearch core function
 bool wordSearch(std::vector<std::string> &board, std::string word, std::vector<loc> &path){
 	int row = 0, col = 0;
-	bool found;
-	for (row = 0; row != board.size(); row++){
-		for (col = 0; col != board[row].size(); col++){
+	bool found=false;
+	for (row = 0; row != board.size() && !found; row++){
+		for (col = 0; col != board[row].size() && !found; col++){
 			if (board[row][col] == word[0])
 			found = searchFromLoc(loc(row, col), word, board, path);
 		}
@@ -100,6 +91,8 @@ int main(int argc, char* argv[])
 		board.push_back(curLine);
 	}
 	std::vector<loc> path;
+	for (int i = 0; i < word.size(); i++)
+		std::cout << word[i] << "-";
 	bool found = wordSearch(board, word, path);
 	if (found)
 		printPath(path);
