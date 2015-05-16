@@ -40,7 +40,7 @@ std::set<TextQuery::line_no> TextQuery::run_query(const std::string& str) const{
 //Why here cannot set return type as reference
 //because it is not a good practice, or add 
 //std::string TextQuery::text_line(line_no line) const{
-const std::string& TextQuery::text_line(line_no line) const{
+std::string TextQuery::text_line(line_no line) const{
 	if (line >= lines_of_text.size())
 		throw std::out_of_range("Exceed number of range");
 	else{

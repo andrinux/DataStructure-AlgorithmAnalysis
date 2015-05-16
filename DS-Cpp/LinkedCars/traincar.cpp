@@ -56,7 +56,6 @@ void DeleteAllCars(TrainCar* simple){
 
 
 //Optimization problem
-//May.13: Still have some bugs here, freights cannot be shipped completely
 std::vector<TrainCar*> ShipFreight(TrainCar*& all_engines, TrainCar*& all_freight, int min_speed, int max_cars_per_train){
 	//all_engines in the engines-list avaiable  all_freights are all the freights cars  
 	std::vector<TrainCar*> trains; //store the final result

@@ -24,7 +24,7 @@ public:
 	*/
 	void read_file(std::ifstream &is) { store_file(is); build_map(); }
 	std::set<line_no> run_query(const std::string& str) const;
-	const std::string& text_line(line_no line) const;
+	std::string text_line(line_no line) const;
 private:
 	//utility functions to read file
 	void store_file(std::ifstream& is);
