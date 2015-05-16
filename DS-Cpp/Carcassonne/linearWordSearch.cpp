@@ -39,8 +39,8 @@ bool insideBoard(int row, int col, std::vector<std::string> &board){
 }
 
 //Linear Search, firstly to determine the constant Diff
-bool searchFromLoc(loc start, std::string &word, std::vector<std::string> &board){
-	std::cout << "Local Search" << std::endl;
+bool searchFromLoc(loc start, std::string &word, std::vector<std::string> &board, std::vector<loc> &path){
+	//std::cout << "Local Search" << std::endl;
 	loc locDiff = loc();
 	int row, col;
 	for (int r = -1; r != 2; r++){
@@ -53,22 +53,31 @@ bool searchFromLoc(loc start, std::string &word, std::vector<std::string> &board
 				continue;
 		}
 	}
+	path.push_back(start);
 	//Found the locDiff, search continue the same direction
 	int cur = 1;
 	row = start.row; col = start.col;
 	while (cur < word.size()){
 		row += locDiff.row;
 		col += locDiff.col;
-		if (insideBoard(row, col, board) && board[row][col] == word[cur])
+		if (insideBoard(row, col, board) && board[row][col] == word[cur]){
 			cur++;
-		else
+			path.push_back(loc(row, col));
+		}
+		else{
+			path.clear();
 			return false;
+		}
 	}
 	return true;
 }
 
-void printPath(){
-	std::cout << "Found" << std::endl;
+void printPath(std::vector<loc> &path){
+	std::cout << "Found: ";
+	std::vector<loc>::const_iterator itr = path.begin();
+	for (; itr != path.end(); itr++)
+		std::cout << "( " << itr->row << ", " << itr->col << " ) -> ";
+	std::cout << std::endl;
 }
 
 int main(int argc, char* argv[])
@@ -85,16 +94,17 @@ int main(int argc, char* argv[])
 	while (infile >> curLine){
 		board.push_back(curLine);
 	}
+	std::vector<loc> path;
 	bool found = false;
 	char tmp;
 	for (int r = 0; r < board.size(); r++){
 		for (int c = 0; c < board[r].size(); c++){
-			std::cout << "check: " << r << " - " << c << std::endl;
+			//std::cout << "check: " << r << " - " << c << std::endl;
 			if ((tmp=board[r][c]) == word[0]){
 				loc start = loc(r, c);
-				found=searchFromLoc(start, word, board);
+				found=searchFromLoc(start, word, board, path);
 				if (found)
-					printPath();
+					printPath(path);
 				found = false;
 			}
 		}
