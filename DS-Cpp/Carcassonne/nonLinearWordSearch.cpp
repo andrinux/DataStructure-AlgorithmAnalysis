@@ -51,7 +51,6 @@ bool searchFromLoc(loc Pos, std::string word, std::vector<std::string>& board, s
 	}
 	path.pop_back();
 	return false;
-
 }
 
 //wordSearch core function
