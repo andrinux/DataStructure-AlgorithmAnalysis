@@ -1,0 +1,6 @@
+*.pdf
+*.zip
+*.txt
+
+provided_files/*
+Cracking/*
