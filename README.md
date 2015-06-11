@@ -12,5 +12,5 @@ Linux Kernel is ~~one of~~ the most complicated C project ever, I believe. ~~Man
 * Radis Trees
 * DFS/BFS
 * sephmore, mutex...
-* KMP(I thought KMP will never be used in real product)
+* KMP(I thought KMP will never be used in real product before)
 * Many sorting....
