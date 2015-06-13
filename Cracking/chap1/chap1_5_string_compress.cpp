@@ -12,7 +12,7 @@ string strCompress(string& str){
 	string res;
 	char curChar=str[0];
 	int curLen = 1;
-	for (int i = 1; i != str.size(); i++){
+	for (int i = 1; i != str.size(); i++){ //From 1
 		if (curChar != str[i]){
 			//Save up
 			res += curChar;
@@ -27,7 +27,10 @@ string strCompress(string& str){
 	//Need to keep the last one
 	res += curChar;
 	res += ('0' + curLen); //important here
-	return res;
+	if (res.size() > str.size())
+		return str;
+	else
+		return res;
 }
 
 int main()
