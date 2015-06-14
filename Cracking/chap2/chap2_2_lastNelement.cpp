@@ -31,6 +31,7 @@ void last_N_element_1(const myList& my, int n){
 	return;
 }
 /*use FAST-SLOW pointers*/
+//Time O(n) as well.
 void last_N_element(const myList& my, int n){
 	Node* pt1 = my.head;
 	Node* pt2 = my.head;
