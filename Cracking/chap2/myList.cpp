@@ -5,22 +5,26 @@
 //Destructor
 myList::~myList()
 {
-	this->destroyList();
+	this->destroyList(head);
 }
-//Always has problem with Destroy List
 
-void myList::destroyList(){
+//Always has problem with Destroy List
+//pay attention to it here.
+//Two versions: Recursive and Iterative
+
+void myList::destroyList(Node* head){
 	if (head == NULL)
 		return;
-	Node* newHead;
-	while (head != NULL){
-		newHead = head->next;
+	Node* tmp = head->next;
+	if (head != NULL){
 		delete head;
-		head = newHead;
+		head = NULL;
 	}
-	head = NULL;
-
+	
+	head = tmp;
+	destroyList(head);
 }
+
 void myList::push_back(int d){
 	Node* newNode = new Node(d);
 	if (head == NULL){
@@ -42,7 +46,10 @@ Node* myList::rmNode(Node* cur)
 	Node* last = NULL;
 	if (cur == head){
 		head = head->next;
-		delete tmp;
+		if (tmp != NULL){
+			delete tmp;
+			tmp = NULL;
+		}
 		tmp = NULL;
 		return head;
 	}
@@ -53,7 +60,10 @@ Node* myList::rmNode(Node* cur)
 	}
 	//Reconnect and clear up
 	last->next = cur->next;
-	delete cur;
+	if (cur != NULL){
+		delete cur;
+		cur = NULL;
+	}
 	cur = NULL;
 	return last->next;
 }

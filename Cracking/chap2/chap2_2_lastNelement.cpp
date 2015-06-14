@@ -4,8 +4,11 @@
 
 #include <iostream>
 #include"myList.h"
+#include <stdlib.h>
 
-void last_N_element(const myList my, int n){
+//If we don't use refrence here, VS2012 will cause memory bug.
+//This method will seek for twice, not the optimal
+void last_N_element_1(const myList& my, int n){
 	int sz = 0;
 	Node* cur = my.head;
 	while (cur!=NULL){
@@ -18,7 +21,7 @@ void last_N_element(const myList my, int n){
 	}
 	cur = my.head;
 	int idx = 0;
-	while (cur){
+	while (cur != NULL){
 		if (idx >= (sz - n)){
 			std::cout << cur->value << "-";
 		}
@@ -27,8 +30,20 @@ void last_N_element(const myList my, int n){
 	}
 	return;
 }
+/*use FAST-SLOW pointers*/
+void last_N_element(const myList& my, int n){
+	Node* pt1 = my.head;
+	Node* pt2 = my.head;
+	for (int i = 0; i < n; i++)
+		pt2 = pt2->next;
+	while (pt2 != NULL){
+		pt1 = pt1->next;
+		pt2 = pt2->next;
+	}
+	std::cout << pt1->value << std::endl;
+}
 
-int main()
+void main()
 {
 	myList mylist;
 	mylist.push_back(0); mylist.push_back(1); mylist.push_back(2);
@@ -38,5 +53,5 @@ int main()
 	mylist.printList();
 
 	last_N_element(mylist, 4);
-	return EXIT_SUCCESS;
+
 }

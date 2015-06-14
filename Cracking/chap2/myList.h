@@ -9,6 +9,7 @@ public:
 	int value;
 public:
 	Node() { value = 0; next = NULL; }
+	~Node() {}
 	Node(int d) { value = d; next = NULL; }
 };
 
@@ -19,7 +20,7 @@ public:
 public:
 	myList() { head  = NULL; }
 	~myList();
-	void destroyList();
+	void destroyList(Node* head);
 	void push_back(int d);
 	void printList();
 	void rmDup();
