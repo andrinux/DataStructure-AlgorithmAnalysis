@@ -9,7 +9,8 @@
 
 using namespace std;
 
-//Remove Dup with buffer
+//Remove Dup with buffer, use set as the buffer
+
 void myList::rmDup()
 {
 	set<int> dataset;
@@ -20,7 +21,7 @@ void myList::rmDup()
 		}
 		else{
 			//Remove this node
-			cur=this->rmNode(cur);
+			cur=rmNode(cur);
 		}
 		cur = cur->next;
 	}
@@ -33,10 +34,11 @@ int main()
 	mylist.push_back(0); mylist.push_back(1); mylist.push_back(2);
 	mylist.push_back(3); mylist.push_back(1); mylist.push_back(4);
 	mylist.push_back(5); mylist.push_back(2); mylist.push_back(7);
+	mylist.push_back(8); mylist.push_back(2); mylist.push_back(9);
 	mylist.printList();
 	mylist.rmDup();
 	mylist.printList();
-	
+
 
 	return 0;
 }
