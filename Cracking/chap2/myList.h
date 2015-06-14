@@ -23,6 +23,7 @@ public:
 	void push_back(int d);
 	void printList();
 	void rmDup();
+	void rmDup_v1();
 	Node*  rmNode(Node* cur);
 };
 

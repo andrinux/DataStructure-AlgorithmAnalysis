@@ -11,7 +11,9 @@ using namespace std;
 
 //Remove Dup with buffer, use set as the buffer
 
-void myList::rmDup()
+//This is O(n) space, O(n) time
+
+void myList::rmDup_v1()
 {
 	set<int> dataset;
 	Node* cur = head;
@@ -27,6 +29,25 @@ void myList::rmDup()
 	}
 }
 
+//Another solution: loop from beginning
+//Time: O(n^2), space O(1)
+void myList::rmDup()
+{
+	Node* cur=head;
+	Node* scan = head->next;
+	//scan is used to scan the following elements to check
+	while (cur != NULL){
+		int curVal = cur->value;
+		scan = cur->next;
+		while (scan != NULL){
+			if (scan->value == curVal)
+				scan = this->rmNode(scan);
+			else
+				scan = scan->next;
+		}
+		cur = cur->next;
+	}
+}
 
 int main()
 {
