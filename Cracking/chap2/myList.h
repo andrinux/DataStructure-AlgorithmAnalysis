@@ -18,6 +18,8 @@ public:
 	Node *head;
 public:
 	myList() { head  = NULL; }
+	~myList();
+	void destroyList();
 	void push_back(int d);
 	void printList();
 	void rmDup();
