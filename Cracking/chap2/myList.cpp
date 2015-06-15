@@ -8,6 +8,33 @@ myList::~myList()
 	this->destroyList(head);
 }
 
+//Copy constructor
+//Still doesn't work
+myList::myList(const myList& rgt){
+	this->copyList(rgt);
+}
+
+void myList::copyList(const myList& rgt){
+	this->head = NULL;
+	Node* p = rgt.head;
+	Node *tmp;
+	while (p != NULL){
+		Node *newNode = new Node(p->value);
+		if (head == NULL){
+			head = newNode;
+			tmp = head;
+		}
+		else{
+			tmp->next = newNode;
+			tmp = newNode;
+		}
+		p = p->next;
+	}
+	tmp->next = NULL;
+	
+}
+
+
 //Always has problem with Destroy List
 //pay attention to it here.
 //Two versions: Recursive and Iterative

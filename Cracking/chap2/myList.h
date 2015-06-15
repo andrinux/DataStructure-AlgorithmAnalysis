@@ -19,7 +19,9 @@ public:
 	Node *head;
 public:
 	myList() { head  = NULL; }
+	myList(const myList &rgt);
 	~myList();
+	void copyList(const myList& rgt);
 	void destroyList(Node* head);
 	void push_back(int d);
 	void printList();
