@@ -23,6 +23,7 @@ public:
 	~myList();
 	void copyList(const myList& rgt);
 	void destroyList(Node* head);
+	void destroyList_Iter(Node* head);
 	void push_back(int d);
 	void printList();
 	void rmDup();

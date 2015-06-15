@@ -5,7 +5,8 @@
 //Destructor
 myList::~myList()
 {
-	this->destroyList(head);
+	//this->destroyList(head);
+	this->destroyList_Iter(head);
 }
 
 //Copy constructor
@@ -38,18 +39,25 @@ void myList::copyList(const myList& rgt){
 //Always has problem with Destroy List
 //pay attention to it here.
 //Two versions: Recursive and Iterative
-
 void myList::destroyList(Node* head){
 	if (head == NULL)
 		return;
-	Node* tmp = head->next;
-	if (head != NULL){
+	destroyList(head->next);
+	delete head;
+	this->head = NULL; //Must "this" here?
+}
+
+void myList::destroyList_Iter(Node* head){
+	if (head == NULL)
+		return;
+	Node *p;
+	while (head != NULL){
+		p = head->next;
 		delete head;
-		head = NULL;
+		head = p;
 	}
-	
-	head = tmp;
-	destroyList(head);
+	head = NULL;
+	this->head = NULL;
 }
 
 void myList::push_back(int d){
