@@ -43,7 +43,9 @@ void removeNode_v1(myList & my, Node* cur){
 }
 
 //A clearner version
-void removeNode(myList &my, Node* cur){
+//Not the optimal, This is O(n), should be O(1)
+//Holy
+void removeNode_On(myList &my, Node* cur){
 	if(cur==NULL)
 		return;
 	if(cur->next == NULL){
@@ -64,6 +66,22 @@ void removeNode(myList &my, Node* cur){
 	return;
 }
 
+//Solution for O(1) time complexity
+void removeNode(myList &my, Node* cur){
+	if (cur == NULL)
+		return;
+	if (cur->next == NULL){
+		cur->value = NULL;
+		delete cur;
+		cur = NULL;
+		return;
+	}
+	cur->value = cur->next->value;
+	cur->next = cur->next->next;
+	delete cur->next;
+	cur->next = NULL;
+	return;
+}
 
 int  main()
 {
