@@ -7,7 +7,7 @@
 #include "myList.h"
 #include <vector>
 //Question: x is unique?
-
+void appendTo(Node*& head, Node*& cur);
 
 //Version-1: Space O(n), time O(2n)[because of an extra copy]
 //Not elegant at all.
@@ -25,23 +25,26 @@ void partitionList_v1(myList& my, int x){
 	}
 	//Copy to 'my'
 	p = my.head;
-	for (int i = 0; i != res1.size(); i++){
+	for (unsigned int i = 0; i != res1.size(); i++){
 		p->value = res1[i];
 		p = p->next;
 	}
-	for (int i = 0; i != res2.size(); i++){
+	for (unsigned int i = 0; i != res2.size(); i++){
 		p->value = res2[i];
 		p = p->next;
 	}
-	for (int i = 0; i != res3.size(); i++){
+	for (unsigned int i = 0; i != res3.size(); i++){
 		p->value = res3[i];
 		p = p->next;
 	}
 
 }
+
 //Append a node to a list
-void append(Node* head, Node* cur){
+void appendTo(Node*& head, Node*& cur){
+	//std::cout<<"Append:"<<cur->value<<", ";
 	if (head == NULL){
+		//std::cout<<"head is NULL"<<std::endl;
 		head = cur;
 		head->next = NULL;
 		return;
@@ -49,12 +52,16 @@ void append(Node* head, Node* cur){
 	Node *tmp = head->next;
 	head->next = cur;
 	cur->next = tmp;
-	//std::cout << "Debug: head is " << head->value<< ", ";
-	//while (head != NULL){
-	//	std::cout << head->value<<"-";
-	//	head = head->next;
-	//}
-	//std::cout << std::endl;
+	/*
+	std::cout << "Debug: head is " << head->value<< ", ";
+	//WTF, Debug code was wrong, how funny.
+	Node *p=head;
+	while (p != NULL){
+		std::cout << p->value<<"-";
+		p = p->next;
+	}
+	std::cout << std::endl;
+	*/
 	return;
 }
 
@@ -69,14 +76,15 @@ void partitionList_v2(myList& my, int x){
 	while (p != NULL){
 		Node* tmp = p->next;
 		if (p->value > x)
-			append(large, p);
+			appendTo(large, p);
 		if (p->value == x)
-			append(equal, p);
+			appendTo(equal, p);
 		if (p->value < x)
-			append(small, p);
+			appendTo(small, p);
 		p = tmp;
 	}
 	my.head = small;
+	//This concatenation operation seems stupid, but, what up?
 	p = small;
 	while (p->next != NULL)
 		p = p->next;
@@ -95,6 +103,7 @@ int  main()
 	mylist.push_back(3); mylist.push_back(7); mylist.push_back(4);
 	mylist.push_back(5); mylist.push_back(2); mylist.push_back(7);
 	mylist.push_back(1); mylist.push_back(2); mylist.push_back(9);
+	mylist.push_back(10);
 	mylist.printList();
 	myList newlist(mylist);
 	partitionList_v1(mylist, 5);
