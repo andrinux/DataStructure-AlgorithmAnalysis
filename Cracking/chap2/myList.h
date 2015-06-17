@@ -28,6 +28,7 @@ public:
 	void printList();
 	void rmDup();
 	void rmDup_v1();
+	void reverse();
 	Node*  rmNode(Node* cur);
 };
 

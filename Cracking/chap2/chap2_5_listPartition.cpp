@@ -106,13 +106,18 @@ int  main()
 	mylist.push_back(10);
 	mylist.printList();
 	myList newlist(mylist);
-	partitionList_v1(mylist, 5);
-	std::cout << "Method-1: " << std::endl;
-	mylist.printList();
+	//partitionList_v1(mylist, 5);
+	//std::cout << "Method-1: " << std::endl;
+	//mylist.printList();
 	////Another
-	partitionList_v2(newlist, 5);
-	std::cout << "Method-2:" << std::endl;
-	newlist.printList();
+	//partitionList_v2(newlist, 5);
+	//std::cout << "Method-2:" << std::endl;
+	//newlist.printList();
+	mylist.reverse();
+	mylist.printList();
+	mylist.reverse();
+	mylist.printList();
+
 	//mylist.destroyList_Iter(mylist.head);
 	//mylist.printList();
 	return 1;
