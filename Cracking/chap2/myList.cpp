@@ -48,6 +48,7 @@ void myList::destroyList(Node* head){
 	this->head = NULL; //Must "this" here?
 }
 
+//Note the circular List may have problem with this destroy
 void myList::destroyList_Iter(Node* head){
 	if (head == NULL)
 		return;
@@ -55,6 +56,7 @@ void myList::destroyList_Iter(Node* head){
 	while (head != NULL){
 		p = head->next;
 		delete head;
+		head = NULL;
 		head = p;
 	}
 	head = NULL;
@@ -239,21 +241,3 @@ void myList::reverse()
 {
 	do_reverse_v4(this->head);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
