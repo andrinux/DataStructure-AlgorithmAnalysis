@@ -16,6 +16,9 @@ bool checkCircle(Node * head){
 		return false;
 	Node *fast = head;
 	Node *slow = head;
+	/* When node number is even, may cause core dump, 
+	* because fast->next may not exist when fast==NULL
+	*/
 	while (fast != NULL && fast->next != NULL){
 		slow = slow->next;
 		fast = fast->next->next;
@@ -65,7 +68,7 @@ int  main()
 	for (int i = 0; i != 5; i++)
 		m = m->next;
 	std::cout<<"Value should be:" << m->value <<std::endl;
-	p->next = m;
+	//p->next = m;
 
 	bool circle = false;
 	circle=checkCircle(mylist.head);
