@@ -18,6 +18,7 @@ bool palindrome_v1(Node *& head){
 		fast = fast->next->next;
 		slow = slow->next;
 	}
+	//Skip the middle point if odd number length
 	if(fast!=NULL && fast->next == NULL)
 		slow=slow->next;
 
@@ -32,6 +33,18 @@ bool palindrome_v1(Node *& head){
 	return true;
 }
 
+bool do_Palindrome(Node *head, int length){
+	//Base case
+
+}
+//Recursion Version of Palindrome Checking
+//It seems we need to get the tail?
+bool palindrome_vR(Node *& head){
+	int length;
+	do_Palindrome(head, length);
+
+}
+
 int  main()
 {
 	myList mylist;
@@ -41,7 +54,7 @@ int  main()
 	mylist.push_back(2); mylist.push_back(6); mylist.push_back(1);
 	mylist.printList();
 	
-	bool res=palindrome_v1(mylist.head);
+	bool res=palindrome_vR(mylist.head);
 	if(res)
 		std::cout << "Yes" << std::endl;
 	else
