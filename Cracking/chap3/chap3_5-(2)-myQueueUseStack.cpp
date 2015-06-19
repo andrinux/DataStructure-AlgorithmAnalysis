@@ -28,17 +28,15 @@ myQueue::myQueue(){
 
 //Move stack src to dst
 void myQueue::move(stack<int> &src, stack<int> &dst){
-	if (src.size() == 0){
+	if (src.empty()){
 		cout << "Cannot Move: Stack is empty." << endl;
 		return;
 	}
-	while (src.size() != 0){
-		int val = src.top();
-		dst.push(val);
+	while (!src.empty()){
+		dst.push(src.top());
 		src.pop();
 	}
 }
-
 
 void myQueue::push_back(int data){
 	stk1.push(data);
@@ -46,62 +44,38 @@ void myQueue::push_back(int data){
 
 //Pop out data, from stk2, if stk2 is empty, move from stk1 first.
 void myQueue::pop_front(){
-	if (stk1.size() == 0 && stk2.size() == 0){
+	if (stk1.empty() && stk2.empty()){
 		cout << "Empty. Cannot PopFront" << endl;
 		return;
 	}
-	if (stk2.size() != 0){
-		stk2.pop();
-		return;
-	}
-	if (stk2.size() == 0 && stk1.size() != 0){
+	if (stk2.empty() && !stk1.empty())
 		move(stk1, stk2);
-		stk2.pop();
-		return;
-	}
+	stk2.pop();
 }
 
 //the top of 2nd stack on the right side
 int myQueue::front(){
-	if (stk1.size() == 0 && stk2.size() == 0){
+	if (stk1.empty() && stk2.empty()){
 		cout << "Empty. Cannot PopFront" << endl;
 		return 0;
 	}
-	if (stk2.size() != 0){
-		return stk2.top();
-	}
-	if (stk2.size() == 0){
+	if (stk2.empty())
 		move(stk1, stk2);
-		return stk2.top();
-	}
+	return stk2.top();
 }
 
 int myQueue::back(){
-	if (stk1.size() == 0 && stk2.size() == 0){
+	if (stk1.empty() && stk2.empty()){
 		cout << "Empty. Cannot PopFront" << endl;
 		return 0;
 	}
-	if (stk1.size() != 0){
-		return stk1.top();
-	}
-	if (stk1.size() == 0 && stk2.size() != 0){
+	if (stk1.empty() && !stk2.empty())
 		move(stk2, stk1);
-		return stk1.top();
-	}
+	return stk1.top();
 }
 
 int main()
 {
-	//myQueue mq;
-	//for (int i = 0; i != 20; i++){
-	//	mq.push_back(i);
-	//	cout << "Push " << i << ", then front=" << mq.front() << ", back= " << mq.back() << endl;
-	//}
-
-	//for (int i = 0; i != 20; i++){
-	//	mq.pop_front();
-	//	cout << "Pop " << ", then front=" << mq.front() << ", back= " << mq.back() << endl;
-	//}
 
 	myQueue newQ;
 	for (int i = 0; i != 15; i++){

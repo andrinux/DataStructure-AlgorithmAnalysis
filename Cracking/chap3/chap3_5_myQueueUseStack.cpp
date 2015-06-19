@@ -26,18 +26,18 @@ myQueue::myQueue(){
 //stk1 keeps empty and stk2 hold all the elements
 void myQueue::push_back(int data){
 	//Transfer all the elements from stk2 to stk1
-	//while (stk2.size() != 0){
-	//	int val = stk2.top();
-	//	stk1.push(val);
-	//	stk2.pop();
-	//}
+	while (stk2.size() != 0){
+		int val = stk2.top();
+		stk1.push(val);
+		stk2.pop();
+	}
 	stk1.push(data);
-	////Transfer to stk2
-	//while (stk1.size() != 0){
-	//	int val = stk1.top();
-	//	stk2.push(val);
-	//	stk1.pop();
-	//}
+	//Transfer to stk2
+	while (stk1.size() != 0){
+		int val = stk1.top();
+		stk2.push(val);
+		stk1.pop();
+	}
 }
 
 void myQueue::pop_front(){
@@ -45,19 +45,6 @@ void myQueue::pop_front(){
 		cout << "No element. Cannot pop." << endl;
 		return;
 	}
-	//=============
-	while (stk2.size() != 0){
-		int val = stk2.top();
-		stk1.push(val);
-		stk2.pop();
-	}
-	//Transfer to stk2
-	while (stk1.size() != 0){
-		int val = stk1.top();
-		stk2.push(val);
-		stk1.pop();
-	}
-	//=============
 	stk2.pop();
 }
 
