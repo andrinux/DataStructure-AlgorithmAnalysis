@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <queue>
 
 class Node{
 public:
@@ -24,11 +25,14 @@ public:
 	//Data
 	void insert(const int & val);
 	void do_insert(const int & val, Node* & p);
-	//void erase(int & val);
+	//bool erase(int & val);
+	//bool erase(Node *p);
 	////Attributes
-	void getHeight();
-	int do_get_Depth(Node * p, int depth);
+	bool checkAVL(Node *p);
+	int getHeight(Node *p);
+	int do_get_Depth(Node * p);
 	void getAllDepth(Node*p, int cur, std::vector<int> &depth);
+	int do_get_Depth_I(Node *p);
 	//void isEmpty();
 	void destroy(Node * root);
 	//int getSize();

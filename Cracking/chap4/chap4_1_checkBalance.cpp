@@ -28,10 +28,21 @@ int main()
 	BinarySearchTree BST;
 	BST.insert(5); BST.insert(7); BST.insert(6);
 	BST.insert(4); BST.insert(3); BST.insert(2);
-	BST.insert(1); BST.insert(8);
+	BST.insert(1); BST.insert(8); BST.insert(0);
 	BST.print_as_sideways_tree();
-	//BST.getHeight();
+	BST.getHeight(BST.root);
 	checkBalance(BST);
+	BST.do_get_Depth_I(BST.root);
+	//=================================
+	BinarySearchTree nBST;
+	nBST.insert(10); nBST.insert(5); nBST.insert(12); nBST.insert(3);
+	nBST.insert(6); nBST.insert(11); nBST.insert(13); nBST.insert(2);
+	nBST.insert(4); nBST.insert(7); nBST.insert(14); nBST.insert(1);
+	nBST.print_as_sideways_tree();
+	if (nBST.checkAVL(nBST.root))
+		std::cout << "AVL Tree" << std::endl;
+	else
+		std::cout << "Not AVL Tree" << std::endl;
 
 	return EXIT_SUCCESS;
 }
