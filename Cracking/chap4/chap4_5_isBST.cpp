@@ -4,9 +4,12 @@
 
 #include <iostream>
 #include "BinarySearchTree.h"
-#define INT_MIN -999999
+#define MIN -999999
 
 //CHeck isBST
+/****************************************************************
+* This is WRONG CODE. Only check left<cur<right is not enough.
+*****************************************************************/
 bool isBST(Node *p){
 	bool lTree, rTree;
 	if (p->left != NULL)
@@ -24,7 +27,7 @@ bool isBST(Node *p){
 //Solution2 from CC BOOK, very clean.(not easy to think...)
 //Like In order traversal
 //I feel not that good to understand.
-static int last = INT_MIN;
+static int last = MIN;
 bool isBST_v2(Node *p){
 	if (p == NULL)
 		return true;
@@ -50,10 +53,17 @@ int main()
 	nBST.insert(6); nBST.insert(11); nBST.insert(13); nBST.insert(2);
 	nBST.insert(4); nBST.insert(7); nBST.insert(14); nBST.insert(1);
 	nBST.print_as_sideways_tree();
-	std::cout << isBST(nBST.root)<<std::endl;
+	std::cout << isBST(nBST.root) << "-" << isBST_v2(nBST.root) << std::endl;
 	nBST.root->left->left->left->left->value = 0;
-	std::cout << isBST(nBST.root) << std::endl;
+	std::cout << isBST(nBST.root) << "-" << isBST_v2(nBST.root) << std::endl;
 	nBST.root->right->left->value = 15;
-	std::cout << isBST(nBST.root) << std::endl;
+	std::cout << isBST(nBST.root) << "-" << isBST_v2(nBST.root) << std::endl;
+
+	BinarySearchTree BST;
+	BST.root = new Node(20);
+	BST.root->left = new Node(10);
+	BST.root->right = new Node(30);
+	BST.root->left->right = new Node(25);
+	std::cout << isBST(BST.root) <<"-"<<isBST_v2(BST.root)<< std::endl;
 	return EXIT_SUCCESS;
 }
