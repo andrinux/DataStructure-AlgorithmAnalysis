@@ -29,6 +29,8 @@ public:
 	//bool erase(Node *p);
 	////Attributes
 	bool checkAVL(Node *p);
+	bool checkAVL_2(Node *p);
+	bool do_checkAVL_2(Node *p, int &height);
 	int getHeight(Node *p);
 	int do_get_Depth(Node * p);
 	void getAllDepth(Node*p, int cur, std::vector<int> &depth);

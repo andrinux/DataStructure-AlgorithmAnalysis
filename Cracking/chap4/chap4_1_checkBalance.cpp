@@ -39,7 +39,7 @@ int main()
 	nBST.insert(6); nBST.insert(11); nBST.insert(13); nBST.insert(2);
 	nBST.insert(4); nBST.insert(7); nBST.insert(14); nBST.insert(1);
 	nBST.print_as_sideways_tree();
-	if (nBST.checkAVL(nBST.root))
+	if (nBST.checkAVL_2(nBST.root))
 		std::cout << "AVL Tree" << std::endl;
 	else
 		std::cout << "Not AVL Tree" << std::endl;

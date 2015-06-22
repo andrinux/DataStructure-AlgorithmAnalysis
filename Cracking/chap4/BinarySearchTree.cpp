@@ -114,7 +114,7 @@ int BinarySearchTree::getHeight(Node * p){
 
 
 //For each node. check the height of left subtree and rightsubtree.
-//A direct way is O(N^2)??? or O(Nlog(N))?
+//A direct way is worst case O(N^2): skewed tree
 bool BinarySearchTree::checkAVL(Node *p){
 	//traversal
 	bool res=false;
@@ -129,3 +129,24 @@ bool BinarySearchTree::checkAVL(Node *p){
 	return res;
 }
 
+//Version 2 is to reduce the time complexity by calculating the height together
+bool BinarySearchTree::checkAVL_2(Node *p){
+	int height = 0;
+	return do_checkAVL_2(p, height);
+}
+
+bool BinarySearchTree::do_checkAVL_2(Node *p, int &height){
+	int LH = 0, RH = 0;//height of subtrees
+	bool L_AVL = false, R_VAL = false;
+	if (p == NULL){
+		height = 0;
+		return true;
+	}
+	L_AVL = do_checkAVL_2(p->left, LH);
+	R_VAL = do_checkAVL_2(p->right, RH);
+	height = (LH > RH ? LH : RH) + 1;
+	if (abs(LH - RH) >= 2)
+		return false;
+	else
+		return L_AVL && R_VAL;
+}
