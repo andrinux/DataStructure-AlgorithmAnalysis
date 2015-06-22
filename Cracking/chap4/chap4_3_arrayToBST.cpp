@@ -19,6 +19,7 @@ void ArrayToBST(std::vector<int> &data, BinarySearchTree &BST){
 	std::cout << "layer Number N = " << N << std::endl;
 	int step = 1 << (N - 2);
 	int i = (1 << (N-1) )-1;
+	i = M / 2;
 	std::queue<int> cur, next;
 	cur.push(i); BST.insert(data[i]);
 	while (step > 0){
@@ -45,12 +46,12 @@ Node* ArrayToBST_R(std::vector<int> &data){
 	//base case
 	if (data.size() == 0)
 		return NULL;
-	if (data.size() == 1){
-		BST->insert(data[0]);
-		return BST->root;
-	}
+	//This base case can be skipped.
+	//if (data.size() == 1){
+	//	BST->insert(data[0]);
+	//	return BST->root;
+	//}
 	//general case
-	//Node *lTree = NULL, *rTree = NULL;
 	std::vector<int> lData, rData;
 	for (int i = 0; i != mid; i++)
 		lData.push_back(data[i]);
