@@ -1,4 +1,4 @@
-# Data Structure-Algorithm Analysis
+# Data Structures in Linux Kernel(From MOOC)
 
 The initial purpose of this project is to get familiar with the data structures in Linux Kernel.
 Linux Kernel is ~~one of~~ the most complicated C project ever, I believe. ~~Many~~ MMMAAANNNYYY advanced data structures and ~~good~~ astonishing techniques are adopted in it.
