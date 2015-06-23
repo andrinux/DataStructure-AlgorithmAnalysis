@@ -35,17 +35,17 @@ public:
 	int do_get_Depth(Node * p);
 	void getAllDepth(Node*p, int cur, std::vector<int> &depth);
 	int do_get_Depth_I(Node *p);
-	//void isEmpty();
+	bool isEmpty() const { return this->root == NULL; }
 	void destroy(Node * root);
-	//int getSize();
+	int getSize();
 	//bool isEqual(BST& old);
 	////Find
-	//bool find(int val);
-	//int findMin();
+	bool find(int val) const;
+	int findMin();
 	////Traversal
-	//void print_pre_order();
-	//void print_in_order();
-	//void print_post_order();
+	void print_pre_order(Node * root);
+	void print_in_order(Node * root);
+	void print_post_order(Node * root);
 	//void print_level_orer();
 	////Print
 	void print_as_sideways_tree();

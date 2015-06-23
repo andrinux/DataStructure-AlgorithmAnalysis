@@ -150,3 +150,56 @@ bool BinarySearchTree::do_checkAVL_2(Node *p, int &height){
 	else
 		return L_AVL && R_VAL;
 }
+
+bool BinarySearchTree::find(int val) const{
+	Node *p = root;
+	while (p != NULL){
+		if (p->value == val)
+			return true;
+		else if (p->value < val)
+			p = p->right;
+		else
+			p = p->left;
+	}
+		return false;
+}
+
+int BinarySearchTree::findMin(){
+	Node *p = root;
+	if (root == NULL){
+		return -1;
+	}
+	while (p->left != NULL){
+		p = p->left;
+	}
+	return p->value;
+}
+
+void BinarySearchTree::print_pre_order(Node * p){
+	if (p == NULL)
+		return;
+	std::cout << p->value << "->";
+	print_pre_order(p->left);
+	print_pre_order(p->right);
+}
+
+void BinarySearchTree::print_in_order(Node * p){
+	if (p == NULL)
+		return;
+	print_in_order(p->left);
+	std::cout << p->value << "->";
+	print_in_order(p->right);
+}
+
+void BinarySearchTree::print_post_order(Node * p){
+	if (p == NULL)
+		return;
+	print_post_order(p->left);
+	print_post_order(p->right);
+	std::cout << p->value << "->";
+}
+
+//Iteratively Traversal
+int BinarySearchTree::getSize(){
+
+}
