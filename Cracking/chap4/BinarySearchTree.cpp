@@ -11,6 +11,7 @@ BinarySearchTree::~BinarySearchTree(){
 
 void BinarySearchTree::insert(const int &val){
 	do_insert(val, root);
+	size++;
 }
 
 //Skip node if this value already exists
@@ -199,7 +200,32 @@ void BinarySearchTree::print_post_order(Node * p){
 	std::cout << p->value << "->";
 }
 
-//Iteratively Traversal
-int BinarySearchTree::getSize(){
+//Iteratively
+void BinarySearchTree::print_pre_order_I(Node * p){
 
 }
+
+void BinarySearchTree::print_in_order_I(Node * p){
+
+}
+
+void BinarySearchTree::print_post_order_I(Node * p){
+
+}
+
+int BinarySearchTree::M = 0;
+
+//Iteratively Traversal
+int BinarySearchTree::getSize(){
+	do_getSize(root);
+	return M;
+}
+
+void BinarySearchTree::do_getSize(Node *p){
+	if (p == NULL)
+		return;
+	print_post_order(p->left);
+	print_post_order(p->right);
+	M++;
+}
+

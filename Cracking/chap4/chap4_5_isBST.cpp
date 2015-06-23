@@ -59,6 +59,7 @@ int main()
 	std::cout << "\n=================" << std::endl;
 	nBST.print_post_order(nBST.root);
 	std::cout << "\n=================" << std::endl;
+	std::cout << "Size is " << nBST.getSize() << std::endl;
 
 	std::cout << isBST(nBST.root) << "-" << isBST_v2(nBST.root) << std::endl;
 	nBST.root->left->left->left->left->value = 0;

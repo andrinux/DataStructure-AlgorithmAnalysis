@@ -15,12 +15,16 @@ public:
 	Node(int val) : value(val), left(NULL), right(NULL) {}
 };
 
+
+
 class BinarySearchTree{
 public:
 	Node * root;
+	int size;
+	static int M;
 public:
 	//Constructor
-	BinarySearchTree() : root(NULL) {}
+	BinarySearchTree() : root(NULL), size(0) {}
 	~BinarySearchTree();
 	//Data
 	void insert(const int & val);
@@ -38,6 +42,7 @@ public:
 	bool isEmpty() const { return this->root == NULL; }
 	void destroy(Node * root);
 	int getSize();
+	void do_getSize(Node *p);
 	//bool isEqual(BST& old);
 	////Find
 	bool find(int val) const;
@@ -46,6 +51,9 @@ public:
 	void print_pre_order(Node * root);
 	void print_in_order(Node * root);
 	void print_post_order(Node * root);
+	void print_pre_order_I(Node * root);
+	void print_in_order_I(Node * root);
+	void print_post_order_I(Node * root);
 	//void print_level_orer();
 	////Print
 	void print_as_sideways_tree();
