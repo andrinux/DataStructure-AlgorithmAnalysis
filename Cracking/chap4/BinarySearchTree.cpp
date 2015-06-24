@@ -279,12 +279,58 @@ void BinarySearchTree::do_getSize(Node *p){
 }
 
 //Three different cases based on number of children nodes
+//Unfinished, Tired...
 bool BinarySearchTree::erase(int val){
 	Node * parent = root, *cur=root;
+	while(cur->value != val && cur != NULL){
+		if(cur == NULL){
+			std::cout << "Cannot find it." << std::endl;
+			return false;
+		}
+		if(cur->value > val){
+			parent = cur;
+			cur =cur->left;
+		}else 
+		{
+			parent = cur;
+			cur = cur->right;
+		}
+	}
 	//Case 1: leaf node
-
+	if(cur->left == NULL && cur->right==NULL){
+		if(parent->left == cur){
+			parent->left = NULL;
+			delete cur;
+		}else{
+			parent->right = NULL;
+			delete cur;
+		}
+	}
 	//Case 2: only one child
-
+	if (cur->left ==NULL && cur->right != NULL){
+		if(parent->left == cur)
+			parent->left = cur->right;
+		else
+			parent->right = cur->right;
+	}
+	if(cur->left !=NULL && cur->right==NULL){
+		if(parent->left == cur)
+			parent->left = cur->left;
+		else
+			parent->right = cur->left;
+	}
 	//Case 3: two children, found parent node.
+	if(cur->left !=NULL && cur->right !=NULL){
+		//Find the largest left-side child nodes to replace it.
+		Node *p = cur->left;
+		while(p->right){
+			p=p->right;
+		}
+		//p can be leaf node, or one-child node.
+		if(p->left == NULL && p->rght == NULL){
+			cur->value=p->value;
+
+		}
+	}
 	return true;
 }
