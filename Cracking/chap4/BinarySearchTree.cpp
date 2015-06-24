@@ -6,6 +6,7 @@
 #include "BinarySearchTree.h"
 #include <cmath>
 
+static int M = 0;
 BinarySearchTree::~BinarySearchTree(){
 	this->destroy(this->root);
 }
@@ -203,18 +204,52 @@ void BinarySearchTree::print_post_order(Node * p){
 
 //Iteratively
 void BinarySearchTree::print_pre_order_I(Node * p){
-	
+	if(p == NULL)
+		return;
+	std::stack<Node*> toVisit;
+	toVisit.push(p);
+	while(!toVisit.empty()){
+		p = toVisit.top();
+		toVisit.pop();
+		while(p != NULL){
+			std::cout << p->value << "->";
+			if(p->right != NULL)
+				toVisit.push(p->right);
+			p = p->left;
+		}
+	}
+	std::cout <<"\n================="<< std::endl;
 }
 
+//A bit different from Pre order iteration
 void BinarySearchTree::print_in_order_I(Node * p){
+	if(p == NULL)
+		return;
+	std::stack<Node *> toVisit;
+	while(p != NULL || !toVisit.empty()){
+		if(p != NULL){
+			if(p->right)
+				toVisit.push(p->right);
+			toVisit.push(p);
+			p = p->left;
+		}
+		else{
+			p = toVisit.top();
+			std::cout<< p->value << "->";
+			toVisit.pop();
+			p = toVisit.top();
+		}
+	}
 
 }
 
 void BinarySearchTree::print_post_order_I(Node * p){
+	if(p == NULL)
+		return;
+	//std::stack<Node *> toVisit;
 
 }
 
-int BinarySearchTree::M = 0;
 
 //Iteratively Traversal
 int BinarySearchTree::getSize(){
@@ -222,11 +257,12 @@ int BinarySearchTree::getSize(){
 	return M;
 }
 
+//Why a static variable cannot get the size.
 void BinarySearchTree::do_getSize(Node *p){
 	if (p == NULL)
 		return;
-	print_post_order(p->left);
-	print_post_order(p->right);
-	M++;
+	print_in_order(p->left);
+	M=M+1;
+	print_in_order(p->right);
 }
 

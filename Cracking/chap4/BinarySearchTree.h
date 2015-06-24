@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <stack>
 
 class Node{
 public:
@@ -21,7 +22,6 @@ class BinarySearchTree{
 public:
 	Node * root;
 	int size;
-	static int M;
 public:
 	//Constructor
 	BinarySearchTree() : root(NULL), size(0) {}

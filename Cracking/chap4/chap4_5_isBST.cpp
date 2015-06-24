@@ -12,7 +12,7 @@
 * This is WRONG CODE. Only check left<cur<right is not enough.
 *****************************************************************/
 bool isBST(Node *p){
-
+	return true;
 }
 
 //Solution2 from CC BOOK, very clean.(not easy to think...)
@@ -44,12 +44,15 @@ int main()
 	nBST.insert(6); nBST.insert(11); nBST.insert(13); nBST.insert(2);
 	nBST.insert(4); nBST.insert(7); nBST.insert(14); nBST.insert(1);
 	nBST.print_as_sideways_tree();
-	nBST.print_pre_order(nBST.root);
-	std::cout << "\n=================" << std::endl;
+	nBST.print_pre_order(nBST.root); std::cout << std::endl;
+	nBST.print_pre_order_I(nBST.root);
 	nBST.print_in_order(nBST.root);
 	std::cout << "\n=================" << std::endl;
 	nBST.print_post_order(nBST.root);
 	std::cout << "\n=================" << std::endl;
+
+
+
 	std::cout << "Size is " << nBST.getSize() << std::endl;
 
 	std::cout << isBST(nBST.root) << "-" << isBST_v2(nBST.root) << std::endl;
