@@ -226,27 +226,39 @@ void BinarySearchTree::print_in_order_I(Node * p){
 	if(p == NULL)
 		return;
 	std::stack<Node *> toVisit;
-	while(p != NULL || !toVisit.empty()){
+	while(p!=NULL || !toVisit.empty()){
 		if(p != NULL){
-			if(p->right)
-				toVisit.push(p->right);
 			toVisit.push(p);
-			p = p->left;
+			p=p->left;
 		}
 		else{
 			p = toVisit.top();
-			std::cout<< p->value << "->";
+			std::cout << p->value << "->";
 			toVisit.pop();
-			p = toVisit.top();
+			p=p->right;
 		}
 	}
-
+	std::cout <<"\n================="<< std::endl;
 }
 
 void BinarySearchTree::print_post_order_I(Node * p){
 	if(p == NULL)
 		return;
-	//std::stack<Node *> toVisit;
+	std::stack<Node *> stk1, stk2;
+	stk1.push(p);
+	while (!stk1.empty()){
+		p = stk1.top();
+		stk2.push(p);
+		stk1.pop();
+		if (p->left) stk1.push(p->left);
+		if (p->right) stk1.push(p->right);
+	}
+	while (!stk2.empty()){
+		p = stk2.top();
+		std::cout << p->value << "->";
+		stk2.pop();
+	}
+	std::cout << "\n=================" << std::endl;
 
 }
 
@@ -261,8 +273,18 @@ int BinarySearchTree::getSize(){
 void BinarySearchTree::do_getSize(Node *p){
 	if (p == NULL)
 		return;
-	print_in_order(p->left);
+	do_getSize(p->left);
 	M=M+1;
-	print_in_order(p->right);
+	do_getSize(p->right);
 }
 
+//Three different cases based on number of children nodes
+bool BinarySearchTree::erase(int val){
+	Node * parent = root, *cur=root;
+	//Case 1: leaf node
+
+	//Case 2: only one child
+
+	//Case 3: two children, found parent node.
+	return true;
+}

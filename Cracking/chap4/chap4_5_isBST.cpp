@@ -46,11 +46,14 @@ int main()
 	nBST.print_as_sideways_tree();
 	nBST.print_pre_order(nBST.root); std::cout << std::endl;
 	nBST.print_pre_order_I(nBST.root);
-	nBST.print_in_order(nBST.root);
-	std::cout << "\n=================" << std::endl;
-	nBST.print_post_order(nBST.root);
-	std::cout << "\n=================" << std::endl;
-
+	nBST.print_in_order(nBST.root); std::cout << std::endl;
+	nBST.print_in_order_I(nBST.root); 
+	nBST.print_post_order(nBST.root); std::cout << std::endl;
+	nBST.print_post_order_I(nBST.root);
+	//Erase test
+	Node *p = nBST.root->right->right->right;
+	nBST.erase(14);
+	nBST.print_as_sideways_tree();
 
 
 	std::cout << "Size is " << nBST.getSize() << std::endl;

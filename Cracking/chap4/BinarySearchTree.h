@@ -29,7 +29,7 @@ public:
 	//Data
 	void insert(const int & val);
 	void do_insert(const int & val, Node* & p);
-	//bool erase(int & val);
+	bool erase(int  val);
 	//bool erase(Node *p);
 	////Attributes
 	bool checkAVL(Node *p);
