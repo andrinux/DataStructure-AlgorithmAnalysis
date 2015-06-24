@@ -1,6 +1,7 @@
 /*
 * Check if a Binary Tree is a BST or not.
 */
+//g++ -Wall chap4_5_isBST.cpp BinarySearchTree.cpp -std=c++0x -o test
 
 #include <iostream>
 #include "BinarySearchTree.h"
@@ -11,16 +12,6 @@
 * This is WRONG CODE. Only check left<cur<right is not enough.
 *****************************************************************/
 bool isBST(Node *p){
-	bool lTree, rTree;
-	if (p->left != NULL)
-		lTree = (p->value > p->left->value) && isBST(p->left);
-	else
-		lTree=true;
-	if (p->right != NULL)
-		rTree = (p->value < p->right->value) && isBST(p->right);
-	else
-		rTree = true;
-	return lTree&&rTree;
 
 }
 

@@ -5,6 +5,7 @@
 #include <iostream>
 #include "BinarySearchTree.h"
 #include <cmath>
+
 BinarySearchTree::~BinarySearchTree(){
 	this->destroy(this->root);
 }
@@ -202,7 +203,7 @@ void BinarySearchTree::print_post_order(Node * p){
 
 //Iteratively
 void BinarySearchTree::print_pre_order_I(Node * p){
-
+	
 }
 
 void BinarySearchTree::print_in_order_I(Node * p){
