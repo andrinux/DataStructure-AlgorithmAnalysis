@@ -46,7 +46,7 @@ public:
 	//bool isEqual(BST& old);
 	////Find
 	bool find(int val) const;
-	int findMin();
+	int findMin(Node *p);
 	////Traversal
 	void print_pre_order(Node * root);
 	void print_in_order(Node * root);

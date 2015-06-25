@@ -11,9 +11,28 @@
 /****************************************************************
 * This is WRONG CODE. Only check left<cur<right is not enough.
 *****************************************************************/
+void GetData(Node *p, std::vector<int> &data){
+	if (p == NULL)
+		return;
+	if (p->left)
+		GetData(p->left, data);
+	data.push_back(p->value);
+	if (p->right)
+		GetData(p->right, data);
+}
+
 bool isBST(Node *p){
+	//In-order traversal, store the elements into a vector
+	std::vector<int> data;
+	GetData(p, data);
+	for (int i = 0; i != data.size() - 1; i++){
+		if (data[i] >= data[i + 1])
+			return false;
+	}
 	return true;
 }
+
+
 
 //Solution2 from CC BOOK, very clean.(not easy to think...)
 //Like In order traversal
@@ -57,7 +76,9 @@ int main()
 	nBST.erase(6);
 	nBST.print_as_sideways_tree();
 	nBST.insert(6);
-
+	nBST.erase(12);
+	nBST.print_as_sideways_tree();
+	nBST.insert(12);
 
 	std::cout << "Size is " << nBST.getSize() << std::endl;
 

@@ -167,9 +167,9 @@ bool BinarySearchTree::find(int val) const{
 		return false;
 }
 
-int BinarySearchTree::findMin(){
-	Node *p = root;
-	if (root == NULL){
+int BinarySearchTree::findMin(Node *p){
+	//Node *p = root;
+	if (p == NULL){
 		return -1;
 	}
 	while (p->left != NULL){
@@ -305,6 +305,7 @@ bool BinarySearchTree::erase(int val){
 			parent->right = NULL;
 			delete cur;
 		}
+		return true;
 	}
 	//Case 2: only one child
 	if (cur->left ==NULL && cur->right != NULL){
@@ -312,25 +313,28 @@ bool BinarySearchTree::erase(int val){
 			parent->left = cur->right;
 		else
 			parent->right = cur->right;
+		delete cur;
+		return true;
 	}
 	if(cur->left !=NULL && cur->right==NULL){
 		if(parent->left == cur)
 			parent->left = cur->left;
 		else
 			parent->right = cur->left;
+		delete cur;
+		return true;
 	}
 	//Case 3: two children, found parent node.
-	if(cur->left !=NULL && cur->right !=NULL){
-		//Find the largest left-side child nodes to replace it.
-		Node *p = cur->left;
-		while(p->right){
-			p=p->right;
-		}
+    //Still some bugs here.left-All right seems doesn't work.
+	if(cur->left != NULL && cur->right != NULL){
 		//p can be leaf node, or one-child node.
-		if(p->left == NULL && p->rght == NULL){
-			cur->value=p->value;
-
-		}
+		//Can use recursion.
+		int tmp = findMin(cur->right);
+		erase(tmp);
+		cur->value = tmp;
+		return true;
 	}
-	return true;
+	else
+		return false;
+
 }
