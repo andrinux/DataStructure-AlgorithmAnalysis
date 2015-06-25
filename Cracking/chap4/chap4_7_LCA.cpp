@@ -14,6 +14,7 @@
 
 Node *findLCA_BST(Node *root, Node *p1, Node* p2);
 Node *findLCA_BT(Node *root, Node *p1, Node* p2);
+Node *findLCA_BT_2(Node *root, Node *p1, Node* p2);
 
 Node* ArrayToTree(int a[], Node * parent, int start, int end){
 	//base case.
@@ -62,13 +63,14 @@ Node * findLCA(Node * root, int v1, int v2, int type){
 	if (type == 0)
 		res = findLCA_BST(root, p1, p2);
 	else
-		res =  findLCA_BT(root, p1, p2);
+		res =  findLCA_BT_2(root, p1, p2);
 	if (res != NULL)
 		std::cout << "LCA is: " << res->data << std::endl;
 	return res;
 }
 
 //For Binary Search Tree
+//Comment: a long boolean euqation is not good, try to change it.
 Node *findLCA_BST(Node *root, Node *p1, Node* p2){
 	Node *p = root;
 	if (root ==NULL ||p1 == NULL || p2 == NULL){
@@ -93,12 +95,64 @@ Node *findLCA_BST(Node *root, Node *p1, Node* p2){
 }
 
 //For ordinary Binary Tree LCA.
+//Cannot use extra data structs to store something.
+//parent node or not?
 Node *findLCA_BT(Node *root, Node *p1, Node* p2){
+	//base cases
+	if (root == NULL || p1 == NULL || p2 == NULL){
+		return NULL;
+	}
+	if (root == p1 || root == p2)
+		return root;
+	//general cases
+	Node *p = root;
+	Node *left = findLCA_BT(p->left, p1, p2);
+	Node * right = findLCA_BT(p->right, p1, p2);
 
-	return NULL;
+	if (left != NULL && right != NULL)
+		return p;
+	else if (left != NULL)
+		return left;
+	else if (right != NULL)
+		return right;
+	else
+		return NULL;
 
 }
 
+//Check if p is p2's parent.
+bool isParent(Node *p, Node *p2){
+	if (p == NULL || p2 == NULL)
+		return false;
+	if (p == p2)
+		return true;
+	if (p->left)
+		if (isParent(p->left, p2))
+			return true;
+	if (p->right)
+		if (isParent(p->right, p2))
+			return true;
+	return false;
+}
+
+//Method-2: for each level parent of p1, check for p2
+Node *findLCA_BT_2(Node *root, Node *p1, Node* p2){
+	if (root == NULL || p1 == NULL || p2 == NULL){
+		return NULL;
+	}
+	if (root == p1 || root == p2)
+		return root;
+	Node * p = p1;
+	while (p != root){
+		if (isParent(p, p2))
+			return p;
+		else
+			p = p->parent;
+	}
+
+	return root;
+
+}
 
 int main()
 {
@@ -114,7 +168,7 @@ int main()
 
 	//test cases:
 	findLCA(myTree.root, 5, 2, BSTree);
-	findLCA(newTree.root, 1, 15, BTree);
+	findLCA(newTree.root, 4, 14, BTree);
 
 
 	return 0;
