@@ -5,6 +5,7 @@
 */  
 
 //path may be not unique, so try to find all of them.
+//method 2 is not finished yet.
 
 #include <iostream>
 #include "BinaryTree.h"
