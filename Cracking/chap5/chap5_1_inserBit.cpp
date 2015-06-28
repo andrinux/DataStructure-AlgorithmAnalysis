@@ -19,14 +19,14 @@ void changeBits(int &N, int M, int i, int j){
 	int m3 = ~m2;
 	N = N&m3;
 	M = M << i;
-	N = M^N;
+	N = M|N;
 
 	return;
 }
 
 int main()
 {
-	int N = 1, M = 21;
+	int N = 1024, M = 21;
 	changeBits(N, M, 2, 6);
 	std::cout << N;
 	return 0;
