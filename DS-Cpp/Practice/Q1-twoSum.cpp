@@ -1,13 +1,14 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 
 //Res is 16ms. Top 50%.
 using namespace std;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
+    vector<int> twoSum_1(vector<int>& nums, int target) {
        vector<int> res;
        unordered_map<int, int> maps;
        unordered_map<int, int>::iterator itr;
@@ -25,16 +26,53 @@ public:
        }
        return res;
     }
+	// Another method: Double side approximate.
+	vector<int> twoSum(vector<int>& nums, int target) {
+		vector<int> num = nums;
+		sort(num.begin(), num.end());
+		vector<int> res;
+		int i = 0, j = num.size() - 1;
+		while (i < j){
+			if (num[i] + num[j] < target)
+				i++;
+			else if (num[i] + num[j] > target)
+				j--;
+			else
+				break;
+		}
+		int k = 0;
+		while (k < nums.size()){
+			if (nums[k] == num[i]){
+				res.push_back(1 + k);
+				break;
+			}
+			k++;
+		}
+		k = nums.size() - 1;
+		while (k >=0 ){
+			if (nums[k] == num[j]){
+				res.push_back(1 +k);
+				break;
+			}
+			k--;
+		}
+		if (res[0] > res[1]){
+			k = res[1];
+			res[1] = res[0];
+			res[0] = k;
+		}
+		cout << "index1=" << res[0] << ", index2=" << res[1] << endl;
+		return res;
+	}
 };
 
 int main()
 {
-    int data[] = {2, 7, 11, 15, 20, 100};
-    vector<int> nums;
-    for(unsigned i=0; i!= 6; i++)
-        nums.push_back(data[i]);
-
+	vector<int> nums = {-1, -2, -3, -4, -5};
     Solution so;
-    so.twoSum(nums, 9);
+
+    so.twoSum(nums, -8);
+	so.twoSum_1(nums, -8);
+	
     return 1;
 }
