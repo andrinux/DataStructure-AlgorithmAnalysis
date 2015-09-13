@@ -30,6 +30,10 @@ public:
 		curLen = i - curStart;
 		return max(maxLen, curLen);
 	}
+
+    int LenSubString(string s){
+
+    }
 };
 
 
