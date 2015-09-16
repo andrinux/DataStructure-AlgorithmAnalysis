@@ -45,4 +45,20 @@ public:
 };
 
 
-
+int main()
+{
+	string str;
+	Solution so;
+	cout << sizeof(long long)<<endl;
+	str = "321";cout << str << " " << so.myAtoi(str) << endl;
+	str = "-321"; cout << str << " " << so.myAtoi(str) << endl;
+	str = "0"; cout << str << " " << so.myAtoi(str) << endl;
+	str = ""; cout << str << " " << so.myAtoi(str) << endl;
+	str = "+-++-1234"; cout << str << " " << so.myAtoi(str) << endl;
+	str = "2147483647"; cout << str << " " << so.myAtoi(str) << endl;
+	str = "2147483649"; cout << str << " " << so.myAtoi(str) << endl;
+	str = "-2147483648"; cout << str << " " << so.myAtoi(str) << endl;
+	str = "9999999999"; cout << str << " " << so.myAtoi(str) << endl;
+	str = "  -0012a42"; cout << str << " " << so.myAtoi(str) << endl;
+	return 1;
+}
