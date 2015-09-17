@@ -108,3 +108,18 @@ public:
 	}
 };
 
+
+
+
+int main()
+{
+	Solution so;
+	int x = 0;
+	x = 1221; cout << x << " -> " << so.isPalindrome(x) << endl;
+	x = 1; cout << x << " -> " << so.isPalindrome(x) << endl;
+	x = 0; cout << x << " -> " << so.isPalindrome(x) << endl;
+	x = 2147447412; cout << x << " -> " << so.isPalindrome(x) << endl;
+	x = 2142; cout << x << " -> " << so.isPalindrome(x) << endl;
+	x = 121; cout << x << " -> " << so.isPalindrome(x) << endl;
+	return 1;
+}
