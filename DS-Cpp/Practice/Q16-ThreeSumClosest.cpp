@@ -34,7 +34,50 @@ public:
 		}
 		return sum;
 	}
-
+	//Two Optimize
+	int threeSumClosest(vector<int>& nums, int target){
+		int M = nums.size();
+		int sum = 0, curSum = 0;
+		int minDiff = INT_MAX;
+		int flag = 0;
+		sort(nums.begin(), nums.end());
+		int i = 0, j = 0, k = 0;
+		for (i = 0; i < M - 2; i++){
+			j = i + 1;
+			k = M - 1;
+			while (j < k){
+				curSum = nums[i] + nums[j] + nums[k];
+				cout << "check: " << i << ", " << j << ", " << k << ": "<< curSum<< endl;
+				//check the closest
+				if (minDiff > abs(curSum - target)){
+					minDiff = abs(curSum - target);
+					sum = curSum;
+				}
+				flag = 0;
+				//iterating for next time.
+				if (curSum - target == 0)
+					return target;
+				else if (curSum - target < 0){
+					if (flag == 1)
+						break;
+					flag = -1;
+					j++;
+				}
+				else{
+					//If the synbol changes from negative to positive, then we can end. change to 12ms.
+					if (flag == -1)
+						break;
+					flag = 1;
+					k--;
+				}
+					
+			}
+			//Optimize: This two lines of code can reduce the runtime from 24ms ->16ms
+			if (sum>target && i < M)
+				break;
+		}
+		return sum;
+	}
 };
 
 int main()
