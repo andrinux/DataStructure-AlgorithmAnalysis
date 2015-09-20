@@ -145,7 +145,31 @@ public:
 		return res;
 	}
 
-
+	//(4) The solution on https://leetcode.com/discuss/3950/tle-on-4sum-using-hashtable
+	//between O(N^2) and O(N^3)
+	//Same idea with Two Sum Hashmap way.
+	vector<vector<int> > fourSum(vector<int> &num, int target) {
+		sort(num.begin(), num.end());
+		unordered_map<int, set<pair<int, int>>> hash;
+		set<vector<int>> ans;
+		int n = num.size();
+		for (int i = 0; i < n; i++) {
+			for (int j = i + 1; j < n; j++) {
+				int a = num[i] + num[j];
+				if (hash.count(target - a)) {
+					for (auto &p : hash[target - a]) {
+						vector<int> b = { p.first, p.second, num[i], num[j] };
+						ans.insert(b);
+					}
+				}
+			}
+			for (int j = 0; j < i; j++) {
+				int a = num[j], b = num[i];
+				hash[a + b].insert(make_pair(a, b));
+			}
+		}
+		return vector<vector<int>>(ans.begin(), ans.end());
+	}
 
 };
 
