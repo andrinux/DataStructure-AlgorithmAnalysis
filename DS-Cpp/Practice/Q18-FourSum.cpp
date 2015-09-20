@@ -105,7 +105,45 @@ public:
 		return res;
 	}
 
+	//(3) use multimap to store.
+	vector<vector<int> > fourSum_3(vector<int> &nums, int target){
+		sort(nums.begin(), nums.end());
+		int M = nums.size();
+		vector<vector<int> > res;
+		if (M < 4) return res;
 
+		unordered_multimap<int, pair<int, int>> Maps;
+		int a = 0, b = 0, c = 0, d = 0;
+		for (a = 0; a < M; a++)
+			for (b = a+1; b < M; b++){
+				Maps.insert(make_pair(nums[a]+nums[b], make_pair(a, b)));
+				//Skip the duplicated. No need of this part because key is unique in MAP.
+				while (a+1 < M && nums[a] == nums[a + 1])
+					a++;
+				while (b+1 < M && nums[b] == nums[b + 1])
+					b++;
+			}
+		unordered_multimap<int, pair<int, int>>::const_iterator itr;
+		for (itr = Maps.begin(); itr != Maps.end(); itr++){
+			int key = target - itr->first;
+			auto range = Maps.equal_range(key);
+			for (auto iter = range.first; iter != range.second; iter++){
+				a = itr->second.first;
+				b = itr->second.second;
+				c = iter->second.first;
+				d = iter->second.second;
+				if (a < c && a < d && b < c && b < d){
+					vector<int> one_res = {nums[a], nums[b], nums[c], nums[d]};
+					//sort(one_res.begin(), one_res.end());
+					res.push_back(one_res);
+				}
+			}
+		}
+		//Manually Dedup
+		sort(res.begin(), res.end());
+		res.erase(unique(res.begin(), res.end()), res.end());
+		return res;
+	}
 
 
 
