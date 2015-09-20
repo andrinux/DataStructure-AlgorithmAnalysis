@@ -51,7 +51,59 @@ public:
 		return res;
 	}
 
+	//(2) A O(N^2) Method using HashMap: store the sum-locations in pair.
+	//It is always very tricky to deal with the duplicated cases.
+	vector<vector<int> > fourSum_2(vector<int> &nums, int target) {
+		sort(nums.begin(), nums.end());
+		int M = nums.size();
+		vector<vector<int> > res;
+		if (M < 4) return res;
+		unordered_map<int, vector<pair<int, int>> > Maps;
+		unordered_map<int, vector<pair<int, int>> >::const_iterator itr;
+		int a = 0, b = 0, c = 0, d = 0;
+		//Construct the Hashmap first, key is the sum and value is the location pairs
+		//the second of this Map is a  VECTOR. So the complexity of this step is O(N^2)
+		// Dedup matters here.
+		for (a = 0; a < M; a++)
+			for (b = a + 1; b < M; b++){
+				Maps[nums[a] + nums[b]].push_back(pair<int, int>(a, b));
+				//Skip the duplicated. No need of this part because key is unique in MAP.
+				//while (a+1 < M && nums[a] == nums[a + 1])
+				//	a++;
+				//while (b+1 < M && nums[b] == nums[b + 1])
+				//	b++;
+			}
+		//cout << Maps.size() << endl;
+				
+		//Then Let us search c&d: Note the deduplication.
+		//AT worst, it is O(N^3).
 
+		for (c = 0; c < M; c++)
+			for (d = c + 1; d < M; d++){
+				while (d <= c)
+					d++;
+				int key = target - nums[c] - nums[d];
+				itr = Maps.find(key);
+				if (itr == Maps.end())
+					continue;
+				const vector<pair<int, int>> vec = itr->second;
+				for (int i = 0; i < vec.size(); i++){
+					if (c <= vec[i].second )//Smaller than the second.
+						continue;
+					else{
+						res.push_back({ nums[vec[i].first], nums[vec[i].second], nums[c], nums[d] });
+						//while (c + 1 < M && nums[c] == nums[c + 1])
+						//	c++;
+						//while (d + 1 < M && nums[d] == nums[d + 1])
+						//	d++;
+					} 
+				}				
+			}
+		//Manually Dedup
+		sort(res.begin(), res.end());
+		res.erase(unique(res.begin(), res.end()), res.end());
+		return res;
+	}
 
 
 
