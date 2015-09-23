@@ -75,6 +75,44 @@ public:
 
 
 
+	/*
+	*
+	*                 Method (2):Use Priority Queue
+	*                  Complexity is O(nklogk)
+	*
+	*/
+
+	//Customized compare function.
+	struct mycompare{
+		bool operator()(const ListNode* p1, const ListNode* p2){
+			return p1->val > p2->val;
+		}
+	};
+	
+	ListNode* mergeKLists(vector<ListNode*>& lists){
+		//corner cases.
+		if (lists.size() == 0)
+			return NULL;
+		//use PQ
+		priority_queue<ListNode*, vector<ListNode*> , mycompare> heap;
+		ListNode head(-1);
+		ListNode *p = &head;
+		for (int i = 0; i < lists.size(); i++){
+			if (lists[i] != NULL)
+				heap.push(lists[i]);
+		}
+		while (heap.size() != 0){
+			p->next = heap.top();
+			heap.pop();
+			p = p->next;
+			if (p->next != NULL)
+				heap.push(p->next);
+		}
+		return head.next;
+			
+	}
+
+};
 
 
 void genListFromVec(ListNode *&head, vector<int> nums){
