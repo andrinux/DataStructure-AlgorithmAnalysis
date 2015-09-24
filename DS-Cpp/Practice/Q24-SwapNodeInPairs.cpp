@@ -25,7 +25,7 @@ void genListFromVec(ListNode *&head, vector<int> nums){
 	delete newhead;
 
 }
-
+//Not clean enough! Need rewriting.
 class Solution {
 public:
 	ListNode* swapPairs(ListNode* head) {
