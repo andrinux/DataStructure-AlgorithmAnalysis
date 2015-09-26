@@ -26,7 +26,20 @@ public:
 		nums.resize(j);
 		return j;
 	}
-
+	// If the input is sorted
+	int removeDuplicates_2(vector<int>& nums){
+		if (nums.size() == 0)
+			return 0;
+		int i = 0, j = 0;
+		while (i < nums.size()){
+			while ( i+1 < nums.size() && nums[i] == nums[i + 1])
+				i++;
+			nums[j] = nums[i];
+			j++; i++;
+		}
+		nums.resize(j);
+		return j;
+	}
 };
 
 
