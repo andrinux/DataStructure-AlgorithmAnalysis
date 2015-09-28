@@ -39,7 +39,38 @@ public:
 		return (int) (sym1*sym2*result);
 	}
 
+	//Rewrite.
+	int divide(int M, int N) {
+		//Corner cases
+		if (N == 0)
+			return INT_MAX;
+		int sym1 = M > 0 ? 1 : -1;
+		int sym2 = N > 0 ? 1 : -1;
+		//convert to positive.
+		long long newM = llabs(M);
+		long long newN = llabs(N);
 
+		// do division.
+		long long result = 0;
+		long long Rem = newM;
+		long long curN = newN, factor = 1;
+		while (Rem >= curN ){//curN will overflow.
+			curN = curN << 1;
+			factor = factor << 1;
+			if (Rem <= curN){
+				result += (factor >> 1);
+				Rem = Rem - (curN >> 1);
+				curN = newN;
+				factor = 1;
+			}
+		}
+		int sym = (sym1 == sym2) ? 1 : -1;
+		result = (sym == 1) ? result : (result - result - result);
+		if (result<INT_MIN || result>INT_MAX)
+			return INT_MAX;
+		else
+			return (int)(result);
+	}
 };
 
 int main()
