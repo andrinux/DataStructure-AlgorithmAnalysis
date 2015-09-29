@@ -102,7 +102,82 @@ public:
 	}
 
 
-
+	/*
+	* The key to make it quicker is to avoid unnecessary/repeated checking
+	* Use A sliding Window.
+	*/
+	//Now it is much quicker. 36ms. nearly 25time faster than the old one.
+	vector<int> findSubstring(string s, vector<string>& words){
+		vector<int> res;
+		int M = s.size(), N = words.size();
+		//check the corner cases.
+		if (M == 0 || N == 0)
+			return res;
+		int wordCnt = words.size();
+		int wordLen = words[0].size();
+		if (M < wordLen*N)
+			return res;
+		//build Map
+		unordered_map<string, int> Map, curMap;
+		for (auto word : words)
+			Map[word]++;
+		//Start search using a window.
+		int winStart = 0, winEnd = 0;
+		int cnt = 0;
+		int i = 0; 
+		for (i = 0; i < wordLen; i++){
+			winStart = i; winEnd = winStart;
+			cnt = 0;//cnt and curMap need to be cleared each time.
+			curMap.clear();
+			while (winEnd <= M - wordLen){
+				string key = s.substr(winEnd, wordLen);
+				if (Map.count(key) == 0){
+					//this key should not exist in target 
+					winStart = winEnd + wordLen;
+					cnt = 0;
+					winEnd = winStart;
+					curMap.clear();
+					continue;
+				}
+				//the correct key
+				if (curMap.count(key) == 0){
+					curMap[key]++;
+					cnt++;
+					winEnd += wordLen;
+				}
+				else if (curMap[key] < Map[key]){
+					//found, add this key simply.
+					/*
+					* CANNOT merge with last case because it operations on 
+					* unexisting key-value will add one entry to it.
+					*/
+					curMap[key]++;
+					cnt++;
+					winEnd += wordLen;
+				}
+				else{
+					//too many occurance, skip the first one
+					//need to update cnt and curMap during this process.
+					string cur = s.substr(winStart, wordLen);
+					while (cur != key){
+						winStart = winStart + wordLen;
+						cnt--;
+						curMap[cur]--;
+						cur = s.substr(winStart, wordLen);
+					}
+					//now cur is the first one equals to 'key'
+					winStart += wordLen;
+					winEnd += wordLen;
+				}
+				if (cnt == N){
+					//find it. store the start, change to next position.
+					res.push_back(winStart);
+				}
+			}
+		}
+		
+		return res;
+	}
 };
 
 
