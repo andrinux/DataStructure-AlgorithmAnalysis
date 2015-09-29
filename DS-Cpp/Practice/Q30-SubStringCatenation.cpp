@@ -54,6 +54,54 @@ public:
 
 		return result;
 	}
+	/* A cleaner Method use help function. 
+	* A little bit quicker 724ms.
+	*/
+	//Check if the current sub string is concatenation or not
+	bool checkSubString(int start, string &s, unordered_map<string, int>& Map, int wordCnt, int wordLen){
+		unordered_map<string, int> curMap;
+		int i = 0;
+		for (i = 0; i < wordCnt; i++){
+			//no need to check out-of-range. becuse it is checked in parent function.
+			string key = s.substr(start + i*wordLen, wordLen);
+			if (Map.count(key) == 0)
+				return false;
+			else{
+				curMap[key]++;
+				if (curMap[key] > Map[key]) //这里有抽屉原则的思想。
+					return false;
+			}
+		}
+		return true;
+	}
+	vector<int> findSubstring_Clean(string s, vector<string>& words){
+		vector<int> res;
+		int M = s.size(), N = words.size();
+		//check the corner cases.
+		if (M == 0 || N == 0) 
+			return res;
+		int wordCnt = words.size();
+		int wordLen = words[0].size();
+		if (M < wordLen*N)
+			return res;
+		//build the map.
+		int i = 0, j = 0;
+		unordered_map<string, int> Map;
+		for (int i = 0; i < N; i++)
+			Map[words[i]]++;
+		//check them one by one
+		while (i <= M - wordLen*N){
+			if (checkSubString(i, s, Map, N, wordLen)){
+				res.push_back(i);
+				i++;
+			}
+			else
+				i++;
+		}
+		return res;
+	}
+
+
 
 };
 
