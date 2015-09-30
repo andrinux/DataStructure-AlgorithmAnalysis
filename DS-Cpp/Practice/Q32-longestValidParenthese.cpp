@@ -45,7 +45,36 @@ public:
 		return maxLen;
 	}
 
-
+	int longestValidParentheses(string s){
+		int M = s.size();
+		if (M <= 1)
+			return 0;
+		stack<pair<char, int>> stk;
+		int i = 0, maxLen = 0, curLen = 0;
+		int start = 0;
+		for (i = 0; i < M; i++){
+			if (s[i] == '('){
+				stk.push(make_pair('(', i));
+				continue;
+			}
+			if (s[i] == ')'){
+				if (!stk.empty() && stk.top().first == '('){
+					//get a match.
+					stk.pop();
+					if (stk.empty())
+						curLen = i + 1;
+					else
+						curLen = i - stk.top().second;
+					maxLen = max(maxLen, curLen);
+				}
+				else{
+					//mismatch, unpaired
+					stk.push(make_pair(s[i], i));
+				}
+			}
+		}
+		return maxLen;
+	}
 };
 
 
