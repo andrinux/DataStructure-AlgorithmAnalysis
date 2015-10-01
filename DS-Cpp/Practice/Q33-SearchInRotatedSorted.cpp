@@ -126,7 +126,54 @@ public:
 	}
 };
 
+//Find The Min first
+class Solution {
+public:
+	int findMin(vector<int>& nums) {
+		int M = nums.size();
+		if (M == 0) return 0;
+		if (M == 1) return M-1;
+		int low = 0, mid = 0, up = M - 1;
+		while (up - low > 1){
+			mid = (up + low) / 2;
+			if (nums[mid] < nums[up]) //Here should be < up.
+				up = mid;
+			else
+				low = mid;
+		}
+		return (nums[up] < nums[low]) ? up : low;
+	}
 
+	int do_search(vector<int>& v, int target, int low, int up){
+		int idx = findMin(v);
+		//Determine the range to search
+		if (idx > 0){
+			if (target >= v[low] && target <= v[idx - 1])
+				up = idx - 1;
+			else
+				low = idx;
+		}
+		//Do a binary Search
+		int mid = 0;
+		while (low <= up){
+			mid = (low + up) / 2;
+			if (target == v[mid])
+				return mid;
+			else if (target>v[mid])
+				low = mid + 1;
+			else
+				up = mid - 1;
+		}
+		return -1;
+	}
+
+	int search(vector<int>& nums, int target) {
+		int M = nums.size();
+		if (M < 1)
+			return -1;
+		return do_search(nums, target, 0, M - 1);
+	}
+};
 
 
 int main()
