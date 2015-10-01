@@ -62,6 +62,49 @@ public:
 	}
 };
 
+//Ref: http://bangbingsyb.blogspot.com/2014/11/leetcode-search-for-range.html
+
+/*
+* Method-2: Use binary search for twice, no need to search for target first.
+*/
+
+class Solution{
+public:
+	vector<int> searchRange(vector<int>& nums, int target){
+		int M = nums.size();
+		if (M == 0)
+			return vector<int>(2, -1);
+		vector<int> res;
+		//Search left point first
+		int low = 0, up = M - 1, mid = 0;
+		while (low <= up){
+			mid = (low + up) / 2;
+			if (nums[mid] >= target)
+				up = mid - 1;
+			else
+				low = mid + 1;
+		}
+		int left = up + 1;
+		//Search for the right position.
+		low = 0, up = M - 1, mid = 0;
+		while ( low <= up){
+			mid = (low + up) / 2;
+			if (target >= nums[mid])
+				low = mid + 1;
+			else
+				up = mid - 1;
+		}
+		int right = low - 1;
+
+		if ( left < M && right >=0 && nums[left] == target && nums[right] == target){
+			res.push_back(left); res.push_back(right);
+			return res;
+		}
+		else
+			return vector<int>(2, -1);
+	}
+};
+
 
 
 
