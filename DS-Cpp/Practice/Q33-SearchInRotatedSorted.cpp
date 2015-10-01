@@ -63,6 +63,69 @@ public:
 };
 
 
+class Solution_2 {
+public:
+	/*
+	* No duplicated elements.
+	*/
+
+	int BinSearch(vector<int> & nums, int target, int low, int up){
+		int M = nums.size();
+		int  mid = 0;
+		while (low <= up){
+			mid = (low + up) / 2;
+			if (nums[mid] == target)
+				return mid;
+			else if (nums[mid] < target)
+				low = mid + 1;
+			else
+				up = mid - 1;
+		}
+		return -1;
+	}
+
+	int do_search(vector<int>& v, int target, int low, int up){
+		int mid = 0 ;
+		//First Case: 
+		while (low <= up){
+			if (v[low] <= v[up])
+				//Binary Search
+				return BinSearch(v, target, low, up);
+			if (v[low] > v[up]){
+				mid = (low + up) / 2;
+				if (target == v[low]) return low;
+				if (target == v[up]) return up;
+				if (target == v[mid]) return mid;
+				if (v[mid] >= v[low]){
+					if (target > v[low] && target < v[mid]){
+						low = low + 1; up = mid - 1;
+					}
+					else{
+						low = mid + 1; up = up - 1;
+					}
+				}
+				else{
+					if (target > v[mid] && target < v[up]){
+						low = mid + 1; up = up - 1;
+					}
+					else{
+						low = low + 1; up = mid - 1;
+					}
+				}
+			}
+		}
+
+		return -1;
+	}
+
+	int search(vector<int>& nums, int target) {
+		int M = nums.size();
+		if (M < 1)
+			return -1;
+		return do_search(nums, target, 0, M - 1);
+	}
+};
+
 
 
 
