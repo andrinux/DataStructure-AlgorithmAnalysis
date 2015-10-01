@@ -1,0 +1,85 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <stack>
+#include <algorithm>
+#include <map>
+
+using namespace std;
+
+/*
+* Very Ugly Code. Not clear to figure out.
+*/
+class Solution_1 {
+public:
+	int BinSearch(vector<int> & nums, int target, int low, int up){
+		int M = nums.size();
+		int  mid = 0;
+		while (low <= up){
+			mid = (low + up) / 2;
+			if (nums[mid] == target)
+				return mid;
+			else if (nums[mid] < target)
+				low = mid + 1;
+			else
+				up = mid - 1;
+		}
+		return -1;
+	}
+	//search a value recursively
+	int do_search(vector<int> &v, int target, int low, int up){
+		if (low > up)
+			return -1;
+		if (low == up && target != v[low])
+			return -1;
+		int mid = (low + up) / 2;
+		if (v[low] == target){
+			return low;
+		}
+		if (v[low] < target){
+			if (v[mid] >= target)
+				return BinSearch(v, target, low + 1, mid);
+			else if (v[up] >= target)
+				return do_search(v, target, mid + 1, up);
+			else
+				return do_search(v, target, low + 1, mid - 1);
+		}
+		if(v[low]>target){//v[low]>target
+			if (v[mid] <= target)
+				return BinSearch(v, target, mid, up);
+			else if (v[low] > v[mid])
+				return do_search(v, target, low + 1, mid);
+			else
+				return do_search(v, target, mid + 1, up);
+		}
+	}
+	int search(vector<int>& nums, int target) {
+		int M = nums.size();
+		if (M < 1)
+			return -1;
+		return do_search(nums, target, 0, M-1);
+	}
+	
+};
+
+
+
+
+
+int main()
+{ 
+	Solution so;	// ,
+	vector<int> nums = { 24, 25, 28, 30, 32, 34, 43, 46, 48, 53, 55, 57, 58, 59, 60 ,1,2,3,4,5,6,9,12,15,18,22};
+	int target = 3;
+	for (int k = 0; k <60 ; k++){
+		target = k;
+		cout << target << ":" << so.search(nums, target) << " - ";
+		for (int i = 0; i < nums.size(); i++){
+			if (target == nums[i])
+				cout << i;
+		}
+		cout << endl;
+	}
+	
+	return 0;
+}
