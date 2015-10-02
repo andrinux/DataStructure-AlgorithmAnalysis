@@ -75,7 +75,36 @@ public:
 	}
 };
 
+//Method-2: A very clean way to write it. Only search once to improve the speed.
+//But we need extra space to store the current state.
+class Solution {
+public:
+	bool isValidSudoku(vector<vector<char>>& board) {
+		const int M = 9;
+		int count_1[M][M] = { 0 };//row
+		int count_2[M][M] = { 0 };//column
+		int count_3[M][M] = { 0 };//sub-matrix
+		for (int i = 0; i < board.size(); i++){
+			for (int j = 0; j < board[0].size(); j++){
+				if (board[i][j] == '.')
+					continue;
+				else{
+					int cur = board[i][j] - '0' - 1;
+					int k = i / 3 * 3 + j/3;
+					if (count_1[i][cur] || count_2[j][cur] || count_3[k][cur])
+						return false;
+					else{
+						count_1[i][cur]++;
+						count_2[j][cur]++;
+						count_3[k][cur]++;
+					}
+				}
+			}
+		}
+		return true;
+	}
 
+};
 
 
 int main()
