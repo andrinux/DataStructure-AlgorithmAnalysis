@@ -70,7 +70,51 @@ public:
 	}
 };
 
-
+//Method-2: Direct Way. Brute Force.
+class Solution {
+public:
+	string multiply(string s1, string s2) {
+		//corner cases
+		if (s1.size() == 0 || s2.size() == 0)
+			return "0";
+		//genral cases:
+		int M1 = s1.size(), M2 = s2.size();
+		vector<int> buf(M1 + M2, 0);
+		int p1 = M1 - 1, p2 = M2 - 1;
+		int p = buf.size() - 1;
+		
+		int start = 0;
+		for (p2 = M2 - 1; p2 >= 0; p2--, start++){
+			int d2 = s2[p2] - '0';
+			int carry = 0; //clear the related variables each loop.
+			p = buf.size() - 1 - start;
+			for (p1 = M1- 1; p1 >= 0; p1--){
+				int d1 = s1[p1] - '0';
+				int d = d1 * d2 + carry + buf[p];
+				if (d >= 10){
+					carry = d / 10;
+					buf[p--] = d % 10;
+				}
+				else{
+					carry = 0;
+					buf[p--] = d;
+				}
+			}
+			buf[p] = carry;//save the last one.
+		}
+		//convert to string, skip all the zeros.
+		string res;
+		for (p = 0; p < buf.size(); p++)
+			res.push_back(buf[p] + '0');
+		//skip the foregoing 0's
+		for (p = 0; p<buf.size() && buf[p] == 0; p++)
+			;
+		if (p == buf.size())
+			return "0";
+		else
+			return res.substr(p);
+	}
+};
 
 
 
