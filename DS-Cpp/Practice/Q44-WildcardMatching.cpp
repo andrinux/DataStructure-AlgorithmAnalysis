@@ -45,6 +45,35 @@ public:
 	}
 };
 
+class Solution {
+public:
+	bool isMatch(string str, string ptn) {
+		int s = 0, p = 0;
+		int M = str.size(), N = ptn.size();
+		int match = -1, star = -1;
+		while (s < M){
+			if (p < N && (ptn[p] == '?' || ptn[p] == str[s])){
+				s++; p++;
+			}
+			else if (p < N && ptn[p] == '*'){
+				star = p;
+				p++;
+				match = s;
+			}
+			else if (star != -1){
+				p = star + 1;
+				s = ++match;
+			}
+			else
+				return false;
+		}
+
+		//
+		while (p < N && ptn[p] == '*')
+			p++;
+		return p == N;
+	}
+};
 
 int main()
 {
