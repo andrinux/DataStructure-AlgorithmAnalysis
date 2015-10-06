@@ -52,7 +52,32 @@ public:
 	}
 };
 
+//Use the swap method.
+class Solution {
+public:
+	//Core function
+	void findPermute(vector<int>& nums, int start, vector<vector<int>> &res){
+		int N = nums.size();
+		if (start == N){
+			res.push_back(nums);
+		}
+		else{
+			for (int i = start; i < N; i++){
+				swap(nums[start], nums[i]);
+				findPermute(nums, start + 1, res);
+				swap(nums[start], nums[i]);
+			}
+		}
+	}
 
+	vector<vector<int>> permute(vector<int>& nums) {
+		vector<vector<int>> res;
+		if (nums.size() == 0)
+			return res;
+		findPermute(nums, 0, res);
+		return res;
+	}
+};
 
 
 int main()
