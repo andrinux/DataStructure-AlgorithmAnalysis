@@ -53,7 +53,30 @@ public:
 	}
 };
 
-
+//A cleaner Method: But need to be very careful.
+class Solution {
+public:
+	vector<int> spiralOrder(vector<vector<int>>& matrix) {
+		vector<int> res;
+		int M = matrix.size(); if (M == 0) return res;
+		int N = matrix[0].size(); if (N == 0) return res;
+		vector<vector<int> > iDir = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
+		int i = 0, j = 0;
+		int c = -1, r = 0;
+		int nSteps[2] = { N, M-1 }; //初始值很容易弄错，顺序和忘记减去1
+		while (nSteps[i%2]){
+			int d_c = iDir[i % 4][0];
+			int d_r = iDir[i % 4][1];
+			for (j = 0; j < nSteps[i % 2]; j++){
+				c = c + d_c; r = r + d_r;
+				res.push_back(matrix[r][c]);
+			}
+			nSteps[i % 2]--;//easy to forget to update nSteps here.
+			i++;
+		}
+		return res;
+	}
+};
 
 
 int main()
