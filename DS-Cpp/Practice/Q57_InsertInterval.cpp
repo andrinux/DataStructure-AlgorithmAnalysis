@@ -54,7 +54,24 @@ public:
 	}
 };
 
+class Solution {
+public:
+	vector<Interval> insert(vector<Interval>& Its, Interval newIt) {
+		int N = Its.size();
+		if (N == 0) return vector<Interval>({ newIt });
+		vector<Interval> res;
+		int i = 0;
+		bool isInserted = false;
+		// Struggling........
 
+
+
+		//TO be filled.
+
+
+		return res;
+	}
+};
 
 int main()
 {
