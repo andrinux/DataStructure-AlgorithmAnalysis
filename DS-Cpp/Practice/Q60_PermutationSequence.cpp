@@ -58,7 +58,33 @@ public:
 	}
 };
 
+class Solution {
+public:
+	string getPermutation(int n, int k) {
+		//Find Factorial first.
+		string data;
+		if (n == 0 || k == 0)
+			return data;
+		vector<int> F(1,1);
+		for (int i = 1; i <= n; i++)
+			F.push_back(F[i - 1] * i);
 
+		//build the source set
+		vector<char> str;
+		for (int i = 1; i <= n; i++)
+			str.push_back(i + '0');
+		k = k - 1;
+		k = k%F[n];
+		//get the N numbers
+		for (int i = n - 1; i >= 0; i--){
+			int idx = k / F[i];
+			data.push_back(str[idx]);
+			str.erase(str.begin() + idx);
+			k = k%F[i];
+		}
+		return data;
+	}
+};
 
 
 
