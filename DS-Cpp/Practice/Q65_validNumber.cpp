@@ -72,6 +72,48 @@ public:
 	}
 };
 
+// This example is pretty clean then.
+//https://leetcode.com/discuss/44047/c-12-ms-give-some-invalid-examples-easily-understand
+
+class Solution {
+public:
+	bool isNumber(string s) {
+		int N = s.size();
+		if (N == 0) return false;
+		int cntDot = 0, cntNum = 0, cntE = 0;
+		int i = 0;//global position.
+		//Skip blanks
+		while (s[i] == ' ') i++;
+		//Skip symbols
+		if (s[i] == '+' || s[i] == '-') i++;
+		//must be numbers/Dot now
+		while (isdigit(s[i]) || s[i] == '.'){
+			if (s[i] == '.')
+				cntDot++;
+			else
+				cntNum++;
+			i++;
+		}
+		if (cntDot > 1 || cntNum < 1) return false; //checker
+		//now we must met some chars not ., not number
+		if (s[i] == 'e' || s[i] == 'E'){
+			i++;
+			//afterwards, we cannot have . and must be only numbers
+			if (s[i] == '+' || s[i] == '-') i++; //skip symbol
+			cntDot = 0; cntNum = 0;
+			while (isdigit(s[i]) || s[i] == '.'){
+				if (s[i] == '.')
+					cntDot++;
+				else
+					cntNum++;
+				i++;
+			}
+			if (cntDot>0 || cntNum < 1) return false;
+		}
+		while (s[i] == ' ') i++;
+		return i==N;
+	}
+};
 
 
 int main()
