@@ -61,7 +61,52 @@ public:
 };
 
 
+//use stack to store it.
+class Solution {
+public:
+	string simplifyPath(string s) {
+		int N = s.size();
+		if (N == 0 || s[0] != '/') return "";
+		int cntABC = 0, cntDot = 0, i = 1, cntOther = 0;
+		deque<string> store; 
+		int beginIdx = 1;
+		while (i < N){
+			beginIdx = i; cntABC = 0; cntDot = 0; cntOther = 0;
+			while (i < N && s[i] != '/'){
+				if (s[i] == '.')
+					cntDot++;
+				else if (isalpha(s[i]))
+					cntABC++;
+				else
+					cntOther++;
+				i++;
+			}
+			//process
+			if (cntDot == 2 && cntABC == 0 && cntOther == 0){
+				if(store.size()>0) store.pop_back(); 
+				i++;
+			}
+			else if (cntDot == 1 && cntABC == 0 && cntOther == 0){
+				i++;
+			}
+			else{
+				if(i>beginIdx)	
+					store.push_back(s.substr(beginIdx, i - beginIdx));
+				i++;
+			}
+		}
+		//convert.
+		string ret;
+		while (store.size() > 0){
+			string cur = store.front();
+			if (cur.size() > 0)
+				ret = ret + '/' + cur;
+			store.pop_front();
+		}
+		return ret.empty() ? "/" : ret;
 
+	}
+};
 
 
 int main()
