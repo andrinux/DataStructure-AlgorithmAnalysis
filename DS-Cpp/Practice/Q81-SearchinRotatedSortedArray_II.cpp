@@ -54,6 +54,42 @@ public:
 	}
 };
 
+//Method-2: Direct Binary Search.
+// http://bangbingsyb.blogspot.com/2014/11/leetcode-search-in-rotated-sorted-array.html
+class Solution {
+public:
+	bool search(vector<int>& nums, int target) {
+		int M = nums.size();
+		if (M < 1) return false;
+		int low = 0, up = M - 1, mid = 0;
+		while (low <= up){
+			mid = (low + up) / 2;
+			if (target == nums[mid])	return true;
+			if (target == nums[low])	return true;
+			if (target == nums[up])		return true;
+			if (nums[mid] > nums[up]){
+				if (target > nums[low] && target < nums[mid])
+					up = mid - 1;
+				else
+					low = mid + 1;
+			}
+			else if (nums[mid] < nums[up]){
+				if (target > nums[mid] && target < nums[up])
+					low = mid + 1;
+				else
+					up = mid - 1;
+			}
+			else{
+				up = up - 1;
+			}
+		}
+		return false;
+	}
+};
+
+//Recall the non-duplicated-element Search in Rotated Array.
+//It is always true that half of the whole array is fully sorted.
+//SO for each time we can remove half of them.
 
 
 
