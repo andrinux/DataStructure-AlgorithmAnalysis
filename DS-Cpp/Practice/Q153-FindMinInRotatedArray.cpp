@@ -26,6 +26,24 @@ public:
 	}
 };
 
+//A cleaner method.
+class Solution{
+public:
+	int findMin(vector<int> nums){
+		int M = nums.size();
+		if (M == 0) return 0;
+		if (M == 1) return nums[M - 1];
+		int low = 0, mid = 0, up = M - 1;
+		while (up > low){
+			mid = (up + low) / 2;
+			if (nums[mid] < nums[up])
+				up = mid;
+			else
+				low = mid+1;
+		}
+		return nums[low];
+	}
+};
 
 
 
